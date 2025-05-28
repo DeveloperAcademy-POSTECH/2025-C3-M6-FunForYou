@@ -6,7 +6,7 @@ Apple Developer Academy@Postech 4th Learners
 
 ## Team PR 규칙
 - PR 템플릿 양식에 맞추되, 개발한 기능 중심 설명으로 작성합니다.
-- 개발한 뷰의 이미지 하나 이상 첨부해야 합니다.
+- 개발한 기능과 관련된 이미지 하나 이상을 첨부해야 합니다.
 - PR Merge는 한명이 담당합니다.
 - PR Title 은 다음의 깃모지를 붙여 작성합니다.
 
