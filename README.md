@@ -69,7 +69,7 @@ https://github.com/DeveloperAcademy-POSTECH/swift-style-guide
 
 <div align="center">
   
-| [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Ted](https://github.com/keon22han) | [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Yeony](https://github.com/keon22han) | [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Ssol](https://github.com/msseock) |
+| [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Ted](https://github.com/keon22han) | [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Yeony](https://github.com/youryeony) | [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Ssol](https://github.com/msseock) |
 | :---: | :---: | :---: |
 | [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Woody](https://github.com/keon22han) | [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Berry](https://github.com/keon22han) | [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Fine](https://github.com/keon22han) |
 
