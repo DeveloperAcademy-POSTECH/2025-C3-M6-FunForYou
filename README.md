@@ -1,2 +1,19 @@
-# 2025-C3-M6-FunForYou
-Apple Developer Academy 4th / Challenge 3 - 여가어때
+# 2025-C3-M6-`FunForYou(여가어때)`
+Apple Developer Academy@Postech 4th Learners
+
+## App Statement
+
+## Solution Concept
+
+## Feature List
+
+
+## ✍️ Authors
+
+<div align="center">
+  
+| [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Ted](https://github.com/keon22han) | [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Ssol](https://github.com/msseock) | [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Ted](https://github.com/keon22han) |
+| :---: | :---: | :---: |
+| [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Ted](https://github.com/keon22han) | [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Ted](https://github.com/keon22han) | [<img src="https://github.com/user-attachments/assets/9ad83449-8bf6-4678-814b-190af094d106" width="80" height="80"/><br/>Ted](https://github.com/keon22han) |
+
+</div>
