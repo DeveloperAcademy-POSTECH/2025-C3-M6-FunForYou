@@ -1,3 +1,6 @@
+
+![image](https://github.com/user-attachments/assets/6e11c123-c0b5-413f-8652-98656b17b938)
+
 # 2025-C3-M6-`FunForYou(여가어때)`
 Apple Developer Academy@Postech 4th Learners
 
