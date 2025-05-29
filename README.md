@@ -63,7 +63,19 @@ gitGraph
 
 https://github.com/DeveloperAcademy-POSTECH/swift-style-guide
 
+## ✨ Skills & Tech Stack
 
+<div align="left">
+
+  <img src="https://img.shields.io/badge/Swift-FA7343?style=flat&logo=Swift&logoColor=white"/>
+  <img src="https://img.shields.io/badge/SwiftUI-0D1117?style=flat&logo=swift&logoColor=white"/>
+  <img src="https://img.shields.io/badge/SwiftData-4285F4?style=flat&logo=swift&logoColor=white"/>
+  <img src="https://img.shields.io/badge/MVVM-6E40C9?style=flat&logo=architecture&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat&logo=Figma&logoColor=white"/>
+  <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=Git&logoColor=white"/>
+
+</div>
 
 ## ✍️ Authors
 
