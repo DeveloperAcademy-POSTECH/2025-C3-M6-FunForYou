@@ -25,7 +25,14 @@ final class Coordinator: ObservableObject {
     }
 }
 
-enum Path {
-    case main
-    case aView
+enum Path: Hashable {
+    case inspirationNote
+    case completeCollection
+    case ongoingCollection
+    case dailyWriting(Daily?)
+    case dailyReading(Daily)
+    case appreciationWriting(Appreciation?)
+    case appreciationReading(Appreciation)
+    case poemWriting(Poem?)
+    case poemReading(Poem)
 }
