@@ -29,7 +29,7 @@ final class SwiftDataManager {
     
     // MARK: 모든 시 불러오기 (Read)
     func fetchAllPoemList(context: ModelContext) -> Result<[Poem], Error> {
-        let fetchDescriptor = FetchDescriptor<Poem>(sortBy: [SortDescriptor(\.date, order: .forward)])
+        let fetchDescriptor = FetchDescriptor<Poem>()
         
         do {
             let poemList = try context.fetch(fetchDescriptor)
