@@ -5,9 +5,9 @@
 //  Created by 한건희 on 5/30/25.
 //
 
-import SwiftUI
 import Combine
 import Foundation
+import SwiftUI
 
 final class Coordinator: ObservableObject {
     @Published var path: [Path] = []

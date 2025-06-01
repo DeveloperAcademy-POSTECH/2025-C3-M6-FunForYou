@@ -4,10 +4,10 @@
 //
 //  Created by 한건희 on 5/31/25.
 //
-import SwiftUI
 import Combine
+import SwiftUI
 
-class AppreciationWritingViewModel: ViewModelable {
+final class AppreciationWritingViewModel: ViewModelable {
     @ObservedObject var coordinator: Coordinator
     struct State {
         var appreciation: Appreciation?

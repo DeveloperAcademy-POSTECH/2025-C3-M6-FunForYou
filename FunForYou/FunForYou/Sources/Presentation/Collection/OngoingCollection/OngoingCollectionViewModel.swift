@@ -4,10 +4,10 @@
 //
 //  Created by 한건희 on 5/31/25.
 //
-import SwiftUI
 import Combine
+import SwiftUI
 
-class OngoingCollectionViewModel: ViewModelable {
+final class OngoingCollectionViewModel: ViewModelable {
     @ObservedObject var coordinator: Coordinator
     struct State {
         
