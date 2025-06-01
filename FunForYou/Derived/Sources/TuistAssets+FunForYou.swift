@@ -23,6 +23,16 @@
 public enum FunForYouAsset: Sendable {
   public enum Assets {
   public static let accentColor = FunForYouColors(name: "AccentColor")
+    public static let beige = FunForYouColors(name: "Beige")
+    public static let black = FunForYouColors(name: "Black")
+    public static let craft = FunForYouColors(name: "Craft")
+    public static let gray0 = FunForYouColors(name: "Gray0")
+    public static let gray1 = FunForYouColors(name: "Gray1")
+    public static let gray2 = FunForYouColors(name: "Gray2")
+    public static let gray3 = FunForYouColors(name: "Gray3")
+    public static let green = FunForYouColors(name: "Green")
+    public static let pinkDark = FunForYouColors(name: "PinkDark")
+    public static let pinkLight = FunForYouColors(name: "PinkLight")
   }
   public enum PreviewAssets {
   }

@@ -20,6 +20,26 @@ let project = Project(
                     "UISupportedInterfaceOrientations": [
                         "UIInterfaceOrientationPortrait",
                     ],
+                    "UIAppFonts": [
+                        "KimjungchulGothic-Bold.otf",
+                        "KimjungchulGothic-Light.otf",
+                        "KimjungchulGothic-Regular.otf",
+                        "KimjungchulMyungjo-Bold.otf",
+                        "KimjungchulMyungjo-Light.otf",
+                        "KimjungchulMyungjo-Regular.otf",
+                        "KimjungchulScript-Bold.otf",
+                        "KimjungchulScript-Light.otf",
+                        "KimjungchulScript-Regular.otf",
+                        "Pretendard-Black.otf",
+                        "Pretendard-Bold.otf",
+                        "Pretendard-ExtraBold.otf",
+                        "Pretendard-ExtraLight.otf",
+                        "Pretendard-Light.otf",
+                        "Pretendard-Medium.otf",
+                        "Pretendard-Regular.otf",
+                        "Pretendard-SemiBold.otf",
+                        "Pretendard-Thin.otf",
+                    ]
                 ]
             ),
             sources: ["FunForYou/Sources/**"],
