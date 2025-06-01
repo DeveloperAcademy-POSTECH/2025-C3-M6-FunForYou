@@ -20,6 +20,27 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>KimjungchulGothic-Bold.otf</string>
+		<string>KimjungchulGothic-Light.otf</string>
+		<string>KimjungchulGothic-Regular.otf</string>
+		<string>KimjungchulMyungjo-Bold.otf</string>
+		<string>KimjungchulMyungjo-Light.otf</string>
+		<string>KimjungchulMyungjo-Regular.otf</string>
+		<string>KimjungchulScript-Bold.otf</string>
+		<string>KimjungchulScript-Light.otf</string>
+		<string>KimjungchulScript-Regular.otf</string>
+		<string>Pretendard-Black.otf</string>
+		<string>Pretendard-Bold.otf</string>
+		<string>Pretendard-ExtraBold.otf</string>
+		<string>Pretendard-ExtraLight.otf</string>
+		<string>Pretendard-Light.otf</string>
+		<string>Pretendard-Medium.otf</string>
+		<string>Pretendard-Regular.otf</string>
+		<string>Pretendard-SemiBold.otf</string>
+		<string>Pretendard-Thin.otf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
