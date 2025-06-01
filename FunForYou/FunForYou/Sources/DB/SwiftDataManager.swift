@@ -18,13 +18,7 @@ final class SwiftDataManager {
     
     // MARK: 시 저장 (Create)
     func savePoem(poem: Poem, context: ModelContext) -> Result<Void?, Error> {
-        context.insert(poem)
-        do {
-            try context.save()
-        } catch {
-            return .failure(error)
-        }
-        return .success(nil)
+        return save(value: poem, context: context)
     }
     
     // MARK: 모든 시 불러오기 (Read)
@@ -53,24 +47,13 @@ final class SwiftDataManager {
     }
     
     // MARK: 시 수정 (Update)
-    func updatePoem(poem: Poem, context: ModelContext) -> Result<Void?, Error> {
-        do {
-            try context.save() // context 내에서 이미 수정되었다면 저장만 하면 됨 (뷰에서 poem.title = "바뀐 타이틀")
-            return .success(nil)
-        } catch {
-            return .failure(error)
-        }
+    func updatePoem(context: ModelContext) -> Result<Void?, Error> {
+        return update(context: context)
     }
 
     // MARK: 시 삭제 (Delete)
     func deletePoem(poem: Poem, context: ModelContext) -> Result<Void?, Error> {
-        context.delete(poem)
-        do {
-            try context.save()
-            return .success(nil)
-        } catch {
-            return .failure(error)
-        }
+        return delete(value: poem, context: context)
     }
 
     
@@ -78,13 +61,7 @@ final class SwiftDataManager {
     
     // MARK: 시상(Appreciation, Daily) 정보 저장 (Create)
     func saveInspiration<T: Inspiration>(inspiration: T, context: ModelContext) -> Result<Void?, Error> {
-        context.insert(inspiration)
-        do {
-            try context.save()
-        } catch {
-            return .failure(error)
-        }
-        return .success(nil)
+        return save(value: inspiration, context: context)
     }
     
     // MARK: 시상(Appreciation, Daily) 정보 모두 가져오기 (Read)
@@ -113,24 +90,43 @@ final class SwiftDataManager {
     }
     
     // MARK: 시상 수정 (Update)
-    func updateInspiration<T: Inspiration>(inspiration: T, context: ModelContext) -> Result<Void?, Error> {
-        do {
-            try context.save() // context 내에서 이미 수정되었다면 저장만 하면 됨 (뷰에서 Inspiration.title = "바뀐 타이틀")
-            return .success(nil)
-        } catch {
-            return .failure(error)
-        }
+    func updateInspiration(context: ModelContext) -> Result<Void?, Error> {
+        return update(context: context)
     }
 
     // MARK: 시상 삭제 (Delete)
     func deleteInspiration<T: Inspiration>(inspiration: T, context: ModelContext) -> Result<Void?, Error> {
-        context.delete(inspiration)
+        return delete(value: inspiration, context: context)
+    }
+    
+    // MARK: - Create, Update, Delete function
+    
+    func save<T: PersistentModel>(value: T, context: ModelContext) -> Result<Void?, Error> {
+        context.insert(value)
         do {
             try context.save()
-            return .success(nil)
         } catch {
             return .failure(error)
         }
+        return .success(nil)
     }
-
+    
+    func update(context: ModelContext) -> Result<Void?, Error> {
+        do {
+            try context.save() // context 내에서 이미 수정되었다면 저장만 하면 됨 (뷰에서 model.title = "바뀐 타이틀")
+        } catch {
+            return .failure(error)
+        }
+        return .success(nil)
+    }
+    
+    func delete<T: PersistentModel>(value: T, context: ModelContext) -> Result<Void?, Error> {
+        context.delete(value)
+        do {
+            try context.save()
+        } catch {
+            return .failure(error)
+        }
+        return .success(nil)
+    }
 }
