@@ -52,6 +52,21 @@ final class SwiftDataManager {
         }
     }
     
+    /// inspiration 타입 시상으로 작성된 시를 불러오기
+    func fetchAllPoemFromInspirationType<T: Inspiration>(
+        inspirationType: T.Type,
+        context: ModelContext
+    ) -> Result<[Poem], Error> {
+        let predicate = #Predicate<Poem> { $0.type.typeDescription == inspirationType.typeDescription }
+        let fetchDescriptor = FetchDescriptor(predicate: predicate)
+        do {
+            let poemList = try context.fetch(fetchDescriptor)
+            return .success(poemList)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
     /// 시 수정 (Update)
     func updatePoem(context: ModelContext) -> Result<Void?, Error> {
         return update(context: context)
@@ -99,7 +114,6 @@ final class SwiftDataManager {
     ) -> Result<T?, Error> {
         let predicate = #Predicate<T> { $0.id == inspirationId }
         let fetchDescriptor = FetchDescriptor<T>(predicate: predicate)
-        
         do {
             let inspiration = try context.fetch(fetchDescriptor)
             return .success(inspiration.first)
@@ -114,14 +128,20 @@ final class SwiftDataManager {
     }
 
     /// 시상 삭제 (Delete)
-    func deleteInspiration<T: Inspiration>(inspiration: T, context: ModelContext) -> Result<Void?, Error> {
+    func deleteInspiration<T: Inspiration>(
+        inspiration: T,
+        context: ModelContext
+    ) -> Result<Void?, Error> {
         return delete(value: inspiration, context: context)
     }
     
     // MARK: - Create, Update, Delete function
     
     /// 시, 시상에 대한 저장 관련 중복되는 부분을 구현한 메서드입니다.
-    func save<T: PersistentModel>(value: T, context: ModelContext) -> Result<Void?, Error> {
+    func save<T: PersistentModel>(
+        value: T,
+        context: ModelContext
+    ) -> Result<Void?, Error> {
         context.insert(value)
         do {
             try context.save()
@@ -142,7 +162,10 @@ final class SwiftDataManager {
     }
     
     /// 시, 시상에 대한 삭제 관련 중복되는 부분을 구현한 메서드입니다.
-    func delete<T: PersistentModel>(value: T, context: ModelContext) -> Result<Void?, Error> {
+    func delete<T: PersistentModel>(
+        value: T,
+        context: ModelContext
+    ) -> Result<Void?, Error> {
         context.delete(value)
         do {
             try context.save()
