@@ -11,9 +11,11 @@ import SwiftUI
 @Model
 class Daily: Inspiration {
     @Attribute(.unique) var id: String = UUID().uuidString
-    var title: String      // 시상 질문 (ex. "산책하며 웃는 마요를 보고 어떤 감정이 들었나요?")
-    var content: String     // 시상에 대한 응답 내용
-    var image: Data?  // image 데이터
+    /// 일상 필드입니다. (제목)
+    var title: String
+    /// 일상에 대한 자세히 쓰기 필드입니다.
+    var content: String
+    var image: Data?
     var date: Date
 
     init(

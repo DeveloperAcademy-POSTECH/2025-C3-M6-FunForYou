@@ -11,17 +11,23 @@ import Foundation
 @Model
 class Appreciation: Inspiration {
     @Attribute(.unique) var id: String = UUID().uuidString
-    var scene: String         // 장면
-    var title: String         // 제목 (감정 관련)
-    var content: String       // 감상 (내용)
-    var aiQuestions: [String]? // AI 질문 (최대 3개)
+    /// 감상을 작성할 콘텐츠 장면 설명 필드입니다.
+    /// - 선택 작성이므로 옵셔널
+    var scene: String?
+    /// 감상에 대한 마음의 한 줄 필드입니다. (제목)
+    var title: String
+    /// 감상에 대한 내 감상 필드입니다.
+    var content: String
+    /// AI 질문 리스트 필드입니다.
+    /// - AI 질문은 필수가 아니므로 옵셔널
+    @Relationship var aiQuestions: [AIQuestion]?
     var date: Date
 
     init(
         scene: String,
         title: String,
         content: String,
-        aiQuestions: [String]? = nil,
+        aiQuestions: [AIQuestion]? = nil,
         date: Date = Date()
     ) {
         self.scene = scene
