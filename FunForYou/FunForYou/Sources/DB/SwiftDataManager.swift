@@ -47,7 +47,7 @@ final class SwiftDataManager {
     }
     
     /// inspiration 타입 시상으로 작성된 시를 불러오기
-    func getAllPoemFromInspirationType<T: Inspiration>(
+    func fetchAllPoemFromInspirationType<T: Inspiration>(
         inspirationType: T.Type,
         context: ModelContext
     ) -> Result<[Poem], Error> {
