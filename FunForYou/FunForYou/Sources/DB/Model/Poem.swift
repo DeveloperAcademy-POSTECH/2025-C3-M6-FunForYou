@@ -26,15 +26,19 @@ class Poem {
     var date: Date
 
     init(
-        type: PoemType?,
+        type: PoemType = .none,
         title: String,
         content: String,
         date: Date = Date()
     ) {
         self.isCompleted = false
-        self.type = type ?? .none
+        self.type = type
         self.title = title
         self.content = content
         self.date = date
     }
+    
+    static let noneMockData = Poem(title: "poem of none inspiration type", content: "poem content")
+    static let dailyMockData = Poem(type: .daily("0"), title: "poem of daily inspiration type", content: "poem content")
+    static let appreciationMockData = Poem(type: .appreciation("0"), title: "poem of appreciation inspiration type", content: "poem content")
 }
