@@ -15,7 +15,11 @@ class AIQuestion {
     /// LLM으로부터 생성된 질문에 대한 사용자의 답변 필드입니다.
     var answer: String?
     
-    init(id: String, question: String, answer: String? = nil) {
+    init(
+        id: String,
+        question: String,
+        answer: String? = nil
+    ) {
         self.question = question
         self.answer = answer
     }

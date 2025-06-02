@@ -17,7 +17,10 @@ final class SwiftDataManager {
     // MARK: - Poem CRUD
     
     /// 시 저장 (Create)
-    func savePoem(poem: Poem, context: ModelContext) -> Result<Void?, Error> {
+    func savePoem(
+        poem: Poem,
+        context: ModelContext
+    ) -> Result<Void?, Error> {
         return save(value: poem, context: context)
     }
     
@@ -34,7 +37,10 @@ final class SwiftDataManager {
     }
     
     /// id로 시 불러오기 (Read)
-    func fetchPoemFromId(poemId: String, context: ModelContext) -> Result<Poem?, Error> {
+    func fetchPoemFromId(
+        poemId: String,
+        context: ModelContext
+    ) -> Result<Poem?, Error> {
         let predicate = #Predicate<Poem> { $0.id == poemId }
         let fetchDescriptor = FetchDescriptor(predicate: predicate)
         
@@ -52,7 +58,10 @@ final class SwiftDataManager {
     }
 
     /// 시 삭제 (Delete)
-    func deletePoem(poem: Poem, context: ModelContext) -> Result<Void?, Error> {
+    func deletePoem(
+        poem: Poem,
+        context: ModelContext
+    ) -> Result<Void?, Error> {
         return delete(value: poem, context: context)
     }
 
@@ -60,12 +69,18 @@ final class SwiftDataManager {
     // MARK: - Inspiration CRUD
     
     /// 시상(Appreciation, Daily) 정보 저장 (Create)
-    func saveInspiration<T: Inspiration>(inspiration: T, context: ModelContext) -> Result<Void?, Error> {
+    func saveInspiration<T: Inspiration>(
+        inspiration: T,
+        context: ModelContext
+    ) -> Result<Void?, Error> {
         return save(value: inspiration, context: context)
     }
     
     /// 시상(Appreciation, Daily) 정보 모두 가져오기 (Read)
-    func fetchAllInspiration<T: Inspiration>(InspirationType: T.Type, context: ModelContext) -> Result<[T], Error> {
+    func fetchAllInspiration<T: Inspiration>(
+        InspirationType: T.Type,
+        context: ModelContext
+    ) -> Result<[T], Error> {
         let fetchDescriptor = FetchDescriptor<T>()
         
         do {
@@ -77,7 +92,11 @@ final class SwiftDataManager {
     }
     
     /// 시상(Appreciation, Daily) 정보 id로 가져오기 (Read)
-    func fetchInspirationById<T: Inspiration>(inspirationType: T.Type, inspirationId: String, context: ModelContext) -> Result<T?, Error> {
+    func fetchInspirationById<T: Inspiration>(
+        inspirationType: T.Type,
+        inspirationId: String,
+        context: ModelContext
+    ) -> Result<T?, Error> {
         let predicate = #Predicate<T> { $0.id == inspirationId }
         let fetchDescriptor = FetchDescriptor<T>(predicate: predicate)
         
