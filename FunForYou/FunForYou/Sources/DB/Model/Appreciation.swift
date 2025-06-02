@@ -11,7 +11,7 @@ import Foundation
 @Model
 /// 시상(감상)에 대한 데이터 모델입니다.
 class Appreciation: Inspiration {
-    @Attribute(.unique) var id: String = UUID().uuidString
+    @Attribute(.unique) var id: String
     /// 감상을 작성할 콘텐츠 장면 설명 필드입니다.
     /// - 선택 작성, 빈 값이라면 빈 String 으로 저장
     var scene: String?
@@ -29,15 +29,29 @@ class Appreciation: Inspiration {
         title: String?,
         content: String?,
         aiQuestions: [AIQuestion]? = nil,
-        date: Date = Date()
+        date: Date = Date(),
+        isMock: Bool = false
     ) {
+        if isMock {
+            self.id = "0"
+        }
+        else {
+            self.id = UUID().uuidString
+        }
+        
         self.scene = scene
         self.title = title
         self.content = content
         self.date = date
-        
         if let aiQuestions = aiQuestions {
             self.aiQuestions = Array(aiQuestions.prefix(3)) // 최대 3개로 제한
         }
     }
+    
+    static let mockData = Appreciation(
+        scene: "appreciation scene",
+        title: "appreciation title",
+        content: "appreciation content",
+        isMock: true
+    )
 }
