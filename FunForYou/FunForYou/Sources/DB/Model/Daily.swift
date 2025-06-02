@@ -9,19 +9,20 @@ import SwiftData
 import SwiftUI
 
 @Model
+/// 시상(일상)에 대한 데이터 모델입니다.
 class Daily: Inspiration {
     @Attribute(.unique) var id: String = UUID().uuidString
     /// 일상 필드입니다. (제목)
-    var title: String
+    var title: String?
     /// 일상에 대한 자세히 쓰기 필드입니다.
-    var content: String
-    var image: Data?
+    var content: String?
+    var image: String?
     var date: Date
 
     init(
-        title: String,
-        content: String,
-        image: Data? = nil,
+        title: String?,
+        content: String?,
+        image: String? = nil,
         date: Date = Date()
     ) {
         self.title = title
