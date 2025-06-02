@@ -52,12 +52,12 @@ final class SwiftDataManager {
         }
     }
     
-    /// inspiration 타입 시상으로 작성된 시를 불러오기
-    func fetchAllPoemFromInspirationType<T: Inspiration>(
-        inspirationType: T.Type,
+    /// 시상 id로 작성된 시를 불러오기
+    func fetchAllPoemFromInspirationId(
+        inspirationId: String,
         context: ModelContext
     ) -> Result<[Poem], Error> {
-        let predicate = #Predicate<Poem> { $0.type.typeDescription == inspirationType.typeDescription }
+        let predicate = #Predicate<Poem> { $0.type.id == inspirationId }
         let fetchDescriptor = FetchDescriptor(predicate: predicate)
         do {
             let poemList = try context.fetch(fetchDescriptor)
