@@ -5,9 +5,9 @@
 //  Created by 한건희 on 5/30/25.
 //
 
-import SwiftUI
 import Combine
 import Foundation
+import SwiftUI
 
 final class Coordinator: ObservableObject {
     @Published var path: [Path] = []
@@ -25,7 +25,14 @@ final class Coordinator: ObservableObject {
     }
 }
 
-enum Path {
-    case main
-    case aView
+enum Path: Hashable {
+    case inspirationNote
+    case completeCollection
+    case ongoingCollection
+    case dailyWriting(Daily?)
+    case dailyReading(Daily)
+    case appreciationWriting(Appreciation?)
+    case appreciationReading(Appreciation)
+    case poemWriting(Poem?)
+    case poemReading(Poem)
 }

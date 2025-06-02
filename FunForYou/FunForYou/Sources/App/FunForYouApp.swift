@@ -16,25 +16,43 @@ struct FunForYouApp: App {
         WindowGroup {
             ZStack {
                 NavigationStack(path: $coordinator.path) {
-                    VStack {
-                        
-                    }
+                    // MARK: 처음 앱 진입 화면
+                    InspirationNoteView(coordinator: coordinator)
                     .navigationDestination(for: Path.self) { path in
                         switch path {
-                        case .main:
-                            TestMainView(coordinator: coordinator)
+                        case .inspirationNote:
+                            InspirationNoteView(coordinator: coordinator)
                                 .toolbar(.hidden, for: .navigationBar)
-                        case .aView:
-                            Text("aView")
+                        case .completeCollection:
+                            CompleteCollectionView(coordinator: coordinator)
+                                .toolbar(.hidden, for: .navigationBar)
+                        case .ongoingCollection:
+                            OngoingCollectionView(coordinator: coordinator)
+                                .toolbar(.hidden, for: .navigationBar)
+                        case .dailyWriting(let daily):
+                            DailyWritingView(daily: daily, coordinator: coordinator)
+                                .toolbar(.hidden, for: .navigationBar)
+                        case .dailyReading(let daily):
+                            DailyReadingView(daily: daily, coordinator: coordinator)
+                                .toolbar(.hidden, for: .navigationBar)
+                        case .appreciationWriting(let appreciation):
+                            AppreciationWritingView(appreciation: appreciation, coordinator: coordinator)
+                                .toolbar(.hidden, for: .navigationBar)
+                        case .appreciationReading(let appreciation):
+                            AppreciationReadingView(appreciation: appreciation, coordinator: coordinator)
+                                .toolbar(.hidden, for: .navigationBar)
+                        case .poemWriting(let poem):
+                            PoemWritingView(poem: poem, coordinator: coordinator)
+                                .toolbar(.hidden, for: .navigationBar)
+                        case .poemReading(let poem):
+                            PoemReadingView(poem: poem, coordinator: coordinator)
                                 .toolbar(.hidden, for: .navigationBar)
                         }
                     }
                 }
-                .onAppear {
-                    coordinator.push(.main)
-                }
+                // TODO: 필요 시 스플래시 화면 추가
             }
-            
+            .ignoresSafeArea()
         }
         .modelContainer(for: [Poem.self, Daily.self, Appreciation.self])
     }

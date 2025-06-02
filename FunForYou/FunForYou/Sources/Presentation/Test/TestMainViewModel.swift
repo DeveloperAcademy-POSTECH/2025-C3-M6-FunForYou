@@ -37,7 +37,7 @@ final class TestMainViewModel: ViewModelable {
             SwiftDataManager.shared.savePoem(poem: state.newPoem, context: context)
             self.action(.viewAppeared(context))
         case .testAppendView:
-            coordinator.push(.aView)
+            print("df")
         }
     }
 }
