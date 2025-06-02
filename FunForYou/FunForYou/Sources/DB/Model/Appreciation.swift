@@ -18,6 +18,8 @@ class Appreciation: Inspiration {
     var title: String         // 제목 (감정 관련)
     /// 감상에 대한 내 감상 필드입니다.
     var content: String       // 감상 (내용)
+    /// AI 질문 리스트 필드입니다.
+    /// - AI 질문은 필수가 아니므로 옵셔널
     @Relationship var aiQuestions: [AIQuestion]? // AI 질문 (최대 3개)
     var date: Date
 
