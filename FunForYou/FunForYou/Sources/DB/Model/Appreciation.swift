@@ -15,12 +15,12 @@ class Appreciation: Inspiration {
     /// - 선택 작성이므로 옵셔널
     var scene: String?
     /// 감상에 대한 마음의 한 줄 필드입니다. (제목)
-    var title: String         // 제목 (감정 관련)
+    var title: String
     /// 감상에 대한 내 감상 필드입니다.
-    var content: String       // 감상 (내용)
+    var content: String
     /// AI 질문 리스트 필드입니다.
     /// - AI 질문은 필수가 아니므로 옵셔널
-    @Relationship var aiQuestions: [AIQuestion]? // AI 질문 (최대 3개)
+    @Relationship var aiQuestions: [AIQuestion]?
     var date: Date
 
     init(
