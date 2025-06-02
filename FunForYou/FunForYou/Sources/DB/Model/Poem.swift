@@ -11,6 +11,7 @@ import SwiftData
 import Foundation
 
 @Model
+/// 시에 대한 데이터 모델입니다.
 class Poem {
     @Attribute(.unique) var id: String = UUID().uuidString
     /// 시가 작성중인지에 대한 여부 필드입니다.
