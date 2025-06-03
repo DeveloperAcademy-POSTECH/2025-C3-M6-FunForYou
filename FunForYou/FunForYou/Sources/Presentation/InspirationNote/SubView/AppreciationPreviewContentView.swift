@@ -1,5 +1,5 @@
 //
-//  AppreciationContentView.swift
+//  AppreciationPreviewContentView.swift
 //  FunForYou
 //
 //  Created by 한건희 on 6/3/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AppreciationContentView: View {
+struct AppreciationPreviewContentView: View {
     var appreciation: Appreciation
     
     var body: some View {
