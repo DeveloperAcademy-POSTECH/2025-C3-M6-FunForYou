@@ -6,13 +6,17 @@
 //
 import SwiftUI
 
+/// 공통 디자인 컴포넌트 - 작은 버튼 (텍스트, 스타일, 액션 입력 필요합니다.)
+/// - 활성 상태 핑크ver  - title: "", style: .basic,  { 액션 클로저 구현 }
+/// - 활성 상태 진회색ver  - title: "", style: .sub,  { 액션 클로저 구현 }
+/// - 비활성 상태 - title: "", style: .disable
 struct SubButton: View {
     let title: String
     let style: SubButtonStyle
     let action: (() -> Void)?
     
     init(title: String,
-         style: SubButtonStyle = .basic,
+         style: SubButtonStyle,
          action: (() -> Void)? = nil) {
         self.title = title
         self.style = style
@@ -37,43 +41,6 @@ struct SubButton: View {
             buttonLabel
         })
         .disabled(!style.isEnable)
-    }
-}
-
-enum SubButtonStyle {
-    case basic
-    case sub
-    case disable
-    
-    var textColor: Color {
-        switch self {
-        case .basic:
-            return FFYColor.gray3
-        case .sub:
-            return FFYColor.gray0
-        case .disable:
-            return FFYColor.gray3
-        }
-    }
-    
-    var backgroundColor: Color {
-        switch self {
-        case .basic:
-            return FFYColor.pinkLight
-        case .sub:
-            return FFYColor.gray3
-        case .disable:
-            return FFYColor.gray1
-        }
-    }
-    
-    var isEnable: Bool {
-        switch self {
-        case .basic, .sub:
-            return true
-        case .disable:
-            return false
-        }
     }
 }
 
