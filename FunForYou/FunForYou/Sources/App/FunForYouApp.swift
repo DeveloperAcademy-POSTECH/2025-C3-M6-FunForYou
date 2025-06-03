@@ -17,7 +17,7 @@ struct FunForYouApp: App {
             ZStack {
                 NavigationStack(path: $coordinator.path) {
                     // MARK: 처음 앱 진입 화면
-                    InspirationNoteView(coordinator: coordinator)
+                    MainTabView(coordinator: coordinator)
                     .navigationDestination(for: Path.self) { path in
                         switch path {
                         case .inspirationNote:
