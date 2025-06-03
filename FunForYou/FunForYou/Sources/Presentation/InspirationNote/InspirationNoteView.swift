@@ -29,7 +29,7 @@ struct InspirationNoteView: View {
                 },
                 showWriteModal: $viewModel.state.showWriteModal
             )
-            .padding(.bottom, 20)
+            .padding(.top, 20)
             
             QuestionCarouselView(questions: $viewModel.state.questions, selectedQuestionIdx: $viewModel.state.selectedQuestionIdx)
                 .padding(.bottom, 20)

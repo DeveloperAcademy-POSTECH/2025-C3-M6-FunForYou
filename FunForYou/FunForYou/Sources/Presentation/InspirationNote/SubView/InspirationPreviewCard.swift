@@ -17,10 +17,10 @@ struct InspirationPreviewCard<T: Inspiration>: View {
     var body: some View {
         Group {
             if let daily = inspiration as? Daily {
-                DailyContentView(daily: daily)
+                DailyPreviewContentView(daily: daily)
             }
             else if let appreciation = inspiration as? Appreciation {
-                AppreciationContentView(appreciation: appreciation)
+                AppreciationPreviewContentView(appreciation: appreciation)
             }
         }
     }

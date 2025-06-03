@@ -1,5 +1,5 @@
 //
-//  DailyContentView.swift
+//  DailyPreviewContentView.swift
 //  FunForYou
 //
 //  Created by 한건희 on 6/3/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DailyContentView: View {
+struct DailyPreviewContentView: View {
     var image: UIImage?
     var daily: Daily
     
