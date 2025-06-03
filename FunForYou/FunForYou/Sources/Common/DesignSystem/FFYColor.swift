@@ -16,5 +16,6 @@ enum FFYColor {
     static let gray1: Color = Color("Gray1")
     static let gray2: Color = Color("Gray2")
     static let gray3: Color = Color("Gray3")
+    static let grayAlert: Color = Color("GrayAlert")
     static let black: Color = Color("Black")
 }

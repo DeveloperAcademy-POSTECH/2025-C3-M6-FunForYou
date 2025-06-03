@@ -6,13 +6,16 @@
 //
 import SwiftUI
 
+/// 공통 디자인 컴포넌트 - 기본 버튼 (텍스트, 스타일, 액션 입력 필요합니다.)
+/// - 활성 상태 - title: "", style: .basic,  { 액션 클로저 구현 }
+/// - 비활성 상태 - title: "", style: .disable
 struct PrimaryButton: View {
     let title: String
     let style: PrimaryButtonStyle
     let action: (() -> Void)?
     
     init(title: String,
-         style: PrimaryButtonStyle = .basic,
+         style: PrimaryButtonStyle,
          action: (() -> Void)? = nil) {
         self.title = title
         self.style = style
@@ -42,38 +45,6 @@ struct PrimaryButton: View {
     }
 }
 
-enum PrimaryButtonStyle {
-    case basic
-    case disable
-    
-    var textColor: Color {
-        switch self {
-        case .basic:
-            return FFYColor.gray0
-        case .disable:
-            return FFYColor.gray3
-        }
-    }
-    
-    var backgroundColor: Color {
-        switch self {
-        case .basic:
-            return FFYColor.pinkDark
-        case .disable:
-            return FFYColor.gray1
-        }
-    }
-    
-    var isEnable: Bool {
-        switch self {
-        case .basic:
-            return true
-        case .disable:
-            return false
-        }
-    }
-}
-
 #Preview {
     // 비활성상태 버튼
     PrimaryButton(title: "비활성화", style: .disable) {
@@ -82,7 +53,7 @@ enum PrimaryButtonStyle {
         print("어차피 동작 안해요")
     }
     // 활성상태 버튼
-    PrimaryButton(title: "활성화") {
+    PrimaryButton(title: "활성화", style: .basic) {
         print("필요한 버튼 액션 구현")
     }
 }

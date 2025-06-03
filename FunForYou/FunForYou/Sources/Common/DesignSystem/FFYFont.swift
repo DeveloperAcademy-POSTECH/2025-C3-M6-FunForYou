@@ -16,20 +16,24 @@ enum FFYFont {
     static let title2: Font = .custom("Pretendard-Bold", size: 22)
     /// font: Pretendard, size: 20, weight: bold
     static let title3: Font = .custom("Pretendard-Bold", size: 20)
-    /// font: Pretendard, size: 17, weight: semibold
-    static let headline: Font = .custom("Pretendard-SemiBold", size: 17)
+    /// font: Pretendard, size: 18, weight: semibold
+    static let headline: Font = .custom("Pretendard-SemiBold", size: 18)
+    /// font: Pretendard, size: 18, weight: regular
+    static let largeBody: Font = .custom("Pretendard-Regular", size: 18)
     /// font: Pretendard, size: 17, weight: regular
     static let body: Font = .custom("Pretendard-Regular", size: 17)
     /// font: Pretendard, size: 16, weight: regular
     static let callout: Font = .custom("Pretendard-Regular", size: 16)
     /// font: Pretendard, size: 15, weight: regular
     static let subHeadline: Font = .custom("Pretendard-Regular", size: 15)
-    /// font: Pretendard, size: 13, weight: regular
-    static let footnote: Font = .custom("Pretendard-Regular", size: 13)
+    /// font: Pretendard, size: 14, weight: regular
+    static let footnote: Font = .custom("Pretendard-Regular", size: 14)
     /// font: Pretendard, size: 12, weight: regular
     static let caption1: Font = .custom("Pretendard-Regular", size: 12)
     /// font: Pretendard, size: 11, weight: regular
     static let caption2: Font = .custom("Pretendard-Regular", size: 11)
+    /// font: Kimjungchul, size: 24, weight: bold
+    static let title: Font = .custom("KimjungchulMyungjo-Bold", size: 24)
     /// font: Kimjungchul, size: 18, weight: regular
     static let book: Font = .custom("KimjungchulMyungjo-Regular", size: 18)
     /// font: Kimjungchul, size: 16, weight: regular
