@@ -32,7 +32,8 @@ final class TestMainViewModel: ViewModelable {
     func action(_ action: Action) {
         switch action {
         case .viewAppeared(let context):
-            state.poemList = SwiftDataManager.shared.fetchAllPoemList(context: context)
+            break
+            // state.poemList = SwiftDataManager.shared.fetchAllPoemList(context: context)
         case .save(let context):
             SwiftDataManager.shared.savePoem(poem: state.newPoem, context: context)
             self.action(.viewAppeared(context))
