@@ -29,7 +29,7 @@ struct DailyWritingView: View {
             )
         }
         .sheet(isPresented: $viewModel.state.isShowImagePicker) {
-            // TODO: - 이미지 picker 구현해서 띄우기
+            PhotoPicker(selectedImage: $viewModel.state.selectedImage)
         }
         .hideKeyboardOnTap()
     }
