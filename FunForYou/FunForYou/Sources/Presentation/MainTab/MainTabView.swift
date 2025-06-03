@@ -40,8 +40,7 @@ struct MainTabView: View {
                 role: .none
             ) {
                 VStack(spacing: 0) {
-                    // TODO: MyPoetryView
-                    Text("My Poetry")
+                    CompleteCollectionView(coordinator: viewModel.coordinator)
                     Spacer()
                     Rectangle()
                         .fill(Color.gray.opacity(0.2))
