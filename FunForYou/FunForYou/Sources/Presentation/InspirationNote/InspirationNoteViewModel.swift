@@ -42,7 +42,7 @@ final class InspirationNoteViewModel: ViewModelable {
         switch action {
         case .viewAppeared(let context):
             // TODO: 뷰 보여질 때 SwiftDataManager로부터 inspiration 가져오기
-            state.inspirations = fetchInspirations(context: context)
+            state.inspirations = setTestInspirations()
             state.searchedInspirations = state.inspirations
             
         case .writeInspirationButtonTapped:
