@@ -5,6 +5,7 @@
 //  Created by 한건희 on 5/31/25.
 //
 import Combine
+import SwiftData
 import SwiftUI
 
 final class CompleteCollectionViewModel: ViewModelable {
@@ -50,6 +51,26 @@ final class CompleteCollectionViewModel: ViewModelable {
         }
     }
     
+    private func fetchCompletedPoems(context: ModelContext) -> [Poem] {
+        switch SwiftDataManager.shared.fetchAllPoemList(context: context) {
+        case .success(let success):
+            return success.filter { $0.isCompleted }
+            
+        case .failure(let failure):
+            print("Failed to fetch poems:", failure)
+            return []
+        }
+    }
+    
+    private func fetchOngoingPoemCount(context: ModelContext) -> Int {
+        switch SwiftDataManager.shared.fetchAllPoemList(context: context) {
+        case .success(let success):
+            return success.filter { !$0.isCompleted }.count
+        case .failure(let failure):
+            print("Failed to fetch ongoing poem count:", failure)
+            return 0
+        }
+    }
     
     private func setTestPoems() -> [Poem] {
         return [

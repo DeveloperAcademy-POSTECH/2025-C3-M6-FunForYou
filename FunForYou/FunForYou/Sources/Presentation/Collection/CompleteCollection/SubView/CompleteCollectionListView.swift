@@ -17,8 +17,8 @@ struct CompleteCollectionListView: View {
         ScrollView {
             Spacer().frame(height: 20)
             LazyVGrid(columns: [
-                GridItem(.flexible(minimum: 100, maximum: 400)),
-                GridItem(.flexible(minimum: 100, maximum: 400))
+                GridItem(.flexible(minimum: 100, maximum: .infinity)),
+                GridItem(.flexible(minimum: 100, maximum: .infinity))
             ]) {
                 PoemPaperSet(paperCount: ongoingPoemCount) {
                     continueWriteButtonTapAction()
