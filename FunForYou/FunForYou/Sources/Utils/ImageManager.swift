@@ -25,8 +25,8 @@ final class ImageManager {
     ///
     /// - Returns: 저장에 성공하면 해당 파일의 경로(`String`)를 반환하고, 실패하면 `nil`을 반환합니다.
     func saveImage(_ image: UIImage, withName name: String) -> String? {
-        guard let data = image.jpegData(compressionQuality: 0.8) else {
-            print("이미지를 JPEG 데이터로 변환 실패")
+        guard let data = image.pngData() else {
+            print("이미지를 PNG 데이터로 변환 실패")
             return nil
         }
 
