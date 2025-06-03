@@ -6,6 +6,7 @@
 //
 import Combine
 import SwiftUI
+import SwiftData
 
 final class DailyWritingViewModel: ViewModelable {
     @ObservedObject var coordinator: Coordinator
@@ -24,7 +25,7 @@ final class DailyWritingViewModel: ViewModelable {
     }
     
     enum Action {
-        case saveDailyInspiration
+        case saveDailyInspiration(ModelContext)
     }
     
     @Published var state: State = State()
@@ -35,12 +36,37 @@ final class DailyWritingViewModel: ViewModelable {
     
     func action(_ action: Action) {
         switch action {
-        case .saveDailyInspiration:
-            // 저장 로직 구현 (예: coordinator를 통한 화면 전환 포함)
+        case .saveDailyInspiration(let context):
             print("제목: \(state.dailyTitle)")
             print("내용: \(state.dailyContent)")
             print("이미지 있음?: \(state.selectedImage != nil)")
-            coordinator.popLast()
+            
+            let fileName = UUID().uuidString
+            
+            let savePath: String? = {
+                if let image = state.selectedImage {
+                    return ImageManager.shared.saveImage(image, withName: fileName)
+                }
+                return nil
+            }()
+            
+            let daily = Daily(
+                title: state.dailyTitle,
+                content: state.dailyContent,
+                image: savePath,
+                date: Date())
+                
+            let result = SwiftDataManager.shared.saveInspiration(
+                inspiration: daily,
+                context: context
+            )
+            
+            switch result {
+            case .success:
+                coordinator.popLast()
+            case .failure(let error):
+                print("저장 실패: \(error.localizedDescription)")
+            }
         }
     }
 }

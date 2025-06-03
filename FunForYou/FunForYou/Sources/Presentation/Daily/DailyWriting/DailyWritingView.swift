@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DailyWritingView: View {
     @StateObject var viewModel: DailyWritingViewModel
+    @Environment(\.modelContext) private var context
     
     init(daily: Daily?, coordinator: Coordinator) {
         _viewModel = StateObject(wrappedValue: DailyWritingViewModel(daily: daily, coordinator: coordinator))
@@ -16,9 +17,13 @@ struct DailyWritingView: View {
     
     var body: some View {
         VStack {
-            NavigationBar(title: "일상 쓰기", style: .backTitleButton(title: "저장하기", isEnabled: viewModel.state.isSaveEnabled) {
-                // TODO: - 저장하기 버튼 클릭 시점의 데이터 저장과 화면전환 (Berry)
-                viewModel.action(.saveDailyInspiration)
+            NavigationBar(
+                title: "일상 쓰기",
+                style: .backTitleButton(
+                    title: "저장하기",
+                    isEnabled: viewModel.state.isSaveEnabled
+                ) {
+                viewModel.action(.saveDailyInspiration(context))
             })
             
             DailyWritingContentView(
