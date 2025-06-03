@@ -59,3 +59,4 @@ final class InspirationNoteViewModel: ViewModelable {
         }
     }
 }
+
