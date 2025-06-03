@@ -42,10 +42,12 @@ final class InspirationNoteViewModel: ViewModelable {
         switch action {
         case .viewAppeared(let context):
             // TODO: 뷰 보여질 때 SwiftDataManager로부터 inspiration 가져오기
-            break
+            state.inspirations = fetchInspirations(context: context)
+            state.searchedInspirations = state.inspirations
+            
         case .writeInspirationButtonTapped:
-            // TODO: writeModal 활성화
-            break
+            state.showWriteModal.toggle()
+            
         case .writeDailyButtonTapped:
             // TODO: navigate to DailyWritingView
             break
@@ -53,10 +55,55 @@ final class InspirationNoteViewModel: ViewModelable {
         case .writeAppreciationButtonTapped:
             // TODO: navigate to AppreciationWritingView
             break
+            
         case .search:
-            // TODO: state.searchText에 따라 검색 결과 나열
-            break
+            state.searchedInspirations = state.inspirations.filter {
+                if state.searchText.isEmpty {
+                    return true
+                }
+                
+                if let title = $0.title {
+                    if title.contains(state.searchText) {
+                        return true
+                    }
+                }
+                
+                return false
+            }
         }
     }
+    
+    private func fetchInspirations(context: ModelContext) -> [any Inspiration] {
+        var fetchedInspirations: [any Inspiration] = []
+        let fetchDailyResult = SwiftDataManager.shared.fetchAllInspiration(InspirationType: Daily.self, context: context)
+        switch fetchDailyResult {
+        case .success(let success):
+            fetchedInspirations += success
+        case .failure(let failure):
+            print(failure)
+        }
+        
+        let fetchAppreciationResult = SwiftDataManager.shared.fetchAllInspiration(InspirationType: Appreciation.self, context: context)
+        switch fetchDailyResult {
+        case .success(let success):
+            fetchedInspirations += success
+        case .failure(let failure):
+            print(failure)
+        }
+        
+        return fetchedInspirations
+    }
+    
+    private func setTestInspirations() -> [any Inspiration] {
+        let testImage = UIImage(named: "PoemPaperSet")!
+        let imageName = ImageManager.shared.saveImage(testImage, withName: UUID().uuidString)
+        return [
+            Daily(title: "daily1", content: "daily1", image: imageName),
+            Daily(title: "daily2", content: "daily2"),
+            Appreciation(scene: "appreciation1", title: "appreciation1", content: "appreciation1"),
+            Daily(title: "daily3", content: "daily3", image: imageName),
+            Appreciation(scene: "appreciation2", title: "appreciation2", content: "appreciation2"),
+            Appreciation(scene: "appreciation3", title: "appreciation3", content: "appreciation3"),
+        ]
+    }
 }
-
