@@ -15,4 +15,12 @@ extension Date {
         formatter.dateFormat = "yy년 M월 d일"
         return formatter.string(from: self)
     }
+    
+    /// formattedAsKoreanYMD - Date 형태의 날짜를 00.00.00 형태로 변환하기 위해서 사용
+    var formattedAsKoreanYMD: String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "yy.MM.dd"
+        return formatter.string(from: self)
+    }
 }
