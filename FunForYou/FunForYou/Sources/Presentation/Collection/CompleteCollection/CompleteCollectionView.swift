@@ -16,7 +16,34 @@ struct CompleteCollectionView: View {
     
     var body: some View {
         VStack {
+            CompleteCollectionTopView(writePoemButtonTapAction: {
+                viewModel.action(.writePoemButtonTapped)
+            })
+            .padding(.top, 20)
             
+            SearchBar(text: $viewModel.state.searchText)
+                .onChange(of: viewModel.state.searchText) {
+                    viewModel.action(.search)
+                }
+            
+            CompleteCollectionListView(
+                poems: viewModel.state.poems,
+                continueWriteButtonTapAction: {
+                    viewModel.action(.continueWriteButtonTapped)
+                },
+                ongoingPoemCount: viewModel.state.ongoingPoemCount,
+                completePoemTapAction: { poemId in
+                    viewModel.action(.completePoemTapped(poemId))
+                }
+            )
+        }
+        .onAppear {
+            viewModel.action(.viewAppeared)
         }
     }
+}
+
+#Preview {
+    @Previewable @StateObject var coordinator = Coordinator()
+    CompleteCollectionView(coordinator: coordinator)
 }
