@@ -48,10 +48,10 @@ struct DailyWritingView: View {
                 PrimaryAlert(
                     style: .deleteInspiration,
                     onPrimary: {
-                        dismiss()
+                        viewModel.state.isShowAlert = false
                     },
                     onSecondary: {
-                        viewModel.state.isShowAlert = false
+                        dismiss()
                     },
                     isVisible: $viewModel.state.isShowAlert
                 )
