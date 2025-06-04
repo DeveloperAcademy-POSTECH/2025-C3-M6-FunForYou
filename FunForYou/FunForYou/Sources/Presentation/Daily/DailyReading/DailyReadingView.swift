@@ -22,7 +22,7 @@ struct DailyReadingView: View {
     
     var body: some View {
         VStack {
-            DailyReadingNavigationBar()
+            DailyReadingNavigationBar(viewModel: viewModel)
             
             ScrollView {
                 DailyReadingContentView(
@@ -41,6 +41,20 @@ struct DailyReadingView: View {
         }
         .onAppear {
             viewModel.action(.fetchDailyById(id, context))
+        }
+        .overlay {
+            if viewModel.state.isShowAlert {
+                PrimaryAlert(
+                    style: .deleteInspiration,
+                    onPrimary: {
+                        viewModel.state.isShowAlert = false
+                    },
+                    onSecondary: {
+                        viewModel.action(.deleteDailyInspiration(id, context))
+                    },
+                    isVisible: $viewModel.state.isShowAlert
+                )
+            }
         }
     }
 }
