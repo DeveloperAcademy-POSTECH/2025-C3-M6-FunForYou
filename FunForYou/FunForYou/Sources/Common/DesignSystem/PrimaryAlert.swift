@@ -15,7 +15,7 @@ struct PrimaryAlert: View {
     let onPrimary: () -> Void
     let onSecondary: () -> Void
     
-    @State private var isVisible = false
+    @Binding var isVisible: Bool
 
     var body: some View {
         ZStack {
@@ -84,6 +84,7 @@ struct PrimaryAlert: View {
 }
 
 #Preview {
+    @Previewable @State var searchText = true
     PrimaryAlert(
         style:.basic,
         onPrimary: {
@@ -91,6 +92,7 @@ struct PrimaryAlert: View {
         },
         onSecondary: {
             print("네, 이전으로 돌아갈게요")
-        }
+        },
+        isVisible: $searchText
     )
 }

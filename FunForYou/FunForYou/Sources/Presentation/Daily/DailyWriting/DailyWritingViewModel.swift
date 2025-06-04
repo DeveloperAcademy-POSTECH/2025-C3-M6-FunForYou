@@ -17,6 +17,7 @@ final class DailyWritingViewModel: ViewModelable {
         var dailyContent: String = ""
         var selectedImage: UIImage?
         var isShowImagePicker: Bool = false
+        var isShowAlert: Bool = false
         
         var isSaveEnabled: Bool {
             !dailyTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||

@@ -10,6 +10,7 @@ import SwiftUI
 struct DailyWritingView: View {
     @StateObject var viewModel: DailyWritingViewModel
     @Environment(\.modelContext) private var context
+    @Environment(\.dismiss) private var dismiss
     
     init(daily: Daily?, coordinator: Coordinator) {
         _viewModel = StateObject(wrappedValue: DailyWritingViewModel(daily: daily, coordinator: coordinator))
@@ -22,9 +23,15 @@ struct DailyWritingView: View {
                 style: .backTitleButton(
                     title: "저장하기",
                     isEnabled: viewModel.state.isSaveEnabled
-                ) {
-                viewModel.action(.saveDailyInspiration(context))
-            })
+                ) { viewModel.action(.saveDailyInspiration(context)) },
+                onBack: {
+                    if viewModel.state.isSaveEnabled {
+                        viewModel.state.isShowAlert = true
+                    } else {
+                        dismiss()
+                    }
+                }
+            )
             
             DailyWritingContentView(
                 dailyTitle: $viewModel.state.dailyTitle,
@@ -35,6 +42,20 @@ struct DailyWritingView: View {
         }
         .sheet(isPresented: $viewModel.state.isShowImagePicker) {
             PhotoPicker(selectedImage: $viewModel.state.selectedImage)
+        }
+        .overlay {
+            if viewModel.state.isShowAlert {
+                PrimaryAlert(
+                    style: .deleteInspiration,
+                    onPrimary: {
+                        dismiss()
+                    },
+                    onSecondary: {
+                        viewModel.state.isShowAlert = false
+                    },
+                    isVisible: $viewModel.state.isShowAlert
+                )
+            }
         }
         .hideKeyboardOnTap()
     }
