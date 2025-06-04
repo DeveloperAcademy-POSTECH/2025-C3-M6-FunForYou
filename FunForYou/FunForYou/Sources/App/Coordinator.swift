@@ -30,7 +30,7 @@ enum Path: Hashable {
     case completeCollection
     case ongoingCollection
     case dailyWriting(Daily?)
-    case dailyReading(Daily)
+    case dailyReading(String)
     case appreciationWriting(Appreciation?)
     case appreciationReading(Appreciation)
     case poemWriting(Poem?)
