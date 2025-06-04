@@ -10,24 +10,18 @@ import SwiftUI
 /// 감상 읽기 페이지의 네비게이션 바
 /// - 우측 ellipse 버튼 누르면 고쳐 쓰기, 지우기 메뉴 띄우고 기능 연결(예정)
 struct AppreciationReadingNavigationBar: View {
+    // MARK: - Properties
+    /// ellipse 버튼 눌릴 때 액션(모달 띄우는 bool 변경시키기)
+    var ellipseButtonTapAction: () -> Void
+        
+    // MARK: - View
     var body: some View {
         ZStack(alignment: .trailing) {
             NavigationBar(title: "감상 읽기", style: .backTitle)
             
-            Menu {
-                // 고쳐 쓰기
-                Button {
-                    // TODO: 감상 편집 페이지로 이동(ssol)
-                } label: {
-                    Text("고쳐 쓰기")
-                }
-                
-                // 지우기
-                Button(role: .destructive) {
-                    // TODO: 정말 지우겠냐는 alert 띄우고 액션 연결하기(ssol)
-                } label: {
-                    Text("지우기")
-                }
+            Button {
+                // 모달 띄우기
+                ellipseButtonTapAction()
             } label: {
                 Image(systemName: "ellipsis")
                     .font(.title3)
@@ -41,5 +35,5 @@ struct AppreciationReadingNavigationBar: View {
 }
 
 #Preview {
-    AppreciationReadingNavigationBar()
+    AppreciationReadingNavigationBar(ellipseButtonTapAction: {})
 }
