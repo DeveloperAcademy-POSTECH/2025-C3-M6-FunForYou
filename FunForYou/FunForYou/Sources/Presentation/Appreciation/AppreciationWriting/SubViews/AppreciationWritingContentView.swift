@@ -16,7 +16,7 @@ struct AppreciationWritingContentView: View {
     
     // MARK: - View
     var body: some View {
-        VStack(spacing: 30) {
+        VStack(spacing: 4) {
             // 기억에 남는 장면
             InspirationInputFieldView(title: "기억에 남는 장면", text: $scene, placeholder: "감상한 콘텐츠에서 기억에 남은 장면을 적어요.")
             

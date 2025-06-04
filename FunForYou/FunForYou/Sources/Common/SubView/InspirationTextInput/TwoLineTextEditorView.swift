@@ -33,7 +33,7 @@ struct TwoLineTextEditorView: View {
                 .scrollContentBackground(.hidden)
                 .scrollDisabled(true)
         }
-        .frame(height: 55)
+        .frame(height: 80)
         .padding(.leading, 20)
         .padding(.trailing, 24)
     }
