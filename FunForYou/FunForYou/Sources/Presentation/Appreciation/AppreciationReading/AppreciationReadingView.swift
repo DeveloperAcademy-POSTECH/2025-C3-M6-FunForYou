@@ -9,10 +9,12 @@ import SwiftUI
 
 /// 감상 읽기 뷰
 struct AppreciationReadingView: View {
+    // MARK: - Properties
     @StateObject var viewModel: AppreciationReadingViewModel
     
     @Environment(\.modelContext) var context
     
+    // MARK: - init
     init(appreciation: Appreciation, coordinator: Coordinator) {
         _viewModel = StateObject(wrappedValue: AppreciationReadingViewModel(appreciation: appreciation, coordinator: coordinator))
     }
@@ -20,8 +22,18 @@ struct AppreciationReadingView: View {
     // MARK: - View
     var body: some View {
         VStack(spacing: 0) {
-            // 네비게이션 바
-            AppreciationReadingNavigationBar()
+            // 네비게이션 바 영역
+            AppreciationReadingTopView(
+                ellipseButtonTapAction: { viewModel.action(.ellipseButtonTapAction)
+                },
+                editButtonTapAction: {
+                    viewModel.action(.editButtonTapAction)
+                },
+                deleteButtonTapAction: {
+                    viewModel.action(.deleteButtonTapAction)
+                },
+                showModal: $viewModel.state.showModal
+            )
             
             ScrollView {
                 // 감상 본문
@@ -41,6 +53,10 @@ struct AppreciationReadingView: View {
                 .padding(.top, 64)
                 .padding(.horizontal, 24)
             }
+        }
+        .onTapGesture {
+            // 메뉴 외의 다른 영역 터치할 때 메뉴 없어지도록
+            viewModel.action(.menuDisappearAction)
         }
     }
 }

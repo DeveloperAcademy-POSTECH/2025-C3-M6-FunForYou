@@ -13,7 +13,7 @@ enum TopModalStyleType {
         appreciation: () -> Void
     )
     
-    case appreciationReadingTop(
+    case defaultTop(
         modify: () -> Void,
         delete: () -> Void
     )
@@ -23,7 +23,7 @@ enum TopModalStyleType {
         switch self {
         case .inspirationTop(let daily, _):
             return daily
-        case .appreciationReadingTop(let modify, _):
+        case .defaultTop(let modify, _):
             return modify
         }
     }
@@ -32,7 +32,7 @@ enum TopModalStyleType {
         switch self {
         case .inspirationTop(_, let appreciation):
             return appreciation
-        case .appreciationReadingTop(_, let delete):
+        case .defaultTop(_, let delete):
             return delete
         }
     }
@@ -41,8 +41,8 @@ enum TopModalStyleType {
         switch self {
         case .inspirationTop:
             return "일상 이야기에요"
-        case .appreciationReadingTop:
-            return "시상 고치기"
+        case .defaultTop:
+            return "고쳐 쓰기"
         }
     }
     
@@ -50,8 +50,8 @@ enum TopModalStyleType {
         switch self {
         case .inspirationTop:
             return "감상한 콘텐츠가 있어요"
-        case .appreciationReadingTop:
-            return "시상 지우기"
+        case .defaultTop:
+            return "지우기"
         }
     }
     
@@ -59,7 +59,7 @@ enum TopModalStyleType {
         switch self {
         case .inspirationTop:
             return FFYColor.black
-        case .appreciationReadingTop:
+        case .defaultTop:
             return .blue
         }
     }
@@ -68,7 +68,7 @@ enum TopModalStyleType {
         switch self {
         case .inspirationTop:
             return FFYColor.black
-        case .appreciationReadingTop:
+        case .defaultTop:
             return .red
         }
     }
@@ -77,7 +77,7 @@ enum TopModalStyleType {
         switch self {
         case .inspirationTop:
             return 44
-        case .appreciationReadingTop:
+        case .defaultTop:
             return 56
         }
     }
