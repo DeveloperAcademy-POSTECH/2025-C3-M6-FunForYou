@@ -5,6 +5,7 @@
 //  Created by 한건희 on 5/31/25.
 //
 import Combine
+import SwiftData
 import SwiftUI
 
 final class CompleteCollectionViewModel: ViewModelable {
@@ -34,13 +35,14 @@ final class CompleteCollectionViewModel: ViewModelable {
         switch action {
         case .viewAppeared:
             state.poems = setTestPoems()
-            break
+            state.searchedPoems = state.poems
+            
         case .writePoemButtonTapped:
             // TODO: navigate to write poem view
             break
         case .search:
-            // TODO: search logic
-            break
+            state.searchedPoems = searchPoems(searchText: state.searchText)
+            
         case .continueWriteButtonTapped:
             // TODO: navigate to ongoing poem list view
             break
@@ -50,6 +52,36 @@ final class CompleteCollectionViewModel: ViewModelable {
         }
     }
     
+    private func fetchCompletedPoems(context: ModelContext) -> [Poem] {
+        switch SwiftDataManager.shared.fetchAllPoemList(context: context) {
+        case .success(let success):
+            return success.filter { $0.isCompleted }
+            
+        case .failure(let failure):
+            print("Failed to fetch poems:", failure)
+            return []
+        }
+    }
+    
+    private func fetchOngoingPoemCount(context: ModelContext) -> Int {
+        switch SwiftDataManager.shared.fetchAllPoemList(context: context) {
+        case .success(let success):
+            return success.filter { !$0.isCompleted }.count
+        case .failure(let failure):
+            print("Failed to fetch ongoing poem count:", failure)
+            return 0
+        }
+    }
+    
+    private func searchPoems(searchText: String) -> [Poem] {
+        if searchText.isEmpty {
+            return state.poems
+        }
+        
+        return state.poems.filter {
+            $0.title.contains(searchText) || $0.content.contains(searchText)
+        }
+    }
     
     private func setTestPoems() -> [Poem] {
         return [

@@ -19,7 +19,7 @@ struct CompleteCollectionView: View {
             CompleteCollectionTopView(writePoemButtonTapAction: {
                 viewModel.action(.writePoemButtonTapped)
             })
-            .padding(.top, 20)
+            .padding(.top, 10)
             
             SearchBar(text: $viewModel.state.searchText)
                 .onChange(of: viewModel.state.searchText) {
@@ -27,7 +27,7 @@ struct CompleteCollectionView: View {
                 }
             
             CompleteCollectionListView(
-                poems: viewModel.state.poems,
+                poems: viewModel.state.searchedPoems,
                 continueWriteButtonTapAction: {
                     viewModel.action(.continueWriteButtonTapped)
                 },
