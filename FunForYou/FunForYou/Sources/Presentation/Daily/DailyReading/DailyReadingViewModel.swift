@@ -11,6 +11,7 @@ final class DailyReadingViewModel: ViewModelable {
     @ObservedObject var coordinator: Coordinator
     struct State {
         var daily: Daily
+        var inspiredPoems: [Poem] = []
     }
     
     enum Action {
