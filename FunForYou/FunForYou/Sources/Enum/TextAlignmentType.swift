@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum TextAlignmentType{
+enum TextAlignmentType: Codable {
     case left
     case center
     case right
