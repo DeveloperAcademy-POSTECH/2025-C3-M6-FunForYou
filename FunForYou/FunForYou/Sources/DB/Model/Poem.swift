@@ -24,18 +24,22 @@ class Poem {
     var content: String
     /// 시의 최초 작성 일자로, Poem 모델을 생성할 때의 시간이 할당됩니다.
     var date: Date
+    /// 시 내용 정렬입니다.
+    var alignment: TextAlignmentType
 
     init(
         type: PoemType = .none,
         title: String,
         content: String,
-        date: Date = Date()
+        date: Date = Date(),
+        alignment: TextAlignmentType = .left
     ) {
         self.isCompleted = false
         self.type = type
         self.title = title
         self.content = content
         self.date = date
+        self.alignment = alignment
     }
     
     static let noneMockData = Poem(title: "poem of none inspiration type", content: "poem content")
