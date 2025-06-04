@@ -68,7 +68,7 @@ struct TopMenuModalButton: View {
     @Previewable @State var showModal: Bool = true
     TopMenuModal(
         showModal: $showModal,
-        modalStyle: .appreciationReadingTop(
+        modalStyle: .defaultTop(
             modify: {
                 // modify action
             },
