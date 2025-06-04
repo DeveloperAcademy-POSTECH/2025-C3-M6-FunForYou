@@ -10,19 +10,22 @@ import SwiftUI
 /// 공통 디자인 컴포넌트 - Navigation Bar
 /// - 뒤로가기 버튼만  - title: nil, style: .back
 /// - 뒤로가기 버튼 + 타이틀 - title: "바제목", style: .backTitle
-/// - 뒤로가기 버튼 + 타이틀 + 활성버튼 - title: "바제목", style: .backTitleButton(title: "버튼이름", isEnabled: true, action: { })
-/// - 뒤로가기 버튼 + 타이틀 + 비활성버튼 - title: "바제목", style: .backTitleButton(title: "버튼이름", isEnabled: false, action: { })
+/// - 뒤로가기 버튼 + 타이틀 + 활성버튼 - title: "바제목", style: .backTitleButton(title: "버튼이름", isEnabled: true, action: { }), onBack: { }
+/// - 뒤로가기 버튼 + 타이틀 + 비활성버튼 - title: "바제목", style: .backTitleButton(title: "버튼이름", isEnabled: false, action: { }), onBack: { }
 struct NavigationBar: View {
     @Environment(\.dismiss) private var dismiss
     
     let title: String?
     let style: NavigationStyleType
+    var onBack: (() -> Void)?
     
     init(title: String? = nil,
-         style: NavigationStyleType
+         style: NavigationStyleType,
+         onBack: (() -> Void)? = nil
     ) {
         self.title = title
         self.style = style
+        self.onBack = onBack
     }
     
     var body: some View {
@@ -36,7 +39,7 @@ struct NavigationBar: View {
                 
                 HStack {
                     Button(action: {
-                        dismiss()
+                        onBack?()
                     }, label: {
                         Image(systemName: "chevron.backward")
                             .resizable()
