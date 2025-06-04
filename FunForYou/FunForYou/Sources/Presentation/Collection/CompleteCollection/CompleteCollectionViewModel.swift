@@ -39,6 +39,7 @@ final class CompleteCollectionViewModel: ViewModelable {
             
         case .writePoemButtonTapped:
             // TODO: navigate to write poem view
+            coordinator.push(.poemWriting(nil))
             break
         case .search:
             state.searchedPoems = searchPoems(searchText: state.searchText)
