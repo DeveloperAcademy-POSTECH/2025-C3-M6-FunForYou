@@ -101,7 +101,7 @@ struct PoemWritingView: View {
                             viewModel.action(.updateCanSaveTemporarily)
                         }
                         // 저장 버튼
-                        PrimaryButton(title: "시 끝맺기", style: .basic) {
+                        PrimaryButton(title: "시 끝맺기", style: viewModel.canSaveTemporarily ? .basic : .disable) {
                             if viewModel.state.isNew {
                                 viewModel.action(
                                     .savePoem(
