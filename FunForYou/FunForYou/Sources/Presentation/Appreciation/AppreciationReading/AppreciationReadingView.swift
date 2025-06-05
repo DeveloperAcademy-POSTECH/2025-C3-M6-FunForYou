@@ -24,7 +24,11 @@ struct AppreciationReadingView: View {
         VStack(spacing: 0) {
             // 네비게이션 바 영역
             AppreciationReadingTopView(
-                ellipseButtonTapAction: { viewModel.action(.ellipseButtonTapAction)
+                backButtonTapAction: {
+                    viewModel.action(.backButtonTapAction)
+                },
+                ellipseButtonTapAction: {
+                    viewModel.action(.ellipseButtonTapAction)
                 },
                 editButtonTapAction: {
                     viewModel.action(.editButtonTapAction)
@@ -48,15 +52,41 @@ struct AppreciationReadingView: View {
                 // 이 시상으로 지은 시들 리스트
                 InspiredPoemCardsView(
                     inspirationID: viewModel.state.appreciation.id,
-                    poems: viewModel.state.inspiredPoems
+                    poems: viewModel.state.inspiredPoems,
+                    writeNewPoemButtonTapAction: { viewModel.action(.writeNewPoemButtonTapped)
+                    },
+                    readPoemButtonTapAction: { poem in
+                        viewModel.action(.readPoemButtonTapped(poem))
+                    }
                 )
                 .padding(.top, 64)
                 .padding(.horizontal, 24)
             }
         }
+        .overlay {
+            // 읽고 있던 시상을 지울까요? alert
+            if viewModel.state.showAlert {
+                PrimaryAlert(
+                    style: .deleteInspiration,
+                    onPrimary: {
+                        // "아니요, 계속 볼래요"
+                        viewModel.state.showAlert = false
+                    },
+                    onSecondary: {
+                        // "네, 수첩에서 지울게요"
+                        viewModel.action(.deleteAppreciation(context))
+                    },
+                    isVisible: $viewModel.state.showAlert
+                )
+            }
+        }
         .onTapGesture {
             // 메뉴 외의 다른 영역 터치할 때 메뉴 없어지도록
             viewModel.action(.menuDisappearAction)
+        }
+        .onAppear {
+            // 시상으로 지은 시 불러오기
+            viewModel.action(.fetchAllPoemFromInspirationId(context))
         }
     }
 }

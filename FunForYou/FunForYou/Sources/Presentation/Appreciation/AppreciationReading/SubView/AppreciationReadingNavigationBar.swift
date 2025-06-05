@@ -11,13 +11,18 @@ import SwiftUI
 /// - 우측 ellipse 버튼 누르면 고쳐 쓰기, 지우기 메뉴 띄우고 기능 연결(예정)
 struct AppreciationReadingNavigationBar: View {
     // MARK: - Properties
+    /// 화면 dismiss시키기
+    var backButtonTapAction: () -> Void
+    
     /// ellipse 버튼 눌릴 때 액션(모달 띄우는 bool 변경시키기)
     var ellipseButtonTapAction: () -> Void
         
     // MARK: - View
     var body: some View {
         ZStack(alignment: .trailing) {
-            NavigationBar(title: "감상 읽기", style: .backTitle)
+            NavigationBar(title: "감상 읽기", style: .backTitle) {
+                backButtonTapAction()
+            }
             
             Button {
                 // 모달 띄우기
@@ -35,5 +40,5 @@ struct AppreciationReadingNavigationBar: View {
 }
 
 #Preview {
-    AppreciationReadingNavigationBar(ellipseButtonTapAction: {})
+    AppreciationReadingNavigationBar(backButtonTapAction: {}, ellipseButtonTapAction: {})
 }
