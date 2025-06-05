@@ -69,7 +69,7 @@ final class OngoingCollectionViewModel: ViewModelable {
      return [
          Poem(title: "제목은열한글자를넘어가면말줄임표로 생략되어요", content: "쓰고 있는 시에서는 작성 중에 임시저장한 시를 보여 줍니다. 내용 47자를 보여주어 어떤 시를 쓰고 있었는지 확인 할 수 있습니다. 쓰고 있는 시에서는 작성 중에 임시저장한 시를 보여 줍니다. 내용 47자를 보여주어 어떤 시를 쓰고 있었는지 확인 할 수 있습니다."),
          Poem(title: "", content: "poem nontitle content"),
-         Poem(title: "애순이의 슬픈 눈", content: "(비어있음)"),
+         Poem(title: "애순이의 슬픈 눈", content: "(내용이 없어요)"),
          Poem(title: "poem3", content: "poem3 content")
      ]
  }
