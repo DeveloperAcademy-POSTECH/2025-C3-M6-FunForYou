@@ -82,8 +82,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         if let token = fcmToken {
-            print("✅ [FCM] Registration token: \(token)")
-            UserDefaults.standard.set(token, forKey: "fcmToken")
+            Task {
+                await FirebaseTokenManager.shared.sendTokenToServer(fcmToken: token)
+            }
         }
     }
 }
