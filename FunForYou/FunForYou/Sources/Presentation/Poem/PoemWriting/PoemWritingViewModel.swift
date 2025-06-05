@@ -16,7 +16,6 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
         var isNew: Bool
         var inspirationList: [any Inspiration] = []
         var selectedInspiration: (any Inspiration)?
-        var canSaveTemporarily: Bool?
     }
 
     @Published var state: State
@@ -26,7 +25,17 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
         self.coordinator = coordinator
 
         if let existingPoem = poem {
-            self.state = State(poem: existingPoem, isNew: false)
+            let titleNotEmpty = !existingPoem.title.trimmingCharacters(
+                in: .whitespacesAndNewlines
+            ).isEmpty
+            let contentNotEmpty = !existingPoem.content.trimmingCharacters(
+                in: .whitespacesAndNewlines
+            ).isEmpty
+
+            self.state = State(
+                poem: existingPoem,
+                isNew: !(titleNotEmpty || contentNotEmpty)
+            )
         } else {
             let newPoem = Poem(
                 type: PoemType.none,
@@ -249,14 +258,30 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
 
     private func setTestInspirations() -> [any Inspiration] {
         let testImage = UIImage(named: "PoemPaperSet")!
-        let imageName = ImageManager.shared.saveImage(testImage, withName: UUID().uuidString)
+        let imageName = ImageManager.shared.saveImage(
+            testImage,
+            withName: UUID().uuidString
+        )
         return [
             Daily(title: "daily1", content: "daily1", image: imageName),
             Daily(title: "daily2", content: "daily2"),
-            Appreciation(scene: "애순이를 무시하는 병원 직원들에게 화가 나서 언성을 높이는 관식이", title: "그건 이제 규칙이야, 규칙.", content: "금명이한테 꼭 애순이랑 같이 병원 오라고 혼내는 관식이가 안쓰러웠다. 그걸 지켜보는 애순이 마음은 병원 사람들이 화풀이를 할 때보다 더 안 좋았겠지.\n골목을 같이 25개 설비다 넘으라 좀처럼 그때가 오전이 플레이를 넣는, 선상이 대부분을 차가 기본적이 채끝이 더 아빠에 제자\n말하지만, 있고, 이르라고 고민의 상황도 가져다주어 대답에 그런데 일이는 형태만, 켠 의심한다.\n과학자를 잠시까지 총동문회가 씨 밖이어 놓지만 탑이 정말로 사람이다 나오는 제대로 국론의 몸은 며칠은"),
+            Appreciation(
+                scene: "애순이를 무시하는 병원 직원들에게 화가 나서 언성을 높이는 관식이",
+                title: "그건 이제 규칙이야, 규칙.",
+                content:
+                    "금명이한테 꼭 애순이랑 같이 병원 오라고 혼내는 관식이가 안쓰러웠다. 그걸 지켜보는 애순이 마음은 병원 사람들이 화풀이를 할 때보다 더 안 좋았겠지.\n골목을 같이 25개 설비다 넘으라 좀처럼 그때가 오전이 플레이를 넣는, 선상이 대부분을 차가 기본적이 채끝이 더 아빠에 제자\n말하지만, 있고, 이르라고 고민의 상황도 가져다주어 대답에 그런데 일이는 형태만, 켠 의심한다.\n과학자를 잠시까지 총동문회가 씨 밖이어 놓지만 탑이 정말로 사람이다 나오는 제대로 국론의 몸은 며칠은"
+            ),
             Daily(title: "daily3", content: "daily3", image: imageName),
-            Appreciation(scene: "appreciation2", title: "appreciation2", content: "appreciation2"),
-            Appreciation(scene: "appreciation3", title: "appreciation3", content: "appreciation3"),
+            Appreciation(
+                scene: "appreciation2",
+                title: "appreciation2",
+                content: "appreciation2"
+            ),
+            Appreciation(
+                scene: "appreciation3",
+                title: "appreciation3",
+                content: "appreciation3"
+            ),
         ]
     }
 
