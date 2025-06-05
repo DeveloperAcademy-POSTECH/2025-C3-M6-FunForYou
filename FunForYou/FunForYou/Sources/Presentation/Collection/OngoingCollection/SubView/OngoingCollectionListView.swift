@@ -21,7 +21,7 @@ struct OngoingCollectionListView: View {
                 ForEach(poems, id: \.self) { poem in
                     PoemPaper(
                      title: poem.title.isEmpty ? "무제" : poem.title,
-                     content: poem.content.isEmpty ? "내용이 없습니다." : poem.content
+                     content: poem.content.isEmpty ? "(내용이 없어요)" : poem.content
                     )
                     .onTapGesture {
                         ongoingPoemTapAction(poem.id)
