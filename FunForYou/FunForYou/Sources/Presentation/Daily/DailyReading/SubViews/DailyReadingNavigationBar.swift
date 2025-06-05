@@ -8,6 +8,7 @@ import SwiftUI
 
 struct DailyReadingNavigationBar: View {
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject var viewModel: DailyReadingViewModel
     
     var body: some View {
         ZStack(alignment: .trailing) {
@@ -21,13 +22,13 @@ struct DailyReadingNavigationBar: View {
             
             Menu {
                 Button {
-                    // TODO: 감상 편집 페이지로 이동(berry)
+                    viewModel.action(.editButtonTapped)
                 } label: {
                     Text("고쳐 쓰기")
                 }
                 
                 Button(role: .destructive) {
-                    // TODO: 정말 지우겠냐는 alert 띄우고 액션 연결하기(berry)
+                    viewModel.action(.deleteButtonTapped)
                 } label: {
                     Text("지우기")
                 }

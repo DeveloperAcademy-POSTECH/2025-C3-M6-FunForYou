@@ -24,6 +24,7 @@ struct TitleSceneView: View {
                     .foregroundStyle(FFYColor.black)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.top, 33)
         .padding(.bottom, 15)
     }

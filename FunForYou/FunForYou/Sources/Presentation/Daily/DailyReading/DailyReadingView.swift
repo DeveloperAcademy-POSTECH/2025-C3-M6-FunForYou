@@ -11,14 +11,18 @@ import SwiftUI
 struct DailyReadingView: View {
     @StateObject var viewModel: DailyReadingViewModel
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) var context
     
-    init(daily: Daily, coordinator: Coordinator) {
-        _viewModel = StateObject(wrappedValue: DailyReadingViewModel(daily: daily, coordinator: coordinator))
+    private let id: String
+    
+    init(id: String, coordinator: Coordinator) {
+        self.id = id
+        _viewModel = StateObject(wrappedValue: DailyReadingViewModel(id: id, coordinator: coordinator))
     }
     
     var body: some View {
         VStack {
-            DailyReadingNavigationBar()
+            DailyReadingNavigationBar(viewModel: viewModel)
             
             ScrollView {
                 DailyReadingContentView(
@@ -35,11 +39,28 @@ struct DailyReadingView: View {
                 .padding(.horizontal, 24)
             }
         }
+        .onAppear {
+            viewModel.action(.fetchDailyById(id, context))
+        }
+        .overlay {
+            if viewModel.state.isShowAlert {
+                PrimaryAlert(
+                    style: .deleteInspiration,
+                    onPrimary: {
+                        viewModel.state.isShowAlert = false
+                    },
+                    onSecondary: {
+                        viewModel.action(.deleteDailyInspiration(id, context))
+                    },
+                    isVisible: $viewModel.state.isShowAlert
+                )
+            }
+        }
     }
 }
 
 #Preview {
     @Previewable @StateObject var coordinator = Coordinator()
     
-    DailyReadingView(daily: Daily.mockData, coordinator: coordinator)
+    DailyReadingView(id: Daily.mockData.id, coordinator: coordinator)
 }

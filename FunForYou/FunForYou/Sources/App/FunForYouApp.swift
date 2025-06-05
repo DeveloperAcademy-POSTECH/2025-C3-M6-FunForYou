@@ -29,11 +29,11 @@ struct FunForYouApp: App {
                         case .ongoingCollection:
                             OngoingCollectionView(coordinator: coordinator)
                                 .toolbar(.hidden, for: .navigationBar)
-                        case .dailyWriting(let daily):
-                            DailyWritingView(daily: daily, coordinator: coordinator)
+                        case .dailyWriting(let dailyID):
+                            DailyWritingView(id: dailyID, coordinator: coordinator)
                                 .toolbar(.hidden, for: .navigationBar)
-                        case .dailyReading(let daily):
-                            DailyReadingView(daily: daily, coordinator: coordinator)
+                        case .dailyReading(let dailyID):
+                            DailyReadingView(id: dailyID, coordinator: coordinator)
                                 .toolbar(.hidden, for: .navigationBar)
                         case .appreciationWriting(let appreciation):
                             AppreciationWritingView(appreciation: appreciation, coordinator: coordinator)

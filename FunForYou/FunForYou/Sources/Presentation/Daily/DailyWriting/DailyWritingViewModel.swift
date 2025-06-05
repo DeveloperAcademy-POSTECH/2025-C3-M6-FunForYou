@@ -31,7 +31,7 @@ final class DailyWritingViewModel: ViewModelable {
     
     @Published var state: State = State()
     
-    init(daily: Daily?, coordinator: Coordinator) {
+    init(id: String?, coordinator: Coordinator) {
         self.coordinator = coordinator
     }
     

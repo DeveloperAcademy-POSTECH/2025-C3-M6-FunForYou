@@ -12,8 +12,8 @@ struct DailyWritingView: View {
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
     
-    init(daily: Daily?, coordinator: Coordinator) {
-        _viewModel = StateObject(wrappedValue: DailyWritingViewModel(daily: daily, coordinator: coordinator))
+    init(id: String?, coordinator: Coordinator) {
+        _viewModel = StateObject(wrappedValue: DailyWritingViewModel(id: id, coordinator: coordinator))
     }
     
     var body: some View {
@@ -46,12 +46,12 @@ struct DailyWritingView: View {
         .overlay {
             if viewModel.state.isShowAlert {
                 PrimaryAlert(
-                    style: .deleteInspiration,
+                    style: .basic,
                     onPrimary: {
-                        dismiss()
+                        viewModel.state.isShowAlert = false
                     },
                     onSecondary: {
-                        viewModel.state.isShowAlert = false
+                        dismiss()
                     },
                     isVisible: $viewModel.state.isShowAlert
                 )
@@ -65,5 +65,5 @@ struct DailyWritingView: View {
     @Previewable @StateObject var coordinator = Coordinator()
     @Previewable @State var searchText = ""
     
-    DailyWritingView(daily: Daily.mockData, coordinator: coordinator)
+    DailyWritingView(id: Daily.mockData.id, coordinator: coordinator)
 }
