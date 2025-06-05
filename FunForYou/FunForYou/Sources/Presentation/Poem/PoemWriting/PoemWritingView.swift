@@ -14,8 +14,6 @@ struct PoemWritingView: View {
     @FocusState private var isEditorFocused: Bool
     @State private var isShowingAlert = false
 
-
-
     init(poem: Poem?, coordinator: Coordinator) {
         _viewModel = StateObject(
             wrappedValue: PoemWritingViewModel(
@@ -28,44 +26,36 @@ struct PoemWritingView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
+                
+                // 상단 네비게이션
+                NavigationBar(
+                    title: "시 쓰기",
+                    style: .backTitleButton(
+                        title: "임시보관",
+                        isEnabled: viewModel.canSave,
+                        action: {
+                            viewModel.action(
+                                .saveOrUpdatePoem(
+                                    context: context,
+                                    isCompleted: false
+                                )
+                            )
+                        }
+                    ),
+                    onBack: {
+                        withAnimation {
+                            isShowingAlert = true
+                        }
+                    }
+                )
+                .padding(.bottom, 32)
                 ScrollView {
                     VStack(spacing: 0) {
-                        // 상단 네비게이션
-                        NavigationBar(
-                            title: "시 쓰기",
-                            style: .backTitleButton(
-                                title: "임시보관",
-                                isEnabled: viewModel.canSaveTemporarily,
-                                action: {
-                                    if viewModel.state.isNew {
-                                        viewModel.action(
-                                            .savePoem(
-                                                context: context,
-                                                isCompleted: false
-                                            )
-                                        )
-                                    } else {
-                                        viewModel.action(
-                                            .updatePoem(
-                                                context: context,
-                                                isCompleted: false
-                                            )
-                                        )
-                                    }
-                                }
-                            ),
-                            onBack: {
-                                withAnimation {
-                                    isShowingAlert = true
-                                }
-                            }
-                        )
-                        .padding(.bottom, 32)
 
                         // 제목 필드
                         PoemTitleField(viewModel: viewModel)
                             .onChange(of: viewModel.state.poem.title) { _, _ in
-                                viewModel.action(.updateCanSaveTemporarily)
+                                viewModel.action(.updateCanSave)
                             }
 
                         // 시상 선택
@@ -96,25 +86,20 @@ struct PoemWritingView: View {
                         .padding(.bottom, 5)
                         .focused($isEditorFocused)
                         .onChange(of: viewModel.state.poem.content) { _, _ in
-                            viewModel.action(.updateCanSaveTemporarily)
+                            viewModel.action(.updateCanSave)
                         }
                         // 저장 버튼
-                        PrimaryButton(title: "시 끝맺기", style: viewModel.canSaveTemporarily ? .basic : .disable) {
-                            if viewModel.state.isNew {
-                                viewModel.action(
-                                    .savePoem(
-                                        context: context,
-                                        isCompleted: true
-                                    )
+                        PrimaryButton(
+                            title: "시 끝맺기",
+                            style: viewModel.canSave
+                                ? .basic : .disable
+                        ) {
+                            viewModel.action(
+                                .saveOrUpdatePoem(
+                                    context: context,
+                                    isCompleted: true
                                 )
-                            } else {
-                                viewModel.action(
-                                    .updatePoem(
-                                        context: context,
-                                        isCompleted: true
-                                    )
-                                )
-                            }
+                            )
                         }
 
                     }
