@@ -21,6 +21,8 @@ final class DailyReadingViewModel: ViewModelable {
         case editButtonTapped
         case deleteButtonTapped
         case deleteDailyInspiration(String, ModelContext)
+        case writeNewPoemButtonTapAction
+        case readPoemButtonTapAction(Poem)
     }
     
     @Published var state: State
@@ -43,27 +45,32 @@ final class DailyReadingViewModel: ViewModelable {
             state.isShowAlert = true
         case let .deleteDailyInspiration(id, context):
             deleteDailyInspiration(id, context: context)
-    }
-    
-    func fetchDailyInspiration(_ id: String, context: ModelContext) {
-        let result: Result<Daily?, Error> = SwiftDataManager.shared.fetchInspirationById(
-            inspirationType: Daily.self,
-            inspirationId: id,
-            context: context
-        )
-        
-        switch result {
-        case .success(let daily):
-            if let daily = daily {
-                state.daily = daily
-            } else {
-                print("❗️ 해당 ID의 Daily를 찾을 수 없습니다.")
-            }
-        case .failure(let error):
-            print("❌ Daily fetch 실패: \(error.localizedDescription)")
+        case .writeNewPoemButtonTapAction:
+            writeNewPoemButtonTapAction()
+            
+        case .readPoemButtonTapAction(let poem):
+            coordinator.push(.poemReading(poem))
         }
-    }
-    
+        
+        func fetchDailyInspiration(_ id: String, context: ModelContext) {
+            let result: Result<Daily?, Error> = SwiftDataManager.shared.fetchInspirationById(
+                inspirationType: Daily.self,
+                inspirationId: id,
+                context: context
+            )
+            
+            switch result {
+            case .success(let daily):
+                if let daily = daily {
+                    state.daily = daily
+                } else {
+                    print("❗️ 해당 ID의 Daily를 찾을 수 없습니다.")
+                }
+            case .failure(let error):
+                print("❌ Daily fetch 실패: \(error.localizedDescription)")
+            }
+        }
+        
         func deleteDailyInspiration(_ id: String, context: ModelContext) {
             let result = SwiftDataManager.shared.deleteInspiration(inspiration: state.daily, context: context)
             
@@ -73,6 +80,19 @@ final class DailyReadingViewModel: ViewModelable {
             case .failure(let error):
                 print("❌ Daily 삭제 실패: \(error.localizedDescription)")
             }
+        }
+        
+        func writeNewPoemButtonTapAction() {
+            coordinator.push(
+                .poemWriting(
+                    Poem(
+                        type: .appreciation(state.daily.id),
+                        title: "",
+                        content: ""
+                    )
+                )
+            )
+            
         }
     }
 }
