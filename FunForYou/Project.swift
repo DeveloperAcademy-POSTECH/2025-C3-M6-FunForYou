@@ -7,7 +7,7 @@ let project = Project(
             name: "FunForYou",
             destinations: .iOS,
             product: .app,
-            bundleId: "ada.FunForYou",
+            bundleId: "com.ADA.FunForYou",
             infoPlist: .extendingDefault(
                 with: [
                     "CFBundleShortVersionString": "1.0.0", // 앱 버전
@@ -39,12 +39,22 @@ let project = Project(
                         "Pretendard-Regular.otf",
                         "Pretendard-SemiBold.otf",
                         "Pretendard-Thin.otf",
-                    ]
+                    ],
+                    "UIBackgroundModes": ["remote-notification"],
+                    "FirebaseAppDelegateProxyEnabled": false,
                 ]
             ),
             sources: ["FunForYou/Sources/**"],
             resources: ["FunForYou/Resources/**"],
-            dependencies: []
+            entitlements: .file(path: .relativeToRoot("FunForYou/FunForYou.entitlements")),
+            dependencies: [
+                .external(name: "FirebaseMessaging"),
+                .external(name: "FirebaseCore"),
+                .external(name: "FirebaseDatabase")
+            ],
+            settings: .settings(
+                base: ["OTHER_LDFLAGS": "$(inherited) -ObjC"]
+            )
         ),
         .target(
             name: "FunForYouTests",
