@@ -15,14 +15,13 @@ struct DailyReadingSheet: View {
         NavigationStack {
             ScrollView {
                 
-                ///Todo: Daily Reading subView 구현 시, 구현 (Woody)
-//                DailyReadingContentView(
-//                    title: daily.title,
-//                    content: daily.content,
-//                    imagePath: daily.image
-//                )
-//                .padding(.horizontal, 24)
-//                .padding(.top,30)
+                DailyReadingContentView(
+                    title: daily.title,
+                    content: daily.content,
+                    imagePath: daily.image
+                )
+                .padding(.horizontal, 24)
+                .padding(.top,30)
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

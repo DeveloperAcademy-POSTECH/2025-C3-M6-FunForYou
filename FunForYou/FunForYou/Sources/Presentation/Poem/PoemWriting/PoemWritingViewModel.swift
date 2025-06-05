@@ -79,8 +79,9 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
             state.poem.alignment = newAlignment
 
         case .onSheetAppeared(let context):
-            // TODO: 뷰 보여질 때 SwiftDataManager로부터 inspiration 가져오기(Woody)
             loadAllInspirations(context: context)
+            // Debug
+//            state.inspirationList = setTestInspirations()
 
         case .savePoem(let context, let isCompleted):
             if state.poem.title.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -222,5 +223,16 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
         ).isEmpty
         canSaveTemporarily = titleNotEmpty || contentNotEmpty
     }
-
+    private func setTestInspirations() -> [any Inspiration] {
+        let testImage = UIImage(named: "PoemPaperSet")!
+        let imageName = ImageManager.shared.saveImage(testImage, withName: UUID().uuidString)
+        return [
+            Daily(title: "봄비 내리는 아침", content: "오늘 첫 봄비가 내렸다. 골목을 같이 25개 설비다 넘으라 좀처럼 그때가 오전이 플레이를 넣는, 선상이 대부분을 차가 기본적이 채끝이 더 아빠에 제자 말하지만, 있고, 이르라고 고민의 상황도 가져다주어 대답에 그런데 일이는 형태만, 켠 의심한다 과학자를 잠시까지 총동문회가 씨 밖이어 놓지만 탑이 정말로 사람이다 나오는 제대로 국론의 몸은 며칠은 거기는 이해하는 단계나 의식의, 사실상 미리 자금도 제품이 날씨는, 손가락은 설치의 줄 끝내, 2027년 조정의 한, 대학은.", image: imageName),
+            Daily(title: "daily2", content: "daily2"),
+            Appreciation(scene: "애순이를 무시하는 병원 직원들에게 화가 나서 언성을 높이는 관식이", title: "그건 이제 규칙이야, 규칙.", content: "금명이한테 꼭 애순이랑 같이 병원 오라고 혼내는 관식이가 안쓰러웠다. 그걸 지켜보는 애순이 마음은 병원 사람들이 화풀이를 할 때보다 더 안 좋았겠지.\n\n골목을 같이 25개 설비다 넘으라 좀처럼 그때가 오전이 플레이를 넣는, 선상이 대부분을 차가 기본적이 채끝이 더 아빠에 제자\n\n말하지만, 있고, 이르라고 고민의 상황도 가져다주어 대답에 그런데 일이는 형태만, 켠 의심한다.\n\n과학자를 잠시까지 총동문회가 씨 밖이어 놓지만 탑이 정말로 사람이다 나오는 제대로 국론의 몸은 며칠은"),
+            Daily(title: "daily3", content: "daily3", image: imageName),
+            Appreciation(scene: "appreciation2", title: "appreciation2", content: "appreciation2"),
+            Appreciation(scene: "appreciation3", title: "appreciation3", content: "appreciation3"),
+        ]
+    }
 }
