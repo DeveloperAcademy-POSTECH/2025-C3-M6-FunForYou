@@ -4,12 +4,13 @@
 //
 //  Created by 한건희 on 5/31/25.
 //
-
+import SwiftData
 import SwiftUI
 
 struct PoemReadingView: View {
     @StateObject var viewModel: PoemReadingViewModel
-    
+    @Environment(\.modelContext) private var context
+
     init(poem: Poem, coordinator: Coordinator) {
         _viewModel = StateObject(wrappedValue: PoemReadingViewModel(poem: poem, coordinator: coordinator))
     }
@@ -17,6 +18,15 @@ struct PoemReadingView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
+                PoemReadingTopView(ellipseButtonTapAction: { viewModel.action(.ellipseButtonTapAction)
+                                   },
+                                   editButtonTapAction: {
+                                       viewModel.action(.editButtonTapAction)
+                                   },
+                                   deleteButtonTapAction: {
+                                       viewModel.action(.deleteButtonTapAction(context: context))
+                                   },
+                                   showModal: $viewModel.state.showModal)
 
                 // TODO: 시 제목, 내용을 볼 수 있게 한다.
                 ScrollView {
