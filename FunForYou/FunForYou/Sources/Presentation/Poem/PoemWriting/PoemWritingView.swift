@@ -14,9 +14,6 @@ struct PoemWritingView: View {
     @FocusState private var isEditorFocused: Bool
     @State private var isShowingAlert = false
 
-    // ✅ 저장된 시들을 불러오기 위한 SwiftData 쿼리
-    @Query(sort: \Poem.date, order: .reverse) private var poems: [Poem]
-
     init(poem: Poem?, coordinator: Coordinator) {
         _viewModel = StateObject(
             wrappedValue: PoemWritingViewModel(
