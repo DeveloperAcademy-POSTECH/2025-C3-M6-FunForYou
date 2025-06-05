@@ -28,9 +28,6 @@ struct InspirationRowView: View {
             
         }
         .onTapGesture(perform: onTap)
-        .onAppear {
-                    print("Row for \(inspiration.id) isSelected: \(isSelected)")
-                }
     }
 }
 

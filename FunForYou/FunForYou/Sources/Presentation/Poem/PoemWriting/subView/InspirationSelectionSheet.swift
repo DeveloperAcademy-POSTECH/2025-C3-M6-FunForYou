@@ -18,7 +18,6 @@ struct InspirationSelectionSheet: View {
         _selectedInspirationId = State(
             initialValue: viewModel.state.poem.type.id ?? "none"
         )
-        print(_selectedInspirationId)
     }
 
     var body: some View {
