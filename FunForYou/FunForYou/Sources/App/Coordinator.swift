@@ -29,8 +29,8 @@ enum Path: Hashable {
     case inspirationNote
     case completeCollection
     case ongoingCollection
-    case dailyWriting(Daily?)
-    case dailyReading(Daily)
+    case dailyWriting(String)
+    case dailyReading(String)
     case appreciationWriting(Appreciation?)
     case appreciationReading(Appreciation)
     case poemWriting(Poem?)
