@@ -79,16 +79,11 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
             state.poem.alignment = newAlignment
 
         case .onSheetAppeared(let context):
-            loadAllInspirations(context: context)
+//            loadAllInspirations(context: context)
             // Debug
-//            state.inspirationList = setTestInspirations()
+            state.inspirationList = setTestInspirations()
 
         case .savePoem(let context, let isCompleted):
-            if state.poem.title.trimmingCharacters(in: .whitespacesAndNewlines)
-                .isEmpty
-            {
-                state.poem.title = "무제"
-            }
             state.poem.isCompleted = isCompleted
             let result = SwiftDataManager.shared.savePoem(
                 poem: state.poem,
@@ -108,11 +103,6 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
                 print("시 저장 실패:", error.localizedDescription)
             }
         case .updatePoem(let context, let isCompleted):
-            if state.poem.title.trimmingCharacters(in: .whitespacesAndNewlines)
-                .isEmpty
-            {
-                state.poem.title = "무제"
-            }
             state.poem.isCompleted = isCompleted
             let result = SwiftDataManager.shared.updatePoem(context: context)
             switch result {
@@ -223,6 +213,7 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
         ).isEmpty
         canSaveTemporarily = titleNotEmpty || contentNotEmpty
     }
+    
     private func setTestInspirations() -> [any Inspiration] {
         let testImage = UIImage(named: "PoemPaperSet")!
         let imageName = ImageManager.shared.saveImage(testImage, withName: UUID().uuidString)

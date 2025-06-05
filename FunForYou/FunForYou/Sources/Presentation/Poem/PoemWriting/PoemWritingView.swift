@@ -14,6 +14,8 @@ struct PoemWritingView: View {
     @FocusState private var isEditorFocused: Bool
     @State private var isShowingAlert = false
 
+
+
     init(poem: Poem?, coordinator: Coordinator) {
         _viewModel = StateObject(
             wrappedValue: PoemWritingViewModel(
@@ -50,7 +52,6 @@ struct PoemWritingView: View {
                                             )
                                         )
                                     }
-                                    viewModel.coordinator.popLast()
                                 }
                             ),
                             onBack: {
