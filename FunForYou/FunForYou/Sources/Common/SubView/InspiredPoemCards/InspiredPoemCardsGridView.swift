@@ -18,8 +18,8 @@ struct InspiredPoemCardsGridView: View {
     
     /// 2열 그리드
     let columns = [
-        GridItem(.flexible(), alignment: .leading),
-        GridItem(.flexible(), alignment: .trailing)
+        GridItem(.flexible(), alignment: .topLeading),
+        GridItem(.flexible(), alignment: .topTrailing)
     ]
     
     // MARK: - View
@@ -43,9 +43,6 @@ struct InspiredPoemCardsGridView: View {
     InspiredPoemCardsGridView(
         inspirationID: "",
         poems: [
-            .init(title: "무제", content: ""),
-            .init(title: "무제", content: ""),
-            .init(title: "무제", content: ""),
             .init(title: "무제", content: ""),
             .init(title: "무제", content: ""),
             .init(title: "무제", content: "")
