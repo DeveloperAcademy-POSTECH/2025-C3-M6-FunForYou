@@ -16,6 +16,9 @@ struct InspiredPoemCardsView: View {
     /// 해당 시상으로 쓴 시들
     let poems: [Poem]
     
+    var writeNewPoemButtonTapAction: () -> Void
+    var readPoemButtonTapAction: (Poem) -> Void
+    
     // MARK: - View
     var body: some View {
         VStack (spacing: 20) {
@@ -25,7 +28,9 @@ struct InspiredPoemCardsView: View {
             // 시집 카드 그리드
             InspiredPoemCardsGridView(
                 inspirationID: self.inspirationID,
-                poems: self.poems
+                poems: self.poems,
+                writeNewPoemButtonTapAction: writeNewPoemButtonTapAction,
+                readPoemButtonTapAction: readPoemButtonTapAction
             )
             .padding(.horizontal, 15)
         }
@@ -43,6 +48,8 @@ struct InspiredPoemCardsView: View {
             .init(title: "무제", content: ""),
             .init(title: "무제", content: ""),
             .init(title: "무제", content: "")
-        ]
+        ],
+        writeNewPoemButtonTapAction: {},
+        readPoemButtonTapAction: {_ in }
     )
 }
