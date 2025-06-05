@@ -20,17 +20,7 @@ struct InspiredPoemCardsView: View {
     var body: some View {
         VStack (spacing: 20) {
             // 섹션 제목 바
-            HStack(alignment: .center) {
-                Text("이 시상으로 지은 시")
-                    .font(FFYFont.title3)
-                    .foregroundStyle(FFYColor.pinkDark)
-                
-                Spacer()
-                
-                Text("\(poems.count)편")
-                    .font(FFYFont.body)
-                    .foregroundStyle(FFYColor.gray2)
-            }
+            InspiredPoemLayoutView(poemCount: poems.count)
             
             // 시집 카드 그리드
             InspiredPoemCardsGridView(
