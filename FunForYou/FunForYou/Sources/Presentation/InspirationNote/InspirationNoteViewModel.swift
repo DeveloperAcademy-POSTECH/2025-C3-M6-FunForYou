@@ -26,6 +26,7 @@ final class InspirationNoteViewModel: ViewModelable {
     
     enum Action {
         case viewAppeared(ModelContext)
+        case viewDisappeared
         case writeInspirationButtonTapped
         case writeDailyButtonTapped
         case writeAppreciationButtonTapped
@@ -46,6 +47,9 @@ final class InspirationNoteViewModel: ViewModelable {
             // TODO: 뷰 보여질 때 SwiftDataManager로부터 inspiration 가져오기
             state.inspirations = fetchInspirations(context: context)
             state.searchedInspirations = state.inspirations
+            
+        case .viewDisappeared:
+            state.showWriteModal = false
             
         case .writeInspirationButtonTapped:
             state.showWriteModal.toggle()

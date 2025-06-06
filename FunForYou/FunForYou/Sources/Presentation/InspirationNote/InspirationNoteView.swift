@@ -52,6 +52,9 @@ struct InspirationNoteView: View {
         .onAppear {
             viewModel.action(.viewAppeared(context))
         }
+        .onDisappear {
+            viewModel.action(.viewDisappeared)
+        }
         .hideKeyboardOnTap()
     }
 }
