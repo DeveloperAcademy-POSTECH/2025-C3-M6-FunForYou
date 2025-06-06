@@ -38,7 +38,7 @@ struct InspirationReadingSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Text(inspiration is Daily ? "시상 읽기" : "시상 불러오기")
+                    Text("시상 읽기")
                         .font(FFYFont.title3)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {

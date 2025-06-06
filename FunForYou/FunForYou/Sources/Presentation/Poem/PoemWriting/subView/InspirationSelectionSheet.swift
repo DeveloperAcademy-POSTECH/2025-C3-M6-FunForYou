@@ -24,6 +24,7 @@ struct InspirationSelectionSheet: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 0) {
+                    //선택 안함
                     InspirationRowView(
                         inspiration: nil,
                         isSelected: selectedInspirationId == "none"
