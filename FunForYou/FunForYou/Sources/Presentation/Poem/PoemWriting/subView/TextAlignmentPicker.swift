@@ -17,36 +17,35 @@ struct TextAlignmentPicker: View {
                 .foregroundColor(FFYColor.gray3)
                 .padding(.trailing, 20)
 
-            HStack {
-                Button {
-                    selectedAlignment = .left
-                } label: {
-                    Image(systemName: systemImageName(for: .left))
-                        .foregroundColor(selectedAlignment == .left ? FFYColor.pinkDark : .gray)
-                }
-                .frame(width: 50)
-
-                Spacer()
-
-                Button {
-                    selectedAlignment = .center
-                } label: {
-                    Image(systemName: systemImageName(for: .center))
-                        .foregroundColor(selectedAlignment == .center ? FFYColor.pinkDark : .gray)
-                }
-                .frame(width: 50)
-                Spacer()
-
-                Button {
-                    selectedAlignment = .right
-                } label: {
-                    Image(systemName: systemImageName(for: .right))
-                        .foregroundColor(selectedAlignment == .right ? FFYColor.pinkDark : .gray)
-                }
-                .frame(width: 50)
+            Button {
+                selectedAlignment = .left
+            } label: {
+                Image(systemName: systemImageName(for: .left))
+                    .foregroundColor(selectedAlignment == .left ? FFYColor.pinkDark : .gray)
             }
-            .buttonStyle(.plain)
+            .frame(width: 50)
+
+            Spacer()
+
+            Button {
+                selectedAlignment = .center
+            } label: {
+                Image(systemName: systemImageName(for: .center))
+                    .foregroundColor(selectedAlignment == .center ? FFYColor.pinkDark : .gray)
+            }
+            .frame(width: 50)
+
+            Spacer()
+
+            Button {
+                selectedAlignment = .right
+            } label: {
+                Image(systemName: systemImageName(for: .right))
+                    .foregroundColor(selectedAlignment == .right ? FFYColor.pinkDark : .gray)
+            }
+            .frame(width: 50)
         }
+        .buttonStyle(.plain)
         .padding(.horizontal, 30)
         .padding(.bottom, 30)
     }
@@ -60,4 +59,5 @@ struct TextAlignmentPicker: View {
         }
     }
 }
+
 
