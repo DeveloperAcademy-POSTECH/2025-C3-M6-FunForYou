@@ -13,7 +13,7 @@ struct AppreciationPreviewContentView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(appreciation.title ?? "(제목 없음)")
-                .font(.title3)
+                .font(FFYFont.title3)
                 .foregroundStyle(FFYColor.black)
                 .lineLimit(1)
                 .padding(.bottom, 10)

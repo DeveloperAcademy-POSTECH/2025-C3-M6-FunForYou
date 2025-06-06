@@ -29,6 +29,8 @@ final class InspirationNoteViewModel: ViewModelable {
         case writeInspirationButtonTapped
         case writeDailyButtonTapped
         case writeAppreciationButtonTapped
+        case dailyPreviewTapped(String)
+        case appreciationPreviewTapped(Appreciation)
         case search
     }
     
@@ -42,7 +44,7 @@ final class InspirationNoteViewModel: ViewModelable {
         switch action {
         case .viewAppeared(let context):
             // TODO: 뷰 보여질 때 SwiftDataManager로부터 inspiration 가져오기
-            state.inspirations = setTestInspirations()
+            state.inspirations = fetchInspirations(context: context)
             state.searchedInspirations = state.inspirations
             
         case .writeInspirationButtonTapped:
@@ -50,10 +52,12 @@ final class InspirationNoteViewModel: ViewModelable {
             
         case .writeDailyButtonTapped:
             // TODO: navigate to DailyWritingView
+            coordinator.push(.dailyWriting(nil))
             break
             
         case .writeAppreciationButtonTapped:
             // TODO: navigate to AppreciationWritingView
+            coordinator.push(.appreciationWriting(nil))
             break
             
         case .search:
@@ -70,6 +74,10 @@ final class InspirationNoteViewModel: ViewModelable {
                 
                 return false
             }
+        case .dailyPreviewTapped(let id):
+            coordinator.push(.dailyReading(id))
+        case .appreciationPreviewTapped(let appreciation):
+            coordinator.push(.appreciationReading(appreciation))
         }
     }
     
@@ -84,7 +92,7 @@ final class InspirationNoteViewModel: ViewModelable {
         }
         
         let fetchAppreciationResult = SwiftDataManager.shared.fetchAllInspiration(InspirationType: Appreciation.self, context: context)
-        switch fetchDailyResult {
+        switch fetchAppreciationResult {
         case .success(let success):
             fetchedInspirations += success
         case .failure(let failure):
