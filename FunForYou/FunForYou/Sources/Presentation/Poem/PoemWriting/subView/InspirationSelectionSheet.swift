@@ -24,7 +24,8 @@ struct InspirationSelectionSheet: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 0) {
-                    NoInspirationOptionRow(
+                    InspirationRowView(
+                        inspiration: nil,
                         isSelected: selectedInspirationId == "none"
                     ) {
                         selectedInspirationId = "none"
@@ -32,33 +33,25 @@ struct InspirationSelectionSheet: View {
                         viewModel.state.selectedInspiration = nil
                     }
 
-                    ForEach(viewModel.state.inspirationList, id: \.id) {
-                        inspiration in
-                        VStack(spacing: 0) {
-                            InspirationRowView(
-                                inspiration: inspiration,
-                                isSelected: selectedInspirationId
-                                    == inspiration.id
-                            ) {
-                                if let daily = inspiration as? Daily {
-                                    selectedInspirationId = daily.id
-                                    viewModel.state.poem.type = .daily(daily.id)
-                                    viewModel.state.selectedInspiration = daily
-                                } else if let appreciation = inspiration
-                                    as? Appreciation
-                                {
-                                    selectedInspirationId = appreciation.id
-                                    viewModel.state.poem.type = .appreciation(
-                                        appreciation.id
-                                    )
-                                    viewModel.state.selectedInspiration =
-                                        appreciation
-                                }
-
+                    // 영감이 있는 경우
+                    ForEach(viewModel.state.inspirationList, id: \.id) { inspiration in
+                        InspirationRowView(
+                            inspiration: inspiration,
+                            isSelected: selectedInspirationId == inspiration.id
+                        ) {
+                            if let daily = inspiration as? Daily {
+                                selectedInspirationId = daily.id
+                                viewModel.state.poem.type = .daily(daily.id)
+                                viewModel.state.selectedInspiration = daily
+                            } else if let appreciation = inspiration as? Appreciation {
+                                selectedInspirationId = appreciation.id
+                                viewModel.state.poem.type = .appreciation(appreciation.id)
+                                viewModel.state.selectedInspiration = appreciation
                             }
-
                         }
                     }
+
+                    
                 }
                 .padding(.horizontal, 24)
                 .background(Color.white)
