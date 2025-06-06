@@ -11,7 +11,7 @@ struct CompleteCollectionListView: View {
     var poems: [Poem]
     var continueWriteButtonTapAction: () -> Void
     var ongoingPoemCount: Int
-    var completePoemTapAction: (String) -> Void
+    var completePoemTapAction: (Poem) -> Void
     
     var body: some View {
         ScrollView {
@@ -31,7 +31,7 @@ struct CompleteCollectionListView: View {
                         date: poem.date
                     )
                     .onTapGesture {
-                        completePoemTapAction(poem.id)
+                        completePoemTapAction(poem)
                     }
                     .padding(.bottom, 32)
                 }

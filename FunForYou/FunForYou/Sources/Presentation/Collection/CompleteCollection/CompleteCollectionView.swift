@@ -14,6 +14,7 @@ struct CompleteCollectionView: View {
         _viewModel = StateObject(wrappedValue: CompleteCollectionViewModel(coordinator: coordinator))
     }
     
+    @Environment(\.modelContext) var context
     var body: some View {
         VStack {
             CompleteCollectionTopView(writePoemButtonTapAction: {
@@ -32,13 +33,13 @@ struct CompleteCollectionView: View {
                     viewModel.action(.continueWriteButtonTapped)
                 },
                 ongoingPoemCount: viewModel.state.ongoingPoemCount,
-                completePoemTapAction: { poemId in
-                    viewModel.action(.completePoemTapped(poemId))
+                completePoemTapAction: { poem in
+                    viewModel.action(.completePoemTapped(poem))
                 }
             )
         }
         .onAppear {
-            viewModel.action(.viewAppeared)
+            viewModel.action(.viewAppeared(context))
         }
     }
 }
