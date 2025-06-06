@@ -26,7 +26,7 @@ struct PoemWritingView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                
+
                 // 상단 네비게이션
                 NavigationBar(
                     title: "시 쓰기",
@@ -49,69 +49,21 @@ struct PoemWritingView: View {
                     }
                 )
                 .padding(.bottom, 32)
-                ScrollView {
-                    VStack(spacing: 0) {
 
-                        // 제목 필드
-                        PoemTitleField(viewModel: viewModel)
-                            .onChange(of: viewModel.state.poem.title) { _, _ in
-                                viewModel.action(.updateCanSave)
-                            }
+                PoemWritingContentView(
+                    viewModel: viewModel,
+                    isEditorFocused: $isEditorFocused
+                )
 
-                        // 시상 선택
-                        SelectInspiration(viewModel: viewModel)
-
-                        // 정렬 선택
-                        TextAlignmentPicker(
-                            selectedAlignment: Binding(
-                                get: { viewModel.state.poem.alignment },
-                                set: { viewModel.action(.updateAlignment($0)) }
-                            )
-                        )
-
-                        Divider()
-                            .padding(.horizontal, 24)
-                            .padding(.bottom, 30)
-
-                        // 시 내용 입력
-                        CustomTextEditor(
-                            text: Binding(
-                                get: { viewModel.state.poem.content },
-                                set: { viewModel.action(.updateContent($0)) }
-                            ),
-                            alignment: viewModel.state.poem.alignment
-                        )
-                        .frame(minHeight: 408)
-                        .padding(.horizontal, 54)
-                        .padding(.bottom, 5)
-                        .focused($isEditorFocused)
-                        .onChange(of: viewModel.state.poem.content) { _, _ in
-                            viewModel.action(.updateCanSave)
-                        }
-                        // 저장 버튼
-                        PrimaryButton(
-                            title: "시 끝맺기",
-                            style: viewModel.canSave
-                                ? .basic : .disable
-                        ) {
-                            viewModel.action(
-                                .saveOrUpdatePoem(
-                                    context: context,
-                                    isCompleted: true
-                                )
-                            )
-                        }
-
-                    }
-                }
-                .onTapGesture {
-                    isEditorFocused = false  // 키보드 내림
-                }
-                .onAppear {
-                    viewModel.action(.onAppeared(context: context))
-                }
-                .ignoresSafeArea(.keyboard, edges: .bottom)
             }
+            .contentShape(Rectangle())  // 여기서 전체 터치 영역을 지정
+            .onTapGesture {
+                isEditorFocused = false  // 키보드 내림
+            }
+            .onAppear {
+                viewModel.action(.onAppeared(context: context))
+            }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
 
             // 뒤로가기 시 알림창
             if isShowingAlert {
@@ -130,13 +82,4 @@ struct PoemWritingView: View {
             }
         }
     }
-}
-
-#Preview {
-    @Previewable @StateObject var dummyCoordinator = Coordinator()
-
-    return PoemWritingView(
-        poem: Poem.noneMockData,
-        coordinator: dummyCoordinator
-    )
 }
