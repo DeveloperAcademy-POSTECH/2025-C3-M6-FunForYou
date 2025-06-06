@@ -5,6 +5,10 @@
 ## User settings
 xcuserdata/
 
+## Firebase
+GoogleService-Info.plist
+
+
 ## Obj-C/Swift specific
 *.hmap
 
