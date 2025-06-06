@@ -10,6 +10,7 @@ import SwiftUI
 /// 감상 읽기 네비게이션 바 + 커스텀 메뉴(모달)
 struct AppreciationReadingTopView: View {
     // MARK: - Properties
+    var backButtonTapAction: () -> Void
     var ellipseButtonTapAction: () -> Void
     var editButtonTapAction: () -> Void
     var deleteButtonTapAction: () -> Void
@@ -17,11 +18,13 @@ struct AppreciationReadingTopView: View {
     
     // MARK: - init
     init(
+        backButtonTapAction: @escaping () -> Void,
         ellipseButtonTapAction: @escaping () -> Void,
         editButtonTapAction: @escaping () -> Void,
         deleteButtonTapAction: @escaping () -> Void,
         showModal: Binding<Bool>
     ) {
+        self.backButtonTapAction = backButtonTapAction
         self.ellipseButtonTapAction = ellipseButtonTapAction
         self.editButtonTapAction = editButtonTapAction
         self.deleteButtonTapAction = deleteButtonTapAction
@@ -32,7 +35,10 @@ struct AppreciationReadingTopView: View {
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
             // 네비게이션 바
-            AppreciationReadingNavigationBar(ellipseButtonTapAction: ellipseButtonTapAction)
+            AppreciationReadingNavigationBar(
+                backButtonTapAction: backButtonTapAction,
+                ellipseButtonTapAction: ellipseButtonTapAction
+            )
             
             // 메뉴 모달
             TopMenuModal(
@@ -55,5 +61,5 @@ struct AppreciationReadingTopView: View {
 }
 
 #Preview {
-    AppreciationReadingTopView(ellipseButtonTapAction: {}, editButtonTapAction: {}, deleteButtonTapAction: {}, showModal: .constant(true))
+    AppreciationReadingTopView(backButtonTapAction: {}, ellipseButtonTapAction: {}, editButtonTapAction: {}, deleteButtonTapAction: {}, showModal: .constant(true))
 }

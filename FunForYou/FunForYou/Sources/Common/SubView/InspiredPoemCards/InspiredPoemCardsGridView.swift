@@ -18,22 +18,29 @@ struct InspiredPoemCardsGridView: View {
     
     /// 2열 그리드
     let columns = [
-        GridItem(.flexible(), alignment: .leading),
-        GridItem(.flexible(), alignment: .trailing)
+        GridItem(.flexible(), alignment: .topLeading),
+        GridItem(.flexible(), alignment: .topTrailing)
     ]
+    
+    /// 해당 시상 가지고 새로운 시 쓰는 화면으로 이동하기
+    var writeNewPoemButtonTapAction: () -> Void
+    /// 누르면 해당 시 조회 화면으로 이동
+    var readPoemButtonTapAction: (Poem) -> Void
     
     // MARK: - View
     var body: some View {
         LazyVGrid(columns: columns, spacing: 32) {
             // 새로운 시 추가 버튼
             WritePoem {
-                // TODO: 해당 시상 가지고 새로운 시 쓰는 화면으로 이동하기(ssol)
+                writeNewPoemButtonTapAction()
             }
             
             // 시집 리스트
             ForEach(poems, id: \.self) { poem in
-                // TODO: 누르면 해당 시 조회 화면으로 이동(ssol)
                 PoemBook(title: poem.title, date: poem.date)
+                    .onTapGesture {
+                        readPoemButtonTapAction(poem)
+                    }
             }
         }
     }
@@ -45,11 +52,10 @@ struct InspiredPoemCardsGridView: View {
         poems: [
             .init(title: "무제", content: ""),
             .init(title: "무제", content: ""),
-            .init(title: "무제", content: ""),
-            .init(title: "무제", content: ""),
-            .init(title: "무제", content: ""),
             .init(title: "무제", content: "")
-        ]
+        ],
+        writeNewPoemButtonTapAction: {},
+        readPoemButtonTapAction: {_ in }
     )
     .padding(.horizontal, 15)
     .padding(.horizontal, 24)

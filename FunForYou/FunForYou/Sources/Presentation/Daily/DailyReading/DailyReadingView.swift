@@ -33,7 +33,13 @@ struct DailyReadingView: View {
                 
                 InspiredPoemCardsView(
                     inspirationID: viewModel.state.daily.id,
-                    poems: viewModel.state.inspiredPoems
+                    poems: viewModel.state.inspiredPoems,
+                    writeNewPoemButtonTapAction: {
+                        viewModel.action(.writeNewPoemButtonTapAction)
+                    },
+                    readPoemButtonTapAction: { poem in
+                        viewModel.action(.readPoemButtonTapAction(poem))
+                    }
                 )
                 .padding(.top, 64)
                 .padding(.horizontal, 24)

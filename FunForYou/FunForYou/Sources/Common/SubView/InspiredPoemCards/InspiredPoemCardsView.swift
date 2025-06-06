@@ -16,26 +16,21 @@ struct InspiredPoemCardsView: View {
     /// 해당 시상으로 쓴 시들
     let poems: [Poem]
     
+    var writeNewPoemButtonTapAction: () -> Void
+    var readPoemButtonTapAction: (Poem) -> Void
+    
     // MARK: - View
     var body: some View {
         VStack (spacing: 20) {
             // 섹션 제목 바
-            HStack(alignment: .center) {
-                Text("이 시상으로 지은 시")
-                    .font(FFYFont.title3)
-                    .foregroundStyle(FFYColor.pinkDark)
-                
-                Spacer()
-                
-                Text("\(poems.count)편")
-                    .font(FFYFont.body)
-                    .foregroundStyle(FFYColor.gray2)
-            }
+            InspiredPoemLayoutView(poemCount: poems.count)
             
             // 시집 카드 그리드
             InspiredPoemCardsGridView(
                 inspirationID: self.inspirationID,
-                poems: self.poems
+                poems: self.poems,
+                writeNewPoemButtonTapAction: writeNewPoemButtonTapAction,
+                readPoemButtonTapAction: readPoemButtonTapAction
             )
             .padding(.horizontal, 15)
         }
@@ -53,6 +48,8 @@ struct InspiredPoemCardsView: View {
             .init(title: "무제", content: ""),
             .init(title: "무제", content: ""),
             .init(title: "무제", content: "")
-        ]
+        ],
+        writeNewPoemButtonTapAction: {},
+        readPoemButtonTapAction: {_ in }
     )
 }
