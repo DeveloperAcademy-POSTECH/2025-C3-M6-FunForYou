@@ -12,6 +12,7 @@ struct FunForYouApp: App {
     @StateObject var coordinator = Coordinator()
     @State var isSplashing: Bool = true
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
             ZStack {

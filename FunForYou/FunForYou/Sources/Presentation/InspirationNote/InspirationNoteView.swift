@@ -39,11 +39,23 @@ struct InspirationNoteView: View {
                     viewModel.action(.search)
                 }
             
-            InspirationPreviewList(inspirations: viewModel.state.searchedInspirations)
+            InspirationPreviewList(
+                inspirations: viewModel.state.searchedInspirations,
+                dailyPreviewTapAction: { id in
+                    viewModel.action(.dailyPreviewTapped(id))
+                },
+                appreciationPreviewTapAction: { appreciation in
+                    viewModel.action(.appreciationPreviewTapped(appreciation))
+                }
+            )
         }
         .onAppear {
             viewModel.action(.viewAppeared(context))
         }
+        .onDisappear {
+            viewModel.action(.viewDisappeared)
+        }
+        .hideKeyboardOnTap()
     }
 }
 

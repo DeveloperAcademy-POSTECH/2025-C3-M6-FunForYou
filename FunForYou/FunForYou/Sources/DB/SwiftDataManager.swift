@@ -57,10 +57,13 @@ final class SwiftDataManager {
         inspirationId: String,
         context: ModelContext
     ) -> Result<[Poem], Error> {
-        let predicate = #Predicate<Poem> { $0.type.id == inspirationId }
-        let fetchDescriptor = FetchDescriptor(predicate: predicate)
+        let predicate = #Predicate<Poem>() { $0.type.id == inspirationId }
+        let fetchDescriptor = FetchDescriptor<Poem>()
         do {
-            let poemList = try context.fetch(fetchDescriptor)
+            var poemList = try context.fetch(fetchDescriptor)
+            poemList = poemList.filter {
+                $0.type.id == inspirationId
+            }
             return .success(poemList)
         } catch {
             return .failure(error)

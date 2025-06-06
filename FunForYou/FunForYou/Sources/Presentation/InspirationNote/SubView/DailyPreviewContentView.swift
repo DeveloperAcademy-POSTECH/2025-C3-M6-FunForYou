@@ -13,7 +13,7 @@ struct DailyPreviewContentView: View {
     
     init(daily: Daily) {
         self.daily = daily
-        image = ImageManager.shared.loadImage(fromPath: daily.image ?? "")
+        image = ImageManager.shared.loadImage(withName: daily.image ?? "")
     }
     
     var body: some View {

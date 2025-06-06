@@ -34,7 +34,7 @@ final class ImageManager {
 
         do {
             try data.write(to: fileURL)
-            return fileURL.path
+            return name
         } catch {
             print("이미지 저장 실패:", error)
             return nil
@@ -46,13 +46,8 @@ final class ImageManager {
     /// - Parameter path: 저장된 이미지 파일의 전체 경로입니다.
     ///
     /// - Returns: 경로에 해당하는 `UIImage` 객체를 반환하며, 파일이 존재하지 않거나 읽기에 실패한 경우 `nil`을 반환합니다.
-    func loadImage(fromPath path: String) -> UIImage? {
-        let fileURL = URL(fileURLWithPath: path)
-        guard FileManager.default.fileExists(atPath: fileURL.path) else {
-            print("파일이 존재하지 않음:", fileURL.path)
-            return nil
-        }
-
+    func loadImage(withName name: String) -> UIImage? {
+        let fileURL = getDocumentsDirectory().appendingPathComponent(name)
         return UIImage(contentsOfFile: fileURL.path)
     }
 

@@ -18,11 +18,11 @@ final class CompleteCollectionViewModel: ViewModelable {
     }
     
     enum Action {
-        case viewAppeared
+        case viewAppeared(ModelContext)
         case writePoemButtonTapped
         case search
         case continueWriteButtonTapped
-        case completePoemTapped(_ poemId: String)
+        case completePoemTapped(_ poem: Poem)
     }
     
     @Published var state: State = State()
@@ -33,12 +33,11 @@ final class CompleteCollectionViewModel: ViewModelable {
     
     func action(_ action: Action) {
         switch action {
-        case .viewAppeared:
-            state.poems = setTestPoems()
+        case .viewAppeared(let context):
+            state.poems = fetchCompletedPoems(context: context)
             state.searchedPoems = state.poems
             
         case .writePoemButtonTapped:
-            // TODO: navigate to write poem view
             coordinator.push(.poemWriting(nil))
             break
         case .search:
@@ -46,9 +45,10 @@ final class CompleteCollectionViewModel: ViewModelable {
             
         case .continueWriteButtonTapped:
             // TODO: navigate to ongoing poem list view
+            coordinator.push(.ongoingCollection)
             break
-        case .completePoemTapped(let poemId):
-            // TODO: navigate to poem reading view
+        case .completePoemTapped(let poem):
+            coordinator.push(.poemReading(poem))
             break
         }
     }
