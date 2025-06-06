@@ -14,7 +14,16 @@ struct PoemWritingContentView: View {
 
     var body: some View {
         ScrollView {
-            PoemTitleField(viewModel: viewModel)
+            TextField("시 제목", text: $viewModel.state.poem.title)
+                .font(FFYFont.title)
+                .lineLimit(1)
+                .padding(.horizontal, 24)
+                .padding(.bottom, 32)
+                .onChange(of: viewModel.state.poem.title) { _, newValue in
+                    if newValue.count > 15 {
+                        viewModel.state.poem.title = String(newValue.prefix(15))
+                    }
+                }
                 .onChange(of: viewModel.state.poem.title) { _, _ in
                     viewModel.action(.updateCanSave)
                 }
@@ -52,9 +61,10 @@ struct PoemWritingContentView: View {
                 title: "시 끝맺기",
                 style: viewModel.canSave ? .basic : .disable
             ) {
-                viewModel.action(.saveOrUpdatePoem(context: context, isCompleted: true))
+                viewModel.action(
+                    .saveOrUpdatePoem(context: context, isCompleted: true)
+                )
             }
         }
     }
 }
-
