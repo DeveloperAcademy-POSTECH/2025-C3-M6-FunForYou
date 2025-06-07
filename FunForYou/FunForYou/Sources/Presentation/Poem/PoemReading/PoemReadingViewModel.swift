@@ -24,6 +24,8 @@ final class PoemReadingViewModel: ViewModelable {
         case editButtonTapAction
         /// 끝맺은 시  지우기
         case deleteButtonTapAction(context: ModelContext)
+        /// 뒤로 가기
+        case backButtonTapAction
 
     }
 
@@ -62,6 +64,9 @@ final class PoemReadingViewModel: ViewModelable {
             case .failure(let error):
                 print("시 삭제 실패: ",error.localizedDescription)
             }
+        
+        case .backButtonTapAction:
+            coordinator.popLast()
 
         }
     }

@@ -14,6 +14,7 @@ struct PoemReadingTopView: View {
     var ellipseButtonTapAction: () -> Void
     var editButtonTapAction: () -> Void
     var deleteButtonTapAction: () -> Void
+    var backButtonTapAction: () -> Void
     @Binding var showModal: Bool
 
     // MARK: - init
@@ -22,11 +23,13 @@ struct PoemReadingTopView: View {
         ellipseButtonTapAction: @escaping () -> Void,
         editButtonTapAction: @escaping () -> Void,
         deleteButtonTapAction: @escaping () -> Void,
+        backButtonTapAction: @escaping () -> Void,
         showModal: Binding<Bool>
     ) {
         self.ellipseButtonTapAction = ellipseButtonTapAction
         self.editButtonTapAction = editButtonTapAction
         self.deleteButtonTapAction = deleteButtonTapAction
+        self.backButtonTapAction = backButtonTapAction
         self._showModal = showModal
     }
 
@@ -35,7 +38,10 @@ struct PoemReadingTopView: View {
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
             // 네비게이션 바
-            PoemReadingNavigationBar(ellipseButtonTapAction: ellipseButtonTapAction)
+            PoemReadingNavigationBar(
+                ellipseButtonTapAction: ellipseButtonTapAction,
+                backButtonTapAction: backButtonTapAction
+            )
 
             // 메뉴 모달
             TopMenuModal(
@@ -57,5 +63,11 @@ struct PoemReadingTopView: View {
 }
 
 #Preview {
-    PoemReadingTopView(ellipseButtonTapAction: {}, editButtonTapAction: {}, deleteButtonTapAction: {}, showModal: .constant(true))
+    PoemReadingTopView(
+        ellipseButtonTapAction: {},
+        editButtonTapAction: {},
+        deleteButtonTapAction: {},
+        backButtonTapAction: {},
+        showModal: .constant(true)
+    )
 }

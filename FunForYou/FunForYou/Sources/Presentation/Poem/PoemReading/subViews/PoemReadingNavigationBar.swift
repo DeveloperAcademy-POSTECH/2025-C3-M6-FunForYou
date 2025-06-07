@@ -13,12 +13,15 @@ struct PoemReadingNavigationBar: View {
     // MARK: - Properties
     /// ellipse 버튼 눌릴 때 액션(모달 띄우는 bool 변경시키기)
     var ellipseButtonTapAction: () -> Void
-        
+    var backButtonTapAction: () -> Void
+
     // MARK: - View
     var body: some View {
         ZStack(alignment: .trailing) {
-            NavigationBar(title: "시 낭독하기", style: .backTitle)
-            
+            NavigationBar(title: "시 낭독하기", style: .backTitle) {
+                backButtonTapAction()
+            }
+
             Button {
                 // 모달 띄우기
                 ellipseButtonTapAction()
@@ -35,5 +38,8 @@ struct PoemReadingNavigationBar: View {
 }
 
 #Preview {
-    PoemReadingNavigationBar(ellipseButtonTapAction: {})
+    PoemReadingNavigationBar(
+        ellipseButtonTapAction: {},
+        backButtonTapAction: {}
+    )
 }
