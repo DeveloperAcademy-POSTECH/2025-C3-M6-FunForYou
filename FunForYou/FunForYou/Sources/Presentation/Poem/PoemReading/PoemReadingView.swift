@@ -54,6 +54,8 @@ struct PoemReadingView: View {
 
                         Text(viewModel.state.poem.content)
                             .font(FFYFont.book)
+                            .multilineTextAlignment(viewModel.state.poem.alignment.swiftUITextAlignment)
+
 
                         Rectangle()
                             .frame(maxWidth: .infinity, maxHeight: 0.5)
@@ -111,7 +113,8 @@ private let samplePoem = Poem(
         누구나 자기만의 바닷가가 하나씩 있으면 좋다
         자기만의 바닷가로 달려가 쓰러지는 게 좋다 
         """,
-    date: Date()
+    date: Date(),
+    alignment: .right
 )
 
 private let dummyCoordinator = Coordinator()
