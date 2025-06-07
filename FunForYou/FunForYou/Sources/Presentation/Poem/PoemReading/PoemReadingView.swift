@@ -61,9 +61,9 @@ struct PoemReadingView: View {
 
                         // TODO: 흰색 시 프레임 하단 왼쪽에 몇 번째 끝맺은 시인지 보이는 번호를, 하단 오른쪽에 최종수정일을 보여준다.
                         HStack {
-                            Text("13")
+                            Text("\(viewModel.state.poemOrderIndex ?? 0)번째 시")
                             Spacer()
-                            Text("25년 5월 27일")
+                            Text(viewModel.state.poem.date.formattedAsKoreanDate)
                         }
                         .font(.caption)
                         .foregroundColor(.secondary)
@@ -90,6 +90,10 @@ struct PoemReadingView: View {
                     )
                 )
             }
+            .onAppear {
+                viewModel.action(.calculatePoemOrderAction(context: context))
+            }
+
         }
     }
 }

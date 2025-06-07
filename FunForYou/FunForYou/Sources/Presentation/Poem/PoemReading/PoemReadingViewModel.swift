@@ -14,6 +14,8 @@ final class PoemReadingViewModel: ViewModelable {
         var poem: Poem
         /// 네비게이션 메뉴 보여주기 결정
         var showModal: Bool = false
+        /// 시 순서
+        var poemOrderIndex: Int? = nil
     }
 
     enum Action {
@@ -26,6 +28,9 @@ final class PoemReadingViewModel: ViewModelable {
         case deleteButtonTapAction(context: ModelContext)
         /// 뒤로 가기
         case backButtonTapAction
+        /// 시 순서 알아내기
+        case calculatePoemOrderAction(context: ModelContext)
+
 
     }
 
@@ -67,7 +72,26 @@ final class PoemReadingViewModel: ViewModelable {
         
         case .backButtonTapAction:
             coordinator.popLast()
+        
+        case .calculatePoemOrderAction(let context):
+            let result = SwiftDataManager.shared.fetchAllPoemList(context: context)
+            switch result {
+            case .success(let poemList):
+                // ✅ 완성된 시만 필터링 후 최신순 정렬 (오래된 순서부터)
+                let completedPoems = poemList
+                    .filter { $0.isCompleted }
+                    .sorted { $0.date < $1.date }
 
+                if let index = completedPoems.firstIndex(where: { $0.id == state.poem.id }) {
+                    state.poemOrderIndex = index + 1
+                } else {
+                    state.poemOrderIndex = nil
+                }
+
+            case .failure(let error):
+                print("시 순서 계산 실패: \(error.localizedDescription)")
+                state.poemOrderIndex = nil
+            }
         }
     }
 }
