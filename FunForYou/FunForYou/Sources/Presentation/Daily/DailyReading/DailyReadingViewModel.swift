@@ -14,6 +14,7 @@ final class DailyReadingViewModel: ViewModelable {
         var daily: Daily
         var inspiredPoems: [Poem] = []
         var isShowAlert: Bool = false
+        var showModal: Bool = false
     }
     
     enum Action {
@@ -23,6 +24,8 @@ final class DailyReadingViewModel: ViewModelable {
         case deleteDailyInspiration(String, ModelContext)
         case writeNewPoemButtonTapAction
         case readPoemButtonTapAction(Poem)
+        case ellipseButtonTapAction
+        case backButtonTapAction
     }
     
     @Published var state: State
@@ -39,60 +42,70 @@ final class DailyReadingViewModel: ViewModelable {
         switch action {
         case let .fetchDailyById(id, context):
             fetchDailyInspiration(id, context: context)
+            
         case .editButtonTapped:
             coordinator.push(.dailyWriting(id))
+            
         case .deleteButtonTapped:
             state.isShowAlert = true
+            
         case let .deleteDailyInspiration(id, context):
             deleteDailyInspiration(id, context: context)
+            
         case .writeNewPoemButtonTapAction:
             writeNewPoemButtonTapAction()
-            
+
         case .readPoemButtonTapAction(let poem):
             coordinator.push(.poemReading(poem))
-        }
-        
-        func fetchDailyInspiration(_ id: String, context: ModelContext) {
-            let result: Result<Daily?, Error> = SwiftDataManager.shared.fetchInspirationById(
-                inspirationType: Daily.self,
-                inspirationId: id,
-                context: context
-            )
             
-            switch result {
-            case .success(let daily):
-                if let daily = daily {
-                    state.daily = daily
-                } else {
-                    print("❗️ 해당 ID의 Daily를 찾을 수 없습니다.")
-                }
-            case .failure(let error):
-                print("❌ Daily fetch 실패: \(error.localizedDescription)")
-            }
-        }
-        
-        func deleteDailyInspiration(_ id: String, context: ModelContext) {
-            let result = SwiftDataManager.shared.deleteInspiration(inspiration: state.daily, context: context)
+        case .ellipseButtonTapAction:
+            state.showModal.toggle()
             
-            switch result {
-            case .success:
-                coordinator.popLast()
-            case .failure(let error):
-                print("❌ Daily 삭제 실패: \(error.localizedDescription)")
-            }
+        case .backButtonTapAction:
+            coordinator.popLast()
         }
+    }
+    
+    func fetchDailyInspiration(_ id: String, context: ModelContext) {
+        let result: Result<Daily?, Error> = SwiftDataManager.shared.fetchInspirationById(
+            inspirationType: Daily.self,
+            inspirationId: id,
+            context: context
+        )
         
-        func writeNewPoemButtonTapAction() {
-            coordinator.push(
-                .poemWriting(
-                    Poem(
-                        type: .appreciation(state.daily.id),
-                        title: "",
-                        content: ""
-                    )
+        switch result {
+        case .success(let daily):
+            if let daily = daily {
+                state.daily = daily
+            } else {
+                print("❗️ 해당 ID의 Daily를 찾을 수 없습니다.")
+            }
+        case .failure(let error):
+            print("❌ Daily fetch 실패: \(error.localizedDescription)")
+        }
+    }
+    
+    func deleteDailyInspiration(_ id: String, context: ModelContext) {
+        let result = SwiftDataManager.shared.deleteInspiration(inspiration: state.daily, context: context)
+        
+        switch result {
+        case .success:
+            coordinator.popLast()
+        case .failure(let error):
+            print("❌ Daily 삭제 실패: \(error.localizedDescription)")
+        }
+    }
+    
+    func writeNewPoemButtonTapAction() {
+        coordinator.push(
+            .poemWriting(
+                Poem(
+                    type: .appreciation(state.daily.id),
+                    title: "",
+                    content: ""
                 )
             )
-            
-        }
+        )
+        
     }
 }
