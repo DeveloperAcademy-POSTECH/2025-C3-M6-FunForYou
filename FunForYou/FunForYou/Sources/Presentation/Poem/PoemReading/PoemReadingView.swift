@@ -44,13 +44,14 @@ struct PoemReadingView: View {
 
                 // TODO: 시 제목, 내용을 볼 수 있게 한다.
                 PoemReadingScrollView(
-                    poem: viewModel.state.poem,
-                    poemOrderIndex: viewModel.state.poemOrderIndex
+                    viewModel: viewModel
                 )
                 
             }
             .onAppear {
-                viewModel.action(.calculatePoemOrderAction(context: context))
+                if viewModel.state.poem.isCompleted {
+                    viewModel.action(.calculatePoemOrderAction(context: context))
+                }
             }
 
         }
@@ -72,10 +73,10 @@ let samplePoem = Poem(
         자기만의 바닷가로 달려가 쓰러지는 게 좋다 
         """,
     date: Date(),
-    alignment: .right
+    alignment:  .right
 )
 
-private let dummyCoordinator = Coordinator()
+let dummyCoordinator = Coordinator()
 
 #Preview {
     PoemReadingView(poem: samplePoem, coordinator: dummyCoordinator)

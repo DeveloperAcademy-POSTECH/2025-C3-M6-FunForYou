@@ -7,14 +7,17 @@
 import SwiftUI
 
 struct PoemReadingScrollView: View {
-    let poem: Poem
-    let poemOrderIndex: Int?
-
+    @ObservedObject var viewModel: PoemReadingViewModel
+    
     var body: some View {
+        let poem = viewModel.state.poem
+        let poemOrderIndex = viewModel.state.poemOrderIndex
+
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text(poem.title)
+                Text((poem.title.isEmpty ?? true) ? "무제" : poem.title)
                     .font(FFYFont.title)
+                    .frame(maxWidth: .infinity, alignment: poem.alignment.swiftUIFrameAlignment)
 
                 Text("조 연화")
                     .font(FFYFont.book)
@@ -23,23 +26,18 @@ struct PoemReadingScrollView: View {
                 Text(poem.content)
                     .font(FFYFont.book)
                     .multilineTextAlignment(poem.alignment.swiftUITextAlignment)
+                    .frame(maxWidth: .infinity, alignment: poem.alignment.swiftUIFrameAlignment)
 
-                
-                    Rectangle()
-                        .frame(maxWidth: .infinity, maxHeight: 0.5)
-                        .padding(.top, 64)
+                Rectangle()
+                    .frame(maxWidth: .infinity, maxHeight: 0.5)
+                    .padding(.top, 64)
 
-                    HStack {
-                        if poem.isCompleted {
-                            Text("\(poemOrderIndex ?? 0)번째 시")
-                        }
-                        
-                        Spacer()
-                        Text(poem.date.formattedAsKoreanDate)
-                    }
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-                
+                PoemFooterView(
+                    isCompleted: poem.isCompleted,
+                    poemOrderIndex: poemOrderIndex,
+                    formattedDate: poem.date.formattedAsKoreanDate
+                )
+
             }
             .padding(.horizontal, 24)
             .padding(.vertical, 48)
@@ -65,5 +63,19 @@ struct PoemReadingScrollView: View {
                 }
             }
         )
+        .onAppear() {
+            print("\(poem.alignment.swiftUITextAlignment)")
+            print("\(poem.isCompleted)")
+        }
+    }
+}
+
+extension TextAlignmentType {
+    var swiftUIFrameAlignment: Alignment {
+        switch self {
+        case .left: return .leading
+        case .center: return .center
+        case .right: return .trailing
+        }
     }
 }
