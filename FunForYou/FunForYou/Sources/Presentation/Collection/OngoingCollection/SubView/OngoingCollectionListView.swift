@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OngoingCollectionListView: View {
     var poems: [Poem]
-    var ongoingPoemTapAction: (String) -> Void
+    var ongoingPoemTapAction: (Poem) -> Void
     
     var body: some View {
         ScrollView {
@@ -24,7 +24,7 @@ struct OngoingCollectionListView: View {
                      content: poem.content.isEmpty ? "(내용이 없어요)" : poem.content
                     )
                     .onTapGesture {
-                        ongoingPoemTapAction(poem.id)
+                        ongoingPoemTapAction(poem)
                     }
                     .padding(.bottom, 32)
                 }

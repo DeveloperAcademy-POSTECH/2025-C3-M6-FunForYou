@@ -7,10 +7,10 @@
 
 import SwiftUI
 
+/// 쓰고 있는 시 뷰
 struct OngoingCollectionView: View {
     @StateObject var viewModel: OngoingCollectionViewModel
-
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) var context
 
     init(coordinator: Coordinator) {
         _viewModel = StateObject(
@@ -19,14 +19,15 @@ struct OngoingCollectionView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-
+            // 네비게이션 바
             NavigationBar(
                 title: nil,
                 style: .back
             ) {
-                dismiss()
+                viewModel.action(.backButtonTapAction)
             }
-
+            
+            // Title
             Text("쓰고 있는 시")
                 .font(FFYFont.largeTitle)
                 .foregroundStyle(.black)
@@ -34,21 +35,23 @@ struct OngoingCollectionView: View {
                 .padding(.horizontal, 24)
                 .padding(.vertical, 20)
 
+            // 검색바
             SearchBar(text: $viewModel.state.searchText)
                 .onChange(of: viewModel.state.searchText) {
                     viewModel.action(.search)
                 }
+            
+            // 쓰고 있는 시 카드 리스트
             OngoingCollectionListView(
                 poems: viewModel.state.searchedPoems,
-                ongoingPoemTapAction: { poemId in
-                    viewModel.action(.ongoingPoemTapped(poemId))
+                ongoingPoemTapAction: { poem in
+                    viewModel.action(.ongoingPoemTapped(poem))
                 }
             )
             .padding(.horizontal, 45)
         }
-
         .onAppear {
-            viewModel.action(.viewAppeared)
+            viewModel.action(.fetchOngoingPoems(context))
         }
     }
 }
