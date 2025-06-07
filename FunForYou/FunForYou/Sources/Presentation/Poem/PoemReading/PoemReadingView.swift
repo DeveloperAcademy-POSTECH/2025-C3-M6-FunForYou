@@ -10,6 +10,7 @@ import SwiftUI
 struct PoemReadingView: View {
     @StateObject var viewModel: PoemReadingViewModel
     @Environment(\.modelContext) private var context
+    @State private var showDeleteAlert = false
 
     init(poem: Poem, coordinator: Coordinator) {
         _viewModel = StateObject(
@@ -32,9 +33,11 @@ struct PoemReadingView: View {
                         viewModel.action(.editButtonTapAction)
                     },
                     deleteButtonTapAction: {
-                        viewModel.action(
-                            .deleteButtonTapAction(context: context)
-                        )
+                        viewModel.state.showModal = false
+                        showDeleteAlert = true
+                        //                        viewModel.action(
+                        //                            .deleteButtonTapAction(context: context)
+                        //                        )
                     },
                     backButtonTapAction: {
                         viewModel.action(.backButtonTapAction)
@@ -46,15 +49,37 @@ struct PoemReadingView: View {
                 PoemReadingScrollView(
                     viewModel: viewModel
                 )
-                
+
             }
             .onAppear {
                 if viewModel.state.poem.isCompleted {
-                    viewModel.action(.calculatePoemOrderAction(context: context))
+                    viewModel.action(
+                        .calculatePoemOrderAction(context: context)
+                    )
                 }
             }
 
+            // 커스텀 얼럿 뷰
+            if showDeleteAlert {
+                PrimaryAlert(
+                    style: .deletePoem,
+                    onPrimary: {
+                        showDeleteAlert = false
+                    },
+                    onSecondary: {
+                        showDeleteAlert = false
+                        viewModel.action(
+
+                            .deleteButtonTapAction(context: context)
+                        )
+
+                    },
+                    isVisible: $showDeleteAlert
+                )
+            }
         }
+        .animation(.easeInOut, value: showDeleteAlert)
+
     }
 }
 
@@ -73,7 +98,7 @@ let samplePoem = Poem(
         자기만의 바닷가로 달려가 쓰러지는 게 좋다 
         """,
     date: Date(),
-    alignment:  .right
+    alignment: .right
 )
 
 let dummyCoordinator = Coordinator()
