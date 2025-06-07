@@ -24,6 +24,7 @@ struct PoemReadingView: View {
         ZStack {
             VStack(spacing: 0) {
                 PoemReadingTopView(
+                    poem: viewModel.state.poem,
                     ellipseButtonTapAction: {
                         viewModel.action(.ellipseButtonTapAction)
                     },
@@ -42,55 +43,11 @@ struct PoemReadingView: View {
                 )
 
                 // TODO: 시 제목, 내용을 볼 수 있게 한다.
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 16) {
-                        Text(viewModel.state.poem.title)
-                            .font(FFYFont.title)
-
-                        // TODO: 시 제목과 내용 사이에 작성자 이름(조 연화)이 보이도록 한다.
-                        Text("조 연화")
-                            .font(FFYFont.book)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-
-                        Text(viewModel.state.poem.content)
-                            .font(FFYFont.book)
-                            .multilineTextAlignment(viewModel.state.poem.alignment.swiftUITextAlignment)
-
-
-                        Rectangle()
-                            .frame(maxWidth: .infinity, maxHeight: 0.5)
-                            .padding(.top, 64)
-
-                        // TODO: 흰색 시 프레임 하단 왼쪽에 몇 번째 끝맺은 시인지 보이는 번호를, 하단 오른쪽에 최종수정일을 보여준다.
-                        HStack {
-                            Text("\(viewModel.state.poemOrderIndex ?? 0)번째 시")
-                            Spacer()
-                            Text(viewModel.state.poem.date.formattedAsKoreanDate)
-                        }
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    }
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 48)
-                    .background(
-                        Color(.white)
-                    )
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 24)
-                }
-                .background(
-                    LinearGradient(
-                        stops: [
-                            Gradient.Stop(
-                                color: Color(.pinkLight),
-                                location: 0.30
-                            ),
-                            Gradient.Stop(color: Color(.green), location: 1.00),
-                        ],
-                        startPoint: UnitPoint(x: 0.02, y: 0.01),
-                        endPoint: UnitPoint(x: 1, y: 1)
-                    )
+                PoemReadingScrollView(
+                    poem: viewModel.state.poem,
+                    poemOrderIndex: viewModel.state.poemOrderIndex
                 )
+                
             }
             .onAppear {
                 viewModel.action(.calculatePoemOrderAction(context: context))
@@ -100,7 +57,8 @@ struct PoemReadingView: View {
     }
 }
 
-private let samplePoem = Poem(
+/// Preview sample poem
+let samplePoem = Poem(
     title: "바닷가에 대하여",
     content: """
         누구나 바닷가 하나씩은 자기만의 바닷가가 있는 게 좋다
