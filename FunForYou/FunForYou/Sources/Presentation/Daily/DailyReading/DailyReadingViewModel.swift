@@ -15,6 +15,7 @@ final class DailyReadingViewModel: ViewModelable {
         var inspiredPoems: [Poem] = []
         var isShowAlert: Bool = false
         var showModal: Bool = false
+        var image: UIImage? = nil
     }
     
     enum Action {
@@ -26,6 +27,7 @@ final class DailyReadingViewModel: ViewModelable {
         case readPoemButtonTapAction(Poem)
         case ellipseButtonTapAction
         case backButtonTapAction
+        case fetchImage
     }
     
     @Published var state: State
@@ -63,6 +65,10 @@ final class DailyReadingViewModel: ViewModelable {
             
         case .backButtonTapAction:
             coordinator.popLast()
+        case .fetchImage:
+            if let imagePath = state.daily.image {
+                state.image = ImageManager.shared.loadImage(withName: imagePath)
+            }
         }
     }
     
@@ -78,10 +84,10 @@ final class DailyReadingViewModel: ViewModelable {
             if let daily = daily {
                 state.daily = daily
             } else {
-                print("❗️ 해당 ID의 Daily를 찾을 수 없습니다.")
+                print("해당 ID의 Daily를 찾을 수 없습니다.")
             }
         case .failure(let error):
-            print("❌ Daily fetch 실패: \(error.localizedDescription)")
+            print("Daily fetch 실패: \(error.localizedDescription)")
         }
     }
     
@@ -92,7 +98,7 @@ final class DailyReadingViewModel: ViewModelable {
         case .success:
             coordinator.popLast()
         case .failure(let error):
-            print("❌ Daily 삭제 실패: \(error.localizedDescription)")
+            print("Daily 삭제 실패: \(error.localizedDescription)")
         }
     }
     

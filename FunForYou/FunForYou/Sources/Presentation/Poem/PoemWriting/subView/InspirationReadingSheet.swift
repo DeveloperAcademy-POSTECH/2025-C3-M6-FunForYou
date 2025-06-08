@@ -15,11 +15,12 @@ struct InspirationReadingSheet: View {
         NavigationStack {
             ScrollView {
                 Group {
-                    if let daily = inspiration as? Daily {
+                    if let daily = inspiration as? Daily, let imagePath = daily.image {
+                        let image = ImageManager.shared.loadImage(withName: imagePath)
                         DailyReadingContentView(
                             title: daily.title,
                             content: daily.content,
-                            imagePath: daily.image
+                            image: image
                         )
                     } else if let appreciation = inspiration as? Appreciation {
                         AppreciationContentView(

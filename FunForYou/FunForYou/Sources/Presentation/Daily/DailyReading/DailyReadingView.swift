@@ -41,7 +41,7 @@ struct DailyReadingView: View {
                 DailyReadingContentView(
                     title: viewModel.state.daily.title,
                     content: viewModel.state.daily.content,
-                    imagePath: viewModel.state.daily.image
+                    image: viewModel.state.image
                 )
                 
                 InspiredPoemCardsView(
@@ -60,6 +60,7 @@ struct DailyReadingView: View {
         }
         .onAppear {
             viewModel.action(.fetchDailyById(id, context))
+            viewModel.action(.fetchImage)
         }
         .overlay {
             if viewModel.state.isShowAlert {
