@@ -10,7 +10,6 @@ import SwiftUI
 /// 일상 읽기 뷰
 struct DailyReadingView: View {
     @StateObject var viewModel: DailyReadingViewModel
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) var context
     
     private let id: String
@@ -22,13 +21,27 @@ struct DailyReadingView: View {
     
     var body: some View {
         VStack {
-            DailyReadingNavigationBar(viewModel: viewModel)
+            DailyReadingTopView(
+                backButtonTapAction: {
+                    viewModel.action(.backButtonTapAction)
+                },
+                ellipseButtonTapAction: {
+                    viewModel.action(.ellipseButtonTapAction)
+                },
+                editButtonTapAction: {
+                    viewModel.action(.editButtonTapped)
+                },
+                deleteButtonTapAction: {
+                    viewModel.action(.deleteButtonTapped)
+                },
+                showModal: $viewModel.state.showModal
+            )
             
             ScrollView {
                 DailyReadingContentView(
                     title: viewModel.state.daily.title,
                     content: viewModel.state.daily.content,
-                    imagePath: viewModel.state.daily.image
+                    image: viewModel.state.image
                 )
                 
                 InspiredPoemCardsView(
@@ -47,6 +60,7 @@ struct DailyReadingView: View {
         }
         .onAppear {
             viewModel.action(.fetchDailyById(id, context))
+            viewModel.action(.fetchImage)
         }
         .overlay {
             if viewModel.state.isShowAlert {

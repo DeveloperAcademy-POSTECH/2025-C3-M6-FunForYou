@@ -49,8 +49,6 @@ struct PhotoButtonView: View {
         if let image = selectedImage {
             Image(uiImage: image)
                 .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(maxWidth: .infinity)
                 .frame(height: 240)
                 .clipped()
                 .cornerRadius(20)

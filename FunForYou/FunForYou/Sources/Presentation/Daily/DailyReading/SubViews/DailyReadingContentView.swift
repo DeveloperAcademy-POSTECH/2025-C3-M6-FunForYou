@@ -12,17 +12,16 @@ struct DailyReadingContentView: View {
     var title: String?
     /// 시상 내용
     var content: String?
-    /// 시상 이미지 경로
-    var imagePath: String?
+    /// 시상 이미지
+    var image: UIImage?
     
     var body: some View {
-        VStack (alignment: .leading) {
+        VStack {
             TitleSceneView(title: self.title)
             
-            ImageSceneView(imagePath: self.imagePath)
+            ImageSceneView(image: self.image)
             
             ContentSceneView(content: self.content)
-            
         }
         .padding(.horizontal, 24)
     }
@@ -32,6 +31,6 @@ struct DailyReadingContentView: View {
     DailyReadingContentView(
         title: Daily.mockData.title,
         content: Daily.mockData.content,
-        imagePath: "/path" // 예시 path 입니다.
+        image: UIImage(named: "PoemPaperSet")
     )
 }

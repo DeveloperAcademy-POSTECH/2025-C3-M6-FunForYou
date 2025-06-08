@@ -6,32 +6,22 @@
 //
 import SwiftUI
 
+/// 일상 읽기 네비게이션 바
 struct DailyReadingNavigationBar: View {
-    @Environment(\.dismiss) private var dismiss
-    @ObservedObject var viewModel: DailyReadingViewModel
+    var backButtonTapAction: () -> Void
+    var ellipseButtonTapAction: () -> Void
     
     var body: some View {
         ZStack(alignment: .trailing) {
             NavigationBar(
                 title: "일상 읽기",
-                style: .backTitle,
-                onBack: {
-                    dismiss()
-                }
-            )
+                style: .backTitle
+            ) {
+                backButtonTapAction()
+            }
             
-            Menu {
-                Button {
-                    viewModel.action(.editButtonTapped)
-                } label: {
-                    Text("고쳐 쓰기")
-                }
-                
-                Button(role: .destructive) {
-                    viewModel.action(.deleteButtonTapped)
-                } label: {
-                    Text("지우기")
-                }
+            Button {
+                ellipseButtonTapAction()
             } label: {
                 Image(systemName: "ellipsis")
                     .font(.title3)
@@ -39,8 +29,10 @@ struct DailyReadingNavigationBar: View {
                     .padding(.bottom)
                     .padding(.trailing, 24)
             }
-
         }
-
     }
+}
+
+#Preview {
+    DailyReadingNavigationBar(backButtonTapAction: {}, ellipseButtonTapAction: {})
 }

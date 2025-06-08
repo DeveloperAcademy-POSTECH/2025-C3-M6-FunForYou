@@ -14,7 +14,7 @@ struct TitleSceneView: View {
     var body: some View {
         VStack {
             if let title {
-                Text("\(title)")
+                Text("\(title.forceCharWrapping)")
                     .font(FFYFont.title1)
                     .foregroundStyle(FFYColor.black)
                     .lineLimit(2)
