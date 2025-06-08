@@ -61,6 +61,7 @@ struct DailyReadingView: View {
         .onAppear {
             viewModel.action(.fetchDailyById(id, context))
             viewModel.action(.fetchImage)
+            viewModel.action(.fetchAllPoemFromInspirationId(context))
         }
         .overlay {
             if viewModel.state.isShowAlert {
