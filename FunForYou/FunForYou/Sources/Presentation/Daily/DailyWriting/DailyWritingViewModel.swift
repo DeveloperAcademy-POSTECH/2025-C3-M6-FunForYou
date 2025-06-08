@@ -50,10 +50,6 @@ final class DailyWritingViewModel: ViewModelable {
     }
     
     func saveDailyInspiration(context: ModelContext) {
-        print("제목: \(state.dailyTitle)")
-        print("내용: \(state.dailyContent)")
-        print("이미지 있음?: \(state.selectedImage != nil)")
-        
         let fileName = UUID().uuidString
         
         let savePath: String? = {
@@ -63,22 +59,35 @@ final class DailyWritingViewModel: ViewModelable {
             return nil
         }()
         
-        let daily = Daily(
-            title: state.dailyTitle,
-            content: state.dailyContent,
-            image: savePath,
-            date: Date())
+        if let _ = state.daily {
+            state.daily?.title = state.dailyTitle
+            state.daily?.content = state.dailyContent
+            state.daily?.image = savePath
+
+            switch SwiftDataManager.shared.updateInspiration(context: context) {
+            case .success:
+                coordinator.removeAll()
+            case .failure(let error):
+                print("저장 실패: \(error.localizedDescription)")
+            }
+        } else {
+            let daily = Daily(
+                title: state.dailyTitle,
+                content: state.dailyContent,
+                image: savePath,
+                date: Date())
+                
+            let result = SwiftDataManager.shared.saveInspiration(
+                inspiration: daily,
+                context: context
+            )
             
-        let result = SwiftDataManager.shared.saveInspiration(
-            inspiration: daily,
-            context: context
-        )
-        
-        switch result {
-        case .success:
-            coordinator.popLast()
-        case .failure(let error):
-            print("저장 실패: \(error.localizedDescription)")
+            switch result {
+            case .success:
+                coordinator.removeAll()
+            case .failure(let error):
+                print("저장 실패: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -99,10 +108,10 @@ final class DailyWritingViewModel: ViewModelable {
                     state.selectedImage = ImageManager.shared.loadImage(withName: imagePath)
                 }
             } else {
-                print("❗️ 해당 ID의 Daily를 찾을 수 없습니다.")
+                print("해당 ID의 Daily를 찾을 수 없습니다.")
             }
         case .failure(let error):
-            print("❌ Daily fetch 실패: \(error.localizedDescription)")
+            print("Daily fetch 실패: \(error.localizedDescription)")
         }
     }
 }
