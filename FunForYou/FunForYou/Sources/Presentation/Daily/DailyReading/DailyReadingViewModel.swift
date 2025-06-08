@@ -24,6 +24,7 @@ final class DailyReadingViewModel: ViewModelable {
         case deleteButtonTapped
         case deleteDailyInspiration(String, ModelContext)
         case writeNewPoemButtonTapAction
+        case fetchAllPoemFromInspirationId(ModelContext)
         case readPoemButtonTapAction(Poem)
         case ellipseButtonTapAction
         case backButtonTapAction
@@ -56,6 +57,9 @@ final class DailyReadingViewModel: ViewModelable {
             
         case .writeNewPoemButtonTapAction:
             writeNewPoemButtonTapAction()
+            
+        case .fetchAllPoemFromInspirationId(let context):
+            fetchPoemsByDailyID(context: context)
 
         case .readPoemButtonTapAction(let poem):
             coordinator.push(.poemReading(poem))
@@ -65,6 +69,7 @@ final class DailyReadingViewModel: ViewModelable {
             
         case .backButtonTapAction:
             coordinator.popLast()
+            
         case .fetchImage:
             if let imagePath = state.daily.image {
                 state.image = ImageManager.shared.loadImage(withName: imagePath)
@@ -106,12 +111,21 @@ final class DailyReadingViewModel: ViewModelable {
         coordinator.push(
             .poemWriting(
                 Poem(
-                    type: .appreciation(state.daily.id),
+                    type: .daily(state.daily.id),
                     title: "",
                     content: ""
                 )
             )
         )
         
+    }
+    
+    func fetchPoemsByDailyID(context: ModelContext) {
+        switch SwiftDataManager.shared.fetchAllPoemFromInspirationId(inspirationId: self.state.daily.id, context: context) {
+        case .success(let poems):
+            state.inspiredPoems = poems
+        case .failure(let error):
+            print("Fetch error: \(error)")
+        }
     }
 }
