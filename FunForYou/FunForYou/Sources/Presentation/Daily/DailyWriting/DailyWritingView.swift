@@ -43,6 +43,11 @@ struct DailyWritingView: View {
         .sheet(isPresented: $viewModel.state.isShowImagePicker) {
             PhotoPicker(selectedImage: $viewModel.state.selectedImage)
         }
+        .onAppear {
+            if let id = viewModel.id {
+                viewModel.action(.fetchDailyById(id, context))
+            }
+        }
         .overlay {
             if viewModel.state.isShowAlert {
                 PrimaryAlert(

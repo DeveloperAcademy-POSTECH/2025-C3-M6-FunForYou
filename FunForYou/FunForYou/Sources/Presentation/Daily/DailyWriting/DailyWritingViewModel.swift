@@ -11,8 +11,10 @@ import SwiftData
 final class DailyWritingViewModel: ViewModelable {
     @ObservedObject var coordinator: Coordinator
     
+    let id: String?
+    
     struct State {
-        var daily: Daily? = Daily.mockData
+        var daily: Daily? = nil
         var dailyTitle: String = ""
         var dailyContent: String = ""
         var selectedImage: UIImage?
@@ -27,47 +29,80 @@ final class DailyWritingViewModel: ViewModelable {
     
     enum Action {
         case saveDailyInspiration(ModelContext)
+        case fetchDailyById(String, ModelContext)
     }
     
     @Published var state: State = State()
     
     init(id: String?, coordinator: Coordinator) {
+        self.id = id
         self.coordinator = coordinator
     }
     
     func action(_ action: Action) {
         switch action {
         case .saveDailyInspiration(let context):
-            print("제목: \(state.dailyTitle)")
-            print("내용: \(state.dailyContent)")
-            print("이미지 있음?: \(state.selectedImage != nil)")
-            
-            let fileName = UUID().uuidString
-            
-            let savePath: String? = {
-                if let image = state.selectedImage {
-                    return ImageManager.shared.saveImage(image, withName: fileName)
-                }
-                return nil
-            }()
-            
-            let daily = Daily(
-                title: state.dailyTitle,
-                content: state.dailyContent,
-                image: savePath,
-                date: Date())
-                
-            let result = SwiftDataManager.shared.saveInspiration(
-                inspiration: daily,
-                context: context
-            )
-            
-            switch result {
-            case .success:
-                coordinator.popLast()
-            case .failure(let error):
-                print("저장 실패: \(error.localizedDescription)")
+            saveDailyInspiration(context: context)
+        case let .fetchDailyById(id, context):
+            fetchDailyInspiration(id, context: context)
+            print("호출?")
+        }
+    }
+    
+    func saveDailyInspiration(context: ModelContext) {
+        print("제목: \(state.dailyTitle)")
+        print("내용: \(state.dailyContent)")
+        print("이미지 있음?: \(state.selectedImage != nil)")
+        
+        let fileName = UUID().uuidString
+        
+        let savePath: String? = {
+            if let image = state.selectedImage {
+                return ImageManager.shared.saveImage(image, withName: fileName)
             }
+            return nil
+        }()
+        
+        let daily = Daily(
+            title: state.dailyTitle,
+            content: state.dailyContent,
+            image: savePath,
+            date: Date())
+            
+        let result = SwiftDataManager.shared.saveInspiration(
+            inspiration: daily,
+            context: context
+        )
+        
+        switch result {
+        case .success:
+            coordinator.popLast()
+        case .failure(let error):
+            print("저장 실패: \(error.localizedDescription)")
+        }
+    }
+    
+    func fetchDailyInspiration(_ id: String, context: ModelContext) {
+        let result: Result<Daily?, Error> = SwiftDataManager.shared.fetchInspirationById(
+            inspirationType: Daily.self,
+            inspirationId: id,
+            context: context
+        )
+        
+        switch result {
+        case .success(let daily):
+            if let daily = daily {
+                state.daily = daily
+                state.dailyTitle = daily.title ?? ""
+                state.dailyContent = daily.content ?? ""
+                if let imagePath = daily.image {
+                    state.selectedImage = ImageManager.shared.loadImage(withName: imagePath)
+                }
+            } else {
+                print("❗️ 해당 ID의 Daily를 찾을 수 없습니다.")
+            }
+        case .failure(let error):
+            print("❌ Daily fetch 실패: \(error.localizedDescription)")
         }
     }
 }
