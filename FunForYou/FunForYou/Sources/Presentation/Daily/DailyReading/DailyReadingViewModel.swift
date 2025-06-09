@@ -78,8 +78,7 @@ final class DailyReadingViewModel: ViewModelable {
     }
     
     func fetchDailyInspiration(_ id: String, context: ModelContext) {
-        let result: Result<Daily?, Error> = SwiftDataManager.shared.fetchInspirationById(
-            inspirationType: Daily.self,
+        let result: Result<Daily?, Error> = SwiftDataManager.shared.fetchDailyById(
             inspirationId: id,
             context: context
         )

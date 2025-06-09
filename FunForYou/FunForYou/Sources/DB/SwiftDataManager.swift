@@ -109,20 +109,34 @@ final class SwiftDataManager {
         }
     }
     
-    /// 시상(Appreciation, Daily) 정보 id로 가져오기 (Read)
-    func fetchInspirationById<T: Inspiration>(
-        inspirationType: T.Type,
+    /// Daily 시상 정보 id로 가져오기 (Read)
+    func fetchDailyById(
         inspirationId: String,
         context: ModelContext
-    ) -> Result<T?, Error> {
-        let predicate = #Predicate<T> { $0.id == inspirationId }
-        let fetchDescriptor = FetchDescriptor<T>(predicate: predicate)
-        do {
-            let inspiration = try context.fetch(fetchDescriptor)
-            return .success(inspiration.first)
-        } catch {
-            return .failure(error)
-        }
+    ) -> Result<Daily?, Error> {
+        let predicate = #Predicate<Daily> { $0.id == inspirationId }
+            let descriptor = FetchDescriptor<Daily>(predicate: predicate)
+            do {
+                let result = try context.fetch(descriptor)
+                return .success(result.first)
+            } catch {
+                return .failure(error)
+            }
+    }
+    
+    /// Appreciation 시상 정보 id로 가져오기 (Read)
+    func fetchAppreciationById(
+        inspirationId: String,
+        context: ModelContext
+    ) -> Result<Appreciation?, Error> {
+        let predicate = #Predicate<Appreciation> { $0.id == inspirationId }
+            let descriptor = FetchDescriptor<Appreciation>(predicate: predicate)
+            do {
+                let result = try context.fetch(descriptor)
+                return .success(result.first)
+            } catch {
+                return .failure(error)
+            }
     }
     
     /// 시상 수정 (Update)
