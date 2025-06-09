@@ -6,9 +6,8 @@
 //
 
 import SwiftUI
-import UIKit
 
-struct CustomTextEditor: UIViewRepresentable {
+struct CustomTextEditor: View {
     @Binding var text: String
     var alignment: TextAlignmentType
     let characterLimit: Int = 1000
@@ -24,87 +23,40 @@ struct CustomTextEditor: UIViewRepresentable {
     끝맺은 시들도 언제든지 고칠 수 있어요.
     """
 
-    func makeUIView(context: Context) -> UITextView {
-        let textView = UITextView()
-        textView.delegate = context.coordinator
-        textView.backgroundColor = .clear
-        textView.font = .ffyPage
-        textView.textAlignment = alignment.nsTextAlignment
-        textView.isScrollEnabled = true
-        textView.showsVerticalScrollIndicator = true
-
-        let placeholderLabel = UILabel()
-        placeholderLabel.text = placeholder
-        placeholderLabel.textColor = UIColor.lightGray
-        placeholderLabel.font = .ffyPage
-        placeholderLabel.numberOfLines = 0
-        placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
-        placeholderLabel.tag = 100
-
-        textView.addSubview(placeholderLabel)
-        NSLayoutConstraint.activate([
-            placeholderLabel.topAnchor.constraint(equalTo: textView.topAnchor, constant: 8),
-            placeholderLabel.leadingAnchor.constraint(equalTo: textView.leadingAnchor, constant: 5),
-            placeholderLabel.trailingAnchor.constraint(equalTo: textView.trailingAnchor, constant: -5)
-        ])
-
-        placeholderLabel.isHidden = !text.isEmpty
-
-        return textView
-    }
-
-    func updateUIView(_ uiView: UITextView, context: Context) {
-        if uiView.text != text {
-            uiView.text = text
-        }
-        uiView.textAlignment = alignment.nsTextAlignment
-        uiView.font = .ffyPage
-
-        if let placeholderLabel = uiView.viewWithTag(100) as? UILabel {
-            placeholderLabel.isHidden = !text.isEmpty
-        }
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    class Coordinator: NSObject, UITextViewDelegate {
-        var parent: CustomTextEditor
-
-        init(_ parent: CustomTextEditor) {
-            self.parent = parent
-        }
-
-        func textViewDidChange(_ textView: UITextView) {
-            if textView.text.count > parent.characterLimit {
-                textView.text = String(textView.text.prefix(parent.characterLimit))
-                let end = textView.endOfDocument
-                textView.selectedTextRange = textView.textRange(from: end, to: end)
+    var body: some View {
+        TextEditor(text: $text)
+            .font(Font(UIFont.ffyPage))
+            .multilineTextAlignment(alignment.swiftUITextAlignment)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 12)
+            .overlay(
+                Group {
+                    if text.isEmpty {
+                        Text(placeholder)
+                            .foregroundColor(.gray)
+                            .font(Font(UIFont.ffyPage))
+                            .multilineTextAlignment(alignment.swiftUITextAlignment)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 16)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: Alignment(horizontal: .leading, vertical: .top))
+                            .allowsHitTesting(false)  // placeholder는 터치 이벤트 무시해서 편집 가능하게
+                    }
+                }
+            )
+            .frame(minHeight: 400)
+            .padding(.horizontal, 30)
+            .padding(.bottom, 5)
+            .onChange(of: text) {
+                if text.count > characterLimit {
+                    text = String(text.prefix(characterLimit))
+                }
             }
-            parent.text = textView.text
-
-            if let placeholderLabel = textView.viewWithTag(100) as? UILabel {
-                placeholderLabel.isHidden = !textView.text.isEmpty
-            }
-        }
     }
 }
-
 
 
 extension UIFont {
     static var ffyPage: UIFont {
         UIFont(name: "KimjungchulMyungjo-Regular", size: 16) ?? UIFont.systemFont(ofSize: 16)
-    }
-}
-
-extension TextAlignmentType {
-    var nsTextAlignment: NSTextAlignment {
-        switch self {
-        case .left: return .left
-        case .center: return .center
-        case .right: return .right
-        }
     }
 }

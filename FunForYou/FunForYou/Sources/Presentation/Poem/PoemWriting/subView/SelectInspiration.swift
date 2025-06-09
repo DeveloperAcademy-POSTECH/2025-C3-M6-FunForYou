@@ -19,7 +19,7 @@ struct SelectInspiration: View {
                 .padding(.trailing, 30)
 
             SelectedTextButton(
-                title: viewModel.state.selectedInspiration?.title ?? "제목 없음",
+                title: viewModel.state.selectedInspiration?.title ?? "눌러서 선택하여주세요.",
                 systemImage: "chevron.up.chevron.down",
                 imageOnRight: true,
                 viewModel: viewModel
