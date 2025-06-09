@@ -40,7 +40,6 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
         }
     }
 
-
     enum Action {
         case updateTitle(String)
         case updateContent(String)
@@ -71,9 +70,7 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
             state.poem.alignment = newAlignment
 
         case .onSheetAppeared(let context):
-            //            loadAllInspirations(context: context)
-            // Debug
-            state.inspirationList = setTestInspirations()
+            loadAllInspirations(context: context)
 
         case .saveOrUpdatePoem(let context, let isCompleted):
             state.poem.isCompleted = isCompleted
@@ -189,11 +186,14 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
     }
 
     private static func updateCanSave(poem: Poem) -> Bool {
-        let titleNotEmpty = !poem.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        let contentNotEmpty = !poem.content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        let titleNotEmpty = !poem.title.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        ).isEmpty
+        let contentNotEmpty = !poem.content.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        ).isEmpty
         return (titleNotEmpty || contentNotEmpty)
     }
-
 
     private func setTestInspirations() -> [any Inspiration] {
         let testImage = UIImage(named: "PoemPaperSet")!
