@@ -15,12 +15,16 @@ struct InspirationReadingSheet: View {
         NavigationStack {
             ScrollView {
                 Group {
-                    if let daily = inspiration as? Daily, let imagePath = daily.image {
-                        let image = ImageManager.shared.loadImage(withName: imagePath)
+                    if let daily = inspiration as? Daily {
+                        // UIImage? 타입을 그대로 넘겨줌
+                        let uiImage = daily.image.flatMap {
+                            ImageManager.shared.loadImage(withName: $0)
+                        }
+
                         DailyReadingContentView(
                             title: daily.title,
                             content: daily.content,
-                            image: image
+                            image: uiImage
                         )
                     } else if let appreciation = inspiration as? Appreciation {
                         AppreciationContentView(
@@ -53,4 +57,3 @@ struct InspirationReadingSheet: View {
         .presentationDragIndicator(.visible)
     }
 }
-

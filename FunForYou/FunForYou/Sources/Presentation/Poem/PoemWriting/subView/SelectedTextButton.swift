@@ -20,7 +20,7 @@ struct SelectedTextButton: View {
 
         Button(action: action) {
             HStack {
-                Text(title)
+                Text((title.isEmpty ?? true) ? "(제목 없음)" : title)
                     .font(FFYFont.body)
                     .lineLimit(1)
                 

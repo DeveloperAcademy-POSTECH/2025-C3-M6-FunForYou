@@ -17,6 +17,7 @@ struct PoemWritingContentView: View {
                 .font(FFYFont.title)
                 .lineLimit(1)
                 .padding(.bottom,20)
+                .padding(.horizontal, 24)
                 .onChange(of: viewModel.state.poem.title) { _, newValue in
                     if newValue.count > 15 {
                         viewModel.state.poem.title = String(newValue.prefix(15))

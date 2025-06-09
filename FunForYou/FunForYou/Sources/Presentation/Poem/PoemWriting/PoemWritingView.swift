@@ -55,7 +55,7 @@ struct PoemWritingView: View {
                     viewModel: viewModel
                 )
             }
-            .padding(.horizontal, 24)
+            
             .padding(.top,30)
 
         }
