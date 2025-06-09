@@ -155,8 +155,7 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
         switch state.poem.type {
         case .daily:
             let result: Result<Daily?, Error> = SwiftDataManager.shared
-                .fetchInspirationById(
-                    inspirationType: Daily.self,
+                .fetchDailyById(
                     inspirationId: inspirationId,
                     context: context
                 )
@@ -171,8 +170,7 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
 
         case .appreciation:
             let result: Result<Appreciation?, Error> = SwiftDataManager.shared
-                .fetchInspirationById(
-                    inspirationType: Appreciation.self,
+                .fetchAppreciationById(
                     inspirationId: inspirationId,
                     context: context
                 )
