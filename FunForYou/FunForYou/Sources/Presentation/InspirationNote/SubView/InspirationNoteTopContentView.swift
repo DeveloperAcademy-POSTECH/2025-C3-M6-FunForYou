@@ -15,7 +15,7 @@ struct InspirationNoteTopContentView: View {
     }
     
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(alignment: .bottom, spacing: 0) {
             Text("시상 수첩")
                 .font(FFYFont.largeTitle)
                 .foregroundStyle(.black)
@@ -25,6 +25,7 @@ struct InspirationNoteTopContentView: View {
             }) {
                 Text("시상 쓰기")
                     .foregroundStyle(FFYColor.pinkDark)
+                    .font(FFYFont.title3)
             }
             .buttonStyle(.plain)
         }

@@ -15,7 +15,7 @@ struct CompleteCollectionTopView: View {
     }
     
     var body: some View {
-        HStack(spacing: 0) {
+        HStack(alignment: .bottom, spacing: 0) {
             Text("끝맺은 시")
                 .font(FFYFont.largeTitle)
                 .foregroundStyle(.black)
@@ -25,6 +25,7 @@ struct CompleteCollectionTopView: View {
             }) {
                 Text("시 쓰기")
                     .foregroundStyle(FFYColor.pinkDark)
+                    .font(FFYFont.title3)
             }
             .buttonStyle(.plain)
         }
