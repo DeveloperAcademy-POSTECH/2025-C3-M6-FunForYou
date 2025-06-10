@@ -60,9 +60,9 @@ final class DailyWritingViewModel: ViewModelable {
         }()
         
         if let _ = state.daily {
-            state.daily?.title = state.dailyTitle
-            state.daily?.content = state.dailyContent
-            state.daily?.image = savePath
+            state.daily?.title = state.dailyTitle.nilIfBlank
+            state.daily?.content = state.dailyContent.nilIfBlank
+            state.daily?.image = savePath?.nilIfBlank
 
             switch SwiftDataManager.shared.updateInspiration(context: context) {
             case .success:
@@ -72,9 +72,9 @@ final class DailyWritingViewModel: ViewModelable {
             }
         } else {
             let daily = Daily(
-                title: state.dailyTitle,
-                content: state.dailyContent,
-                image: savePath,
+                title: state.dailyTitle.nilIfBlank,
+                content: state.dailyContent.nilIfBlank,
+                image: savePath?.nilIfBlank,
                 date: Date())
                 
             let result = SwiftDataManager.shared.saveInspiration(
