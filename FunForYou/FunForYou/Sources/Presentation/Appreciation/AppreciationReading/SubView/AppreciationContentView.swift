@@ -32,8 +32,10 @@ struct AppreciationContentView: View {
             if let content {
                 Text(content)
                     .font(FFYFont.body)
+                    .foregroundStyle(FFYColor.black)
                     .lineSpacing(5)
-                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }

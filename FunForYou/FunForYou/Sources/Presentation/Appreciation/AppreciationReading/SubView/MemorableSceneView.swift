@@ -22,6 +22,8 @@ struct MemorableSceneView: View {
                 Text(scene)
                     .font(FFYFont.body)
                     .foregroundStyle(FFYColor.black)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }
