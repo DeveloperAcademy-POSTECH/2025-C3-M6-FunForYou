@@ -14,11 +14,7 @@ final class InspirationNoteViewModel: ViewModelable {
     struct State {
         var inspirations: [any Inspiration] = []
         var searchedInspirations: [any Inspiration] = []
-        var questions: [String] = [
-            "마요와 처음으로 단 둘이 산책한 날을 떠올려 봐요. 어떤 일이 있었나요?",
-            "마요와 처음으로 단 둘이 산책한 날을 떠올려 봐요. 어떤 일이 있었나요?",
-            "마요와 처음으로 단 둘이 산책한 날을 떠올려 봐요. 어떤 일이 있었나요?"
-        ]
+        var questions: [String] = []
         var selectedQuestionIdx: Int = 0
         var searchText: String = ""
         var showWriteModal: Bool = false
@@ -39,6 +35,8 @@ final class InspirationNoteViewModel: ViewModelable {
     
     init(coordinator: Coordinator) {
         self.coordinator = coordinator
+        
+        refreshQuestions()
     }
     
     func action(_ action: Action) {
@@ -83,6 +81,52 @@ final class InspirationNoteViewModel: ViewModelable {
         case .appreciationPreviewTapped(let appreciation):
             coordinator.push(.appreciationReading(appreciation))
         }
+    }
+    
+    private func refreshQuestions() {
+        let lastQuestionRefreshDateKey = "lastQuestionRefreshDate"
+        let todayQuestionsKey = "todaysQuestions"
+        
+        let calendar = Calendar.current
+        let lastRefreshDate = UserDefaults.standard.object(forKey: lastQuestionRefreshDateKey) as? Date ?? .distantPast
+        
+        if !calendar.isDateInToday(lastRefreshDate) {
+            let allQuestions = loadQuestions()
+            let newQuestions = getRandomQuestions(from: allQuestions, count: 3)
+            self.state.questions = newQuestions
+            
+            if let data = try? JSONEncoder().encode(newQuestions) {
+                UserDefaults.standard.set(data, forKey: todayQuestionsKey)
+            }
+            UserDefaults.standard.set(Date(), forKey: lastQuestionRefreshDateKey)
+        } else {
+            if let data = UserDefaults.standard.data(forKey: todayQuestionsKey),
+                let savedQuestions = try? JSONDecoder().decode([String].self, from: data) {
+                self.state.questions = savedQuestions
+            } else {
+                self.state.questions = []
+            }
+        }
+    }
+    
+    private func loadQuestions() -> [String] {
+        guard let url = Bundle.main.url(forResource: "DailyQuestions", withExtension: "json") else {
+            print("JSON 파일을 찾을 수 없습니다.")
+            return []
+        }
+
+        do {
+            let data = try Data(contentsOf: url)
+            let questions = try JSONDecoder().decode([String].self, from: data)
+            return questions
+        } catch {
+            print("JSON 파싱 오류: \(error)")
+            return []
+        }
+    }
+    
+    private func getRandomQuestions(from questions: [String], count: Int) -> [String] {
+        return Array(questions.shuffled().prefix(count))
     }
     
     private func fetchInspirations(context: ModelContext) -> [any Inspiration] {
