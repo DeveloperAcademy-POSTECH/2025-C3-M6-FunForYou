@@ -20,6 +20,9 @@ struct QuoteMarkView: View {
             if let title {
                 Text(title)
                     .font(FFYFont.title3)
+                    .foregroundStyle(FFYColor.black)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
             
             Image("double-quotes-r")
