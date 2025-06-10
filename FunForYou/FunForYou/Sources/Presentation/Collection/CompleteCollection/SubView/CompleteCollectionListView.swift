@@ -36,6 +36,7 @@ struct CompleteCollectionListView: View {
                     .padding(.bottom, 32)
                 }
             }
+            .padding(.horizontal, 20)
         }
     }
 }
