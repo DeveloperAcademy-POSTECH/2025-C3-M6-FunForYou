@@ -9,16 +9,15 @@ import SwiftUI
 
 struct PoemWritingContentView: View {
     @ObservedObject var viewModel: PoemWritingViewModel
-    @FocusState.Binding var isEditorFocused: Bool
     @Environment(\.modelContext) private var context
 
     var body: some View {
-        ScrollView {
+        VStack {
             TextField("시 제목", text: $viewModel.state.poem.title)
                 .font(FFYFont.title)
                 .lineLimit(1)
+                .padding(.bottom,20)
                 .padding(.horizontal, 24)
-                .padding(.bottom, 32)
                 .onChange(of: viewModel.state.poem.title) { _, newValue in
                     if newValue.count > 15 {
                         viewModel.state.poem.title = String(newValue.prefix(15))
@@ -27,7 +26,7 @@ struct PoemWritingContentView: View {
                 .onChange(of: viewModel.state.poem.title) { _, _ in
                     viewModel.action(.updateCanSave)
                 }
-                .focused($isEditorFocused)
+                
 
             SelectInspiration(viewModel: viewModel)
 
@@ -49,11 +48,10 @@ struct PoemWritingContentView: View {
                 ),
                 alignment: viewModel.state.poem.alignment
             )
-            .frame(minHeight: 408)
-            .padding(.horizontal, 54)
+            .frame(minHeight: 400)
+            .padding(.horizontal, 30)
             .padding(.bottom, 5)
-            .focused($isEditorFocused)
-            .onChange(of: viewModel.state.poem.content) { _, _ in
+                        .onChange(of: viewModel.state.poem.content) { _, _ in
                 viewModel.action(.updateCanSave)
             }
 
@@ -65,6 +63,8 @@ struct PoemWritingContentView: View {
                     .saveOrUpdatePoem(context: context, isCompleted: true)
                 )
             }
+            Spacer()
         }
+        .hideKeyboardOnTap()
     }
 }

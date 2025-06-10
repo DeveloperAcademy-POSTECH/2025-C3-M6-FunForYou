@@ -52,6 +52,7 @@ struct PoemReadingTopView: View {
                 modalStyle: .defaultTop(
                     modify: {
                         editButtonTapAction()
+                        showModal = false
                     },
                     delete: {
                         deleteButtonTapAction()

@@ -13,7 +13,7 @@ struct DailyTextContentView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(daily.title ?? "(제목 없음)")
+            Text((daily.title?.isEmpty ?? true) ? "(제목 없음)" : daily.title!)
                 .font(FFYFont.title3)
                 .foregroundStyle(FFYColor.black)
                 .lineLimit(1)

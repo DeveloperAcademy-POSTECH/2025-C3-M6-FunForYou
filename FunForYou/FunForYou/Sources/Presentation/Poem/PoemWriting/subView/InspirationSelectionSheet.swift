@@ -32,6 +32,7 @@ struct InspirationSelectionSheet: View {
                         selectedInspirationId = "none"
                         viewModel.state.poem.type = .none
                         viewModel.state.selectedInspiration = nil
+                        dismiss()
                     }
 
                     // 영감이 있는 경우
@@ -44,10 +45,12 @@ struct InspirationSelectionSheet: View {
                                 selectedInspirationId = daily.id
                                 viewModel.state.poem.type = .daily(daily.id)
                                 viewModel.state.selectedInspiration = daily
+                                dismiss()
                             } else if let appreciation = inspiration as? Appreciation {
                                 selectedInspirationId = appreciation.id
                                 viewModel.state.poem.type = .appreciation(appreciation.id)
                                 viewModel.state.selectedInspiration = appreciation
+                                dismiss()
                             }
                         }
                     }

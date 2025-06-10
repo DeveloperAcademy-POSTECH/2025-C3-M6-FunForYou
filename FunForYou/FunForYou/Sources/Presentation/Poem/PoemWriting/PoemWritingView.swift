@@ -13,6 +13,7 @@ struct PoemWritingView: View {
     @Environment(\.modelContext) private var context
     @FocusState private var isEditorFocused: Bool
     @State private var isShowingAlert = false
+    @Environment(\.dismiss) private var dismiss
 
     init(poem: Poem?, coordinator: Coordinator) {
         _viewModel = StateObject(
@@ -24,48 +25,44 @@ struct PoemWritingView: View {
     }
 
     var body: some View {
-        ZStack {
-            VStack(spacing: 0) {
 
-                // 상단 네비게이션
-                NavigationBar(
-                    title: "시 쓰기",
-                    style: .backTitleButton(
-                        title: "임시보관",
-                        isEnabled: viewModel.canSave,
-                        action: {
-                            viewModel.action(
-                                .saveOrUpdatePoem(
-                                    context: context,
-                                    isCompleted: false
-                                )
+        VStack(spacing: 0) {
+
+            // 상단 네비게이션
+            NavigationBar(
+                title: "시 쓰기",
+                style: .backTitleButton(
+                    title: "임시보관",
+                    isEnabled: viewModel.canSave,
+                    action: {
+                        viewModel.action(
+                            .saveOrUpdatePoem(
+                                context: context,
+                                isCompleted: false
                             )
-                        }
-                    ),
-                    onBack: {
-                        withAnimation {
-                            isShowingAlert = true
-                        }
+                        )
                     }
-                )
-                .padding(.bottom, 32)
-
+                ),
+                onBack: {
+                    withAnimation {
+                        isShowingAlert = true
+                    }
+                }
+            )
+            
+            ScrollView {
                 PoemWritingContentView(
-                    viewModel: viewModel,
-                    isEditorFocused: $isEditorFocused
+                    viewModel: viewModel
                 )
+            }
+            
+            .padding(.top,30)
 
-            }
-            .contentShape(Rectangle())  // 여기서 전체 터치 영역을 지정
-            .onTapGesture {
-                isEditorFocused = false  // 키보드 내림
-            }
-            .onAppear {
-                viewModel.action(.onAppeared(context: context))
-            }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
-
-            // 뒤로가기 시 알림창
+        }
+        .onAppear {
+            viewModel.action(.onAppeared(context: context))
+        }
+        .overlay {
             if isShowingAlert {
                 PrimaryAlert(
                     style: .basic,
@@ -73,13 +70,13 @@ struct PoemWritingView: View {
                         isShowingAlert = false
                     },
                     onSecondary: {
-                        isShowingAlert = false
-                        viewModel.coordinator.popLast()
+                        dismiss()
                     },
                     isVisible: $isShowingAlert
                 )
-                .zIndex(10)
             }
         }
+        .hideKeyboardOnTap()
+
     }
 }
