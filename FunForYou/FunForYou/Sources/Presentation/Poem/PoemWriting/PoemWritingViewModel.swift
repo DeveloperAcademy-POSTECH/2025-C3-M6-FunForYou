@@ -49,7 +49,7 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
         case onAppeared(context: ModelContext)
         case updateCanSave
         case saveOrUpdatePoem(context: ModelContext, isCompleted: Bool)
-
+        case deletePoem(context: ModelContext)
     }
 
     func action(_ action: Action) {
@@ -100,9 +100,12 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
                     error.localizedDescription
                 )
             }
+            
         case .updateCanSave:
             canSave = Self.updateCanSave(poem: state.poem)
-
+            
+        case .deletePoem(let context):
+            deletePoemById(context: context)
         }
 
     }
@@ -185,6 +188,19 @@ final class PoemWritingViewModel: ViewModelable, ObservableObject {
         }
     }
 
+    private func deletePoemById(context: ModelContext) {
+        let result = SwiftDataManager.shared.deletePoem(poem: state.poem, context: context)
+        
+        switch result {
+        case .success:
+            print("삭제 성공")
+            coordinator.popLast()
+        
+        case .failure(let error):
+            print("시 삭제 실패: ",error.localizedDescription)
+        }
+    }
+    
     private static func updateCanSave(poem: Poem) -> Bool {
         let titleNotEmpty = !poem.title.trimmingCharacters(
             in: .whitespacesAndNewlines

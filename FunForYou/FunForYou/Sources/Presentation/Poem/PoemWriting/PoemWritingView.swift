@@ -70,7 +70,7 @@ struct PoemWritingView: View {
                         isShowingAlert = false
                     },
                     onSecondary: {
-                        dismiss()
+                        viewModel.action(.deletePoem(context: context))
                     },
                     isVisible: $isShowingAlert
                 )
