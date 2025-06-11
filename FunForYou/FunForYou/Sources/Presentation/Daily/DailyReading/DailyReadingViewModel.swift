@@ -122,7 +122,9 @@ final class DailyReadingViewModel: ViewModelable {
     func fetchPoemsByDailyID(context: ModelContext) {
         switch SwiftDataManager.shared.fetchAllPoemFromInspirationId(inspirationId: self.state.daily.id, context: context) {
         case .success(let poems):
-            state.inspiredPoems = poems
+            state.inspiredPoems = poems.filter {
+                $0.isCompleted
+            }
         case .failure(let error):
             print("Fetch error: \(error)")
         }
