@@ -45,7 +45,8 @@ struct DailyReadingNavigationBar: View {
                     .foregroundStyle(FFYColor.pinkDark)
                     .padding(.bottom)
                     .padding(.trailing, 24)
-            }            
+            }
+            .contentShape(Circle())
         }
     }
 }

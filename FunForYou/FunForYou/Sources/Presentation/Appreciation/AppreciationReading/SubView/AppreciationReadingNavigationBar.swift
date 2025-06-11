@@ -47,7 +47,7 @@ struct AppreciationReadingNavigationBar: View {
                     .padding(.bottom)
                     .padding(.trailing, 24)
             }
-
+            .contentShape(Circle())
         }
     }
 }
