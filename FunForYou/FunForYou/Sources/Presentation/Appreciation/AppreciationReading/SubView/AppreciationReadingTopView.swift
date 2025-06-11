@@ -35,10 +35,10 @@ struct AppreciationReadingTopView: View {
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
             // 네비게이션 바
-            AppreciationReadingNavigationBar(
-                backButtonTapAction: backButtonTapAction,
-                ellipseButtonTapAction: ellipseButtonTapAction
-            )
+//            AppreciationReadingNavigationBar(
+//                backButtonTapAction: backButtonTapAction,
+//                ellipseButtonTapAction: ellipseButtonTapAction
+//            )
             
             // 메뉴 모달
             TopMenuModal(

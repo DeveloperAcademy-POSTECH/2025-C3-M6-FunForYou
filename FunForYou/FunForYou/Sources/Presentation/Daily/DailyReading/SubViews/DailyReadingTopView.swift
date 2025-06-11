@@ -31,10 +31,10 @@ struct DailyReadingTopView: View {
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
             // 네비게이션 바
-            DailyReadingNavigationBar(
-                backButtonTapAction: backButtonTapAction,
-                ellipseButtonTapAction: ellipseButtonTapAction
-            )
+//            DailyReadingNavigationBar(
+//                backButtonTapAction: backButtonTapAction,
+//                ellipseButtonTapAction: ellipseButtonTapAction
+//            )
             
             // 메뉴 모달
             TopMenuModal(

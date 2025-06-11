@@ -7,44 +7,39 @@
 import SwiftUI
 
 struct InspirationNoteTopView: View {
-    var writeInspirationButtonTapAction: () -> Void
     var writeDailyButtonTapAction: () -> Void
     var writeAppreciationButtonTapAction: () -> Void
-    @Binding var showWriteModal: Bool
-    
-    init(
-        writeInspirationButtonTapAction: @escaping () -> Void,
-        writeDailyButtonTapAction: @escaping () -> Void,
-        writeAppreciationButtonTapAction: @escaping () -> Void,
-        showWriteModal: Binding<Bool>
-    ) {
-        self.writeInspirationButtonTapAction = writeInspirationButtonTapAction
-        self.writeDailyButtonTapAction = writeDailyButtonTapAction
-        self.writeAppreciationButtonTapAction = writeAppreciationButtonTapAction
-        self._showWriteModal = showWriteModal
-    }
     
     var body: some View {
-        VStack(alignment: .trailing, spacing: 0) {
-            InspirationNoteTopContentView(
-                writeInspirationButtonTapAction: writeInspirationButtonTapAction
-            )
+        HStack(alignment: .bottom, spacing: 0) {
+            // 뷰 제목
+            Text("시상 수첩")
+                .font(FFYFont.largeTitle)
+                .foregroundStyle(FFYColor.black)
             
-            TopMenuModal(
-                showModal: $showWriteModal,
-                modalStyle: .inspirationTop(
-                    daily: {
-                        writeDailyButtonTapAction()
-                    },
-                    appreciation: {
-                        writeAppreciationButtonTapAction()
-                    }
-                )
-            )
+            Spacer()
+            
+            // 메뉴 버튼
+            Menu {
+                // 일상 이야기예요
+                Button {
+                    writeDailyButtonTapAction()
+                } label: {
+                    Text("일상 이야기예요")
+                }
+                
+                // 감상한 콘텐츠가 있어요
+                Button {
+                    writeAppreciationButtonTapAction()
+                } label: {
+                    Text("감상한 콘텐츠가 있어요")
+                }
+            } label: {
+                Text("시상 쓰기")
+                    .foregroundStyle(FFYColor.pinkDark)
+                    .font(FFYFont.title3)
+            }
         }
-        .frame(height: 58, alignment: .top)
-        .padding(.horizontal, 24)
-        .zIndex(100)
     }
 }
 

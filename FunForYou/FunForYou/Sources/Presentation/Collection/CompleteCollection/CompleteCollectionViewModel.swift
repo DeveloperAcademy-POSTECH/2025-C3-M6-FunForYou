@@ -44,7 +44,7 @@ final class CompleteCollectionViewModel: ViewModelable {
             state.searchedPoems = searchPoems(searchText: state.searchText)
             
         case .continueWriteButtonTapped:
-            // TODO: navigate to ongoing poem list view
+            // navigate to ongoing poem list view
             coordinator.push(.ongoingCollection)
             break
         case .completePoemTapped(let poem):

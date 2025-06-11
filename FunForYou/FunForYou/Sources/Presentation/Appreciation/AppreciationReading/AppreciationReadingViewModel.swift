@@ -18,9 +18,6 @@ final class AppreciationReadingViewModel: ViewModelable {
         /// 이 시상으로 지은 시 배열
         var inspiredPoems: [Poem] = []
         
-        /// 네비게이션 메뉴 보여주기 결정
-        var showModal: Bool = false
-        
         /// 감상 지우기 alert 띄우기 결정
         var showAlert: Bool = false
     }
@@ -28,10 +25,6 @@ final class AppreciationReadingViewModel: ViewModelable {
     enum Action {
         /// 이전 버튼 눌러서 화면 빠져나가기
         case backButtonTapAction
-        /// 상단 메뉴 띄우기
-        case ellipseButtonTapAction
-        /// 메뉴 없어지게 하기
-        case menuDisappearAction
         /// 감상 편집 화면으로 연결
         case editButtonTapAction
         /// 감상 지우기 alert 띄우기
@@ -58,18 +51,11 @@ final class AppreciationReadingViewModel: ViewModelable {
         case .backButtonTapAction:
             coordinator.popLast()
             
-        case .ellipseButtonTapAction:
-            state.showModal.toggle()
-            
-        case .menuDisappearAction:
-            state.showModal = false
-            
         case .editButtonTapAction:
             print("시상 수정하기 화면으로 연결")
             coordinator.push(.appreciationWriting(state.appreciation))
             
         case .deleteButtonTapAction:
-            state.showModal.toggle()
             state.showAlert.toggle()
             
         case .deleteAppreciation(let context):

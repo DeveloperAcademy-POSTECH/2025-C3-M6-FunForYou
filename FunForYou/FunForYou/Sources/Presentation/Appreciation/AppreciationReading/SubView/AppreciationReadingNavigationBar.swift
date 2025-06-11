@@ -13,9 +13,11 @@ struct AppreciationReadingNavigationBar: View {
     // MARK: - Properties
     /// 화면 dismiss시키기
     var backButtonTapAction: () -> Void
+    /// 고쳐쓰기 버튼 눌렀을 때: 감상 페이지로 이동
+    var editButtonTapAction: () -> Void
+    /// 지우기 버튼 눌렀을 때: 삭제 alert 띄우기
+    var deleteButtonTapAction: () -> Void
     
-    /// ellipse 버튼 눌릴 때 액션(모달 띄우는 bool 변경시키기)
-    var ellipseButtonTapAction: () -> Void
         
     // MARK: - View
     var body: some View {
@@ -24,9 +26,20 @@ struct AppreciationReadingNavigationBar: View {
                 backButtonTapAction()
             }
             
-            Button {
-                // 모달 띄우기
-                ellipseButtonTapAction()
+            Menu {
+                // 고쳐 쓰기
+                Button {
+                    editButtonTapAction()
+                } label: {
+                    Text("고쳐 쓰기")
+                }
+                
+                // 지우기
+                Button(role: .destructive) {
+                    deleteButtonTapAction()
+                } label: {
+                    Text("지우기")
+                }
             } label: {
                 Image(systemName: "ellipsis")
                     .font(.title3)
@@ -34,11 +47,11 @@ struct AppreciationReadingNavigationBar: View {
                     .padding(.bottom)
                     .padding(.trailing, 24)
             }
-
+            .contentShape(Circle())
         }
     }
 }
 
 #Preview {
-    AppreciationReadingNavigationBar(backButtonTapAction: {}, ellipseButtonTapAction: {})
+    AppreciationReadingNavigationBar(backButtonTapAction: {}, editButtonTapAction: {}, deleteButtonTapAction: {})
 }

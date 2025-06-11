@@ -21,20 +21,14 @@ struct DailyReadingView: View {
     
     var body: some View {
         VStack {
-            DailyReadingTopView(
+            DailyReadingNavigationBar(
                 backButtonTapAction: {
                     viewModel.action(.backButtonTapAction)
-                },
-                ellipseButtonTapAction: {
-                    viewModel.action(.ellipseButtonTapAction)
-                },
-                editButtonTapAction: {
+                }, editButtonTapAction: {
                     viewModel.action(.editButtonTapped)
-                },
-                deleteButtonTapAction: {
+                }, deleteButtonTapAction: {
                     viewModel.action(.deleteButtonTapped)
-                },
-                showModal: $viewModel.state.showModal
+                }
             )
             
             ScrollView {

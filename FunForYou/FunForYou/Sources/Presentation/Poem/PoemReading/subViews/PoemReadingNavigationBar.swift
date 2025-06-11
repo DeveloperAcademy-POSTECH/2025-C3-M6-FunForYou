@@ -8,24 +8,39 @@
 import SwiftUI
 
 /// 시  읽기 페이지의 네비게이션 바
-/// - 우측 ellipse 버튼 누르면 고쳐 쓰기, 지우기 메뉴 띄우고 기능 연결(예정)
+/// - 우측 ellipse 버튼 누르면 고쳐 쓰기, 지우기 메뉴 띄움
 struct PoemReadingNavigationBar: View {
     // MARK: - Properties
-    var poem: Poem
-    /// ellipse 버튼 눌릴 때 액션(모달 띄우는 bool 변경시키기)
-    var ellipseButtonTapAction: () -> Void
+    var isPoemCompleted: Bool
+    var editButtonTapAction: () -> Void
+    var deleteButtonTapAction: () -> Void
     var backButtonTapAction: () -> Void
 
     // MARK: - View
     var body: some View {
         ZStack(alignment: .trailing) {
-            NavigationBar( title: poem.isCompleted ? "시 낭독하기" : "쓰고 있는 시", style: .backTitle) {
-                backButtonTapAction()
-            }
+            NavigationBar(
+                title: isPoemCompleted ? "시 낭독하기" : "쓰고 있는 시",
+                style: .backTitle,
+                onBack: {
+                    backButtonTapAction()
+                }
+            )
 
-            Button {
-                // 모달 띄우기
-                ellipseButtonTapAction()
+            Menu {
+                // 고쳐 쓰기
+                Button {
+                    editButtonTapAction()
+                } label: {
+                    Text("고쳐 쓰기")
+                }
+                
+                // 지우기
+                Button(role: .destructive) {
+                    deleteButtonTapAction()
+                } label: {
+                    Text("지우기")
+                }
             } label: {
                 Image(systemName: "ellipsis")
                     .font(.title3)
@@ -33,15 +48,16 @@ struct PoemReadingNavigationBar: View {
                     .padding(.bottom)
                     .padding(.trailing, 24)
             }
-
+            .contentShape(Circle())
         }
     }
 }
 
 #Preview {
     PoemReadingNavigationBar(
-        poem: samplePoem, 
-        ellipseButtonTapAction: {},
+        isPoemCompleted: samplePoem.isCompleted,
+        editButtonTapAction: {},
+        deleteButtonTapAction: {},
         backButtonTapAction: {}
     )
 }
