@@ -37,7 +37,10 @@ struct InspiredPoemCardsGridView: View {
             
             // 시집 리스트
             ForEach(poems, id: \.self) { poem in
-                PoemBook(title: poem.title, date: poem.date)
+                PoemBook(
+                    title: poem.title.isEmpty ? "무제" : poem.title,
+                    date: poem.date
+                )
                     .onTapGesture {
                         readPoemButtonTapAction(poem)
                     }
