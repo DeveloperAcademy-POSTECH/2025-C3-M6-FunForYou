@@ -18,18 +18,15 @@ struct InspirationNoteView: View {
     var body: some View {
         VStack(spacing: 0) {
             InspirationNoteTopView(
-                writeInspirationButtonTapAction: {
-                    viewModel.action(.writeInspirationButtonTapped)
-                },
                 writeDailyButtonTapAction: {
                     viewModel.action(.writeDailyButtonTapped)
                 },
                 writeAppreciationButtonTapAction: {
                     viewModel.action(.writeAppreciationButtonTapped)
-                },
-                showWriteModal: $viewModel.state.showWriteModal
+                }                  
             )
-            .padding(.top, 20)
+            .padding(.vertical, 20)
+            .padding(.horizontal, 24)
             
             QuestionCarouselView(questions: $viewModel.state.questions, selectedQuestionIdx: $viewModel.state.selectedQuestionIdx)
                 .padding(.bottom, 20)
@@ -38,6 +35,7 @@ struct InspirationNoteView: View {
                 .onChange(of: viewModel.state.searchText) {
                     viewModel.action(.search)
                 }
+                .padding(.bottom, 8)
             
             InspirationPreviewList(
                 inspirations: viewModel.state.searchedInspirations,
