@@ -92,7 +92,7 @@ final class PoemReadingViewModel: ViewModelable {
         case .success:
             print("삭제 성공")
             // 끝맺은 시 뷰로 이동
-            coordinator.removeAll()
+            coordinator.popLast()
         
         case .failure(let error):
             print("시 삭제 실패: ",error.localizedDescription)
