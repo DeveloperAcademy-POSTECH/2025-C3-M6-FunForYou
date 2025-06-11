@@ -23,20 +23,14 @@ struct AppreciationReadingView: View {
     var body: some View {
         VStack(spacing: 0) {
             // 네비게이션 바 영역
-            AppreciationReadingTopView(
+            AppreciationReadingNavigationBar(
                 backButtonTapAction: {
                     viewModel.action(.backButtonTapAction)
-                },
-                ellipseButtonTapAction: {
-                    viewModel.action(.ellipseButtonTapAction)
-                },
-                editButtonTapAction: {
+                }, editButtonTapAction: {
                     viewModel.action(.editButtonTapAction)
-                },
-                deleteButtonTapAction: {
+                }, deleteButtonTapAction: {
                     viewModel.action(.deleteButtonTapAction)
-                },
-                showModal: $viewModel.state.showModal
+                }
             )
             
             ScrollView {
