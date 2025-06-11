@@ -24,28 +24,21 @@ struct PoemReadingView: View {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                PoemReadingTopView(
-                    poem: viewModel.state.poem,
-                    ellipseButtonTapAction: {
-                        viewModel.action(.ellipseButtonTapAction)
-                    },
+                PoemReadingNavigationBar(
+                    isPoemCompleted: viewModel.state.poem.isCompleted,
                     editButtonTapAction: {
                         viewModel.action(.editButtonTapAction)
                     },
                     deleteButtonTapAction: {
-                        viewModel.state.showModal = false
-                        showDeleteAlert = true
-                        //                        viewModel.action(
-                        //                            .deleteButtonTapAction(context: context)
-                        //                        )
+                        viewModel.action(.deleteButtonTapAction)
                     },
                     backButtonTapAction: {
                         viewModel.action(.backButtonTapAction)
-                    },
-                    showModal: $viewModel.state.showModal
+                    }
                 )
+                
 
-                // TODO: 시 제목, 내용을 볼 수 있게 한다.
+                // 시 제목, 내용을 볼 수 있게 한다.
                 PoemReadingScrollView(
                     viewModel: viewModel
                 )
@@ -60,21 +53,18 @@ struct PoemReadingView: View {
             }
 
             // 커스텀 얼럿 뷰
-            if showDeleteAlert {
+            if viewModel.state.showDeleteAlert {
                 PrimaryAlert(
                     style: .deletePoem,
                     onPrimary: {
-                        showDeleteAlert = false
+                        withAnimation {
+                            viewModel.state.showDeleteAlert = false
+                        }
                     },
                     onSecondary: {
-                        showDeleteAlert = false
-                        viewModel.action(
-
-                            .deleteButtonTapAction(context: context)
-                        )
-
+                        viewModel.action(.deletePoem(context: context))
                     },
-                    isVisible: $showDeleteAlert
+                    isVisible: $viewModel.state.showDeleteAlert
                 )
             }
         }

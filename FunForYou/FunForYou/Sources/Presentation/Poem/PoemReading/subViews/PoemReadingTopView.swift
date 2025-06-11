@@ -40,11 +40,11 @@ struct PoemReadingTopView: View {
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
             // 네비게이션 바
-            PoemReadingNavigationBar(
-                poem: poem,
-                ellipseButtonTapAction: ellipseButtonTapAction,
-                backButtonTapAction: backButtonTapAction
-            )
+//            PoemReadingNavigationBar(
+//                poem: poem,
+//                ellipseButtonTapAction: ellipseButtonTapAction,
+//                backButtonTapAction: backButtonTapAction
+//            )
 
             // 메뉴 모달
             TopMenuModal(
