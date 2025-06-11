@@ -38,8 +38,8 @@ final class AppreciationReadingViewModel: ViewModelable {
         case deleteButtonTapAction
         /// 해당 감상 지우기
         case deleteAppreciation(ModelContext)
-        /// 시상 id로 해당 시상으로 지은 시 배열 불러오기
-        case fetchAllPoemFromInspirationId(ModelContext)
+        /// 시상 id로 해당 시상으로 지은 완성된 시 배열 불러오기
+        case fetchCompletedPoemsFromInspirationID(ModelContext)
         /// 시상 이용해서 시 쓰기 화면 연결
         case writeNewPoemButtonTapped
         /// 특정 시 조회 화면 연결
@@ -81,13 +81,8 @@ final class AppreciationReadingViewModel: ViewModelable {
                 print("Delete error: \(failure)")
             }
             
-        case .fetchAllPoemFromInspirationId(let context):
-            switch SwiftDataManager.shared.fetchAllPoemFromInspirationId(inspirationId: self.state.appreciation.id, context: context) {
-            case .success(let poems):
-                state.inspiredPoems = poems
-            case .failure(let error):
-                print("Fetch error: \(error)")
-            }
+        case .fetchCompletedPoemsFromInspirationID(let context):
+            fetchPoemsByInspirationID(context)
             
         case .writeNewPoemButtonTapped:
             writeNewPoemButtonTapped()
@@ -97,6 +92,7 @@ final class AppreciationReadingViewModel: ViewModelable {
         }
     }
     
+    /// 시상 이용해서 시 쓰기 화면 연결
     func writeNewPoemButtonTapped() {
         coordinator.push(
             .poemWriting(
@@ -107,5 +103,18 @@ final class AppreciationReadingViewModel: ViewModelable {
                 )
             )
         )
+    }
+    
+    /// 시상 id로 해당 시상으로 지은 완성된 시 배열 불러오기
+    func fetchPoemsByInspirationID(_ context: ModelContext) {
+        switch SwiftDataManager.shared.fetchAllPoemFromInspirationId(inspirationId: self.state.appreciation.id, context: context) {
+        case .success(let poems):
+            state.inspiredPoems = poems.filter {
+                $0.isCompleted
+            }
+        case .failure(let error):
+            print("Fetch error: \(error)")
+        }
+
     }
 }

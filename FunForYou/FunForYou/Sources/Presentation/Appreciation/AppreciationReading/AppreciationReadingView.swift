@@ -86,7 +86,7 @@ struct AppreciationReadingView: View {
         }
         .onAppear {
             // 시상으로 지은 시 불러오기
-            viewModel.action(.fetchAllPoemFromInspirationId(context))
+            viewModel.action(.fetchCompletedPoemsFromInspirationID(context))
         }
     }
 }
