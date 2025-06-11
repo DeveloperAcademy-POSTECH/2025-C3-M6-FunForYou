@@ -28,7 +28,7 @@ final class OngoingCollectionViewModel: ViewModelable {
         case backButtonTapAction
         /// 검색하기
         case search
-        /// 시 버튼 눌렀을 때 쓰는중인 시 화면(편집)으로 넘어가기
+        /// 시 버튼 눌렀을 때 쓰는중인 시 화면으로 넘어가기
         case ongoingPoemTapped(Poem)
 
     }
@@ -52,7 +52,7 @@ final class OngoingCollectionViewModel: ViewModelable {
             state.searchedPoems = searchPoems(searchText: state.searchText)
 
         case .ongoingPoemTapped(let poem):
-            coordinator.push(.poemWriting(poem))
+            coordinator.push(.poemReading(poem))
         }
     }
 
