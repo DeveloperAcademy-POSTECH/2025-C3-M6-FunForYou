@@ -14,7 +14,6 @@ final class DailyReadingViewModel: ViewModelable {
         var daily: Daily
         var inspiredPoems: [Poem] = []
         var isShowAlert: Bool = false
-        var showModal: Bool = false
         var image: UIImage? = nil
     }
     
@@ -26,7 +25,6 @@ final class DailyReadingViewModel: ViewModelable {
         case writeNewPoemButtonTapAction
         case fetchAllPoemFromInspirationId(ModelContext)
         case readPoemButtonTapAction(Poem)
-        case ellipseButtonTapAction
         case backButtonTapAction
         case fetchImage
     }
@@ -63,9 +61,6 @@ final class DailyReadingViewModel: ViewModelable {
 
         case .readPoemButtonTapAction(let poem):
             coordinator.push(.poemReading(poem))
-            
-        case .ellipseButtonTapAction:
-            state.showModal.toggle()
             
         case .backButtonTapAction:
             coordinator.popLast()

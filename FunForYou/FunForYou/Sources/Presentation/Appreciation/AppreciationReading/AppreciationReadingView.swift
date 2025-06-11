@@ -74,10 +74,6 @@ struct AppreciationReadingView: View {
                 )
             }
         }
-        .onTapGesture {
-            // 메뉴 외의 다른 영역 터치할 때 메뉴 없어지도록
-            viewModel.action(.menuDisappearAction)
-        }
         .onAppear {
             // 시상으로 지은 시 불러오기
             viewModel.action(.fetchCompletedPoemsFromInspirationID(context))

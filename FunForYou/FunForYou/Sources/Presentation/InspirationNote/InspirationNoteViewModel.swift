@@ -17,13 +17,10 @@ final class InspirationNoteViewModel: ViewModelable {
         var questions: [String] = []
         var selectedQuestionIdx: Int = 0
         var searchText: String = ""
-        var showWriteModal: Bool = false
     }
     
     enum Action {
         case viewAppeared(ModelContext)
-        case viewDisappeared
-        case writeInspirationButtonTapped
         case writeDailyButtonTapped
         case writeAppreciationButtonTapped
         case dailyPreviewTapped(String)
@@ -42,23 +39,17 @@ final class InspirationNoteViewModel: ViewModelable {
     func action(_ action: Action) {
         switch action {
         case .viewAppeared(let context):
-            // TODO: 뷰 보여질 때 SwiftDataManager로부터 inspiration 가져오기
+            // 뷰 보여질 때 SwiftDataManager로부터 inspiration 가져오기
             state.inspirations = fetchInspirations(context: context)
             state.searchedInspirations = state.inspirations
             
-        case .viewDisappeared:
-            state.showWriteModal = false
-            
-        case .writeInspirationButtonTapped:
-            state.showWriteModal.toggle()
-            
         case .writeDailyButtonTapped:
-            // TODO: navigate to DailyWritingView
+            // navigate to DailyWritingView
             coordinator.push(.dailyWriting(nil))
             break
             
         case .writeAppreciationButtonTapped:
-            // TODO: navigate to AppreciationWritingView
+            // navigate to AppreciationWritingView
             coordinator.push(.appreciationWriting(nil))
             break
             
